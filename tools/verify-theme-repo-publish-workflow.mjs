@@ -4,6 +4,8 @@ import process from 'node:process';
 
 const root = process.argv[2] ? path.resolve(process.argv[2]) : process.cwd();
 const workflowPath = path.join(root, '.github/workflows/publish-theme-repo.yml');
+const oldSshWorkflowPath = path.join(root, '.github/workflows/deploy-theme.yml');
+const dependabotPath = path.join(root, '.github/dependabot.yml');
 const docsPath = path.join(root, 'docs/deployer-for-git.md');
 
 const failures = [];
@@ -17,10 +19,13 @@ function read(file) {
 }
 
 assert(fs.existsSync(workflowPath), '.github/workflows/publish-theme-repo.yml exists');
+assert(!fs.existsSync(oldSshWorkflowPath), 'legacy SSH deploy workflow is not present');
+assert(fs.existsSync(dependabotPath), '.github/dependabot.yml exists');
 assert(fs.existsSync(docsPath), 'docs/deployer-for-git.md exists');
 
 const workflow = read(workflowPath);
 assert(/name:\s*Publish Theme Repository/.test(workflow), 'workflow has a clear publish name');
+assert(/permissions:\s*\n\s*contents:\s*read/.test(workflow), 'workflow uses read-only GITHUB_TOKEN permissions');
 assert(/push:\s*\n\s*branches:\s*\n\s*-\s*main/.test(workflow), 'workflow runs on pushes to main');
 assert(/workflow_dispatch:/.test(workflow), 'workflow can be run manually');
 assert(/node scripts\/build-luxureat-theme\.mjs/.test(workflow), 'workflow builds the WordPress theme');
@@ -37,6 +42,10 @@ assert(docs.includes('Deployer for Git'), 'docs name the WordPress plugin');
 assert(docs.includes('errpenk/luxureat-wordpress-theme'), 'docs include the theme repository name');
 assert(docs.includes('Install Theme'), 'docs explain which plugin page to use');
 assert(docs.includes('main'), 'docs mention the branch to install');
+
+const dependabot = read(dependabotPath);
+assert(dependabot.includes('package-ecosystem: github-actions'), 'Dependabot monitors GitHub Actions');
+assert(dependabot.includes('interval: weekly'), 'Dependabot checks GitHub Actions weekly');
 
 if (failures.length) {
   console.error(`Theme repo publish workflow verification failed with ${failures.length} issue(s):`);

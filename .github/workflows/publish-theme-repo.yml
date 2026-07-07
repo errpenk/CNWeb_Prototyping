@@ -19,6 +19,9 @@ concurrency:
   group: luxureat-theme-repo
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
