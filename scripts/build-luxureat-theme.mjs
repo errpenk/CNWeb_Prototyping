@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
-const sourceDir = path.resolve(process.argv[2] || '/tmp/CNWeb_Prototyping');
+const sourceDir = path.resolve(process.argv[2] || process.cwd());
 const outputRoot = path.resolve(process.argv[3] || process.cwd());
 const themeDir = path.join(outputRoot, 'luxureat-static');
 const zipFile = path.join(outputRoot, 'luxureat-static-theme.zip');
@@ -139,10 +139,10 @@ function buildRoutesPhp() {
 function styleCss() {
   return `/*
 Theme Name: LuxurEat Static
-Theme URI: https://github.com/errpenk/CNWeb_Prototyping
+Theme URI: https://github.com/errpenk/luxureat-website-source
 Author: LuxurEat
 Description: Static LuxurEat bilingual prototype packaged as a WordPress theme.
-Version: 1.0.1
+Version: 1.0.2
 Requires at least: 6.0
 Text Domain: luxureat-static
 */
@@ -337,7 +337,7 @@ include get_template_directory() . '/' . $routes[$path];
 function readme() {
   return `# LuxurEat Static WordPress Theme
 
-This package wraps the static bilingual LuxurEat prototype from https://github.com/errpenk/CNWeb_Prototyping as a WordPress theme.
+This package wraps the static bilingual LuxurEat website source from https://github.com/errpenk/luxureat-website-source as a WordPress theme.
 
 ## Install
 

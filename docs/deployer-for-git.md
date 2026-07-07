@@ -36,14 +36,31 @@ https://github.com/errpenk/luxureat-wordpress-theme
 
 The free plugin supports public repositories. The generated WordPress theme files live at the root of that repository, so WordPress can install it as a normal theme.
 
-## How Updates Flow
+## Automatic Updates
+
+The update flow is:
 
 ```text
-errpenk/CNWeb_Prototyping
+errpenk/luxureat-website-source
   -> GitHub Actions builds luxureat-static
   -> GitHub Actions publishes root theme files to errpenk/luxureat-wordpress-theme
+  -> GitHub webhook calls the Deployer for Git Push-to-Deploy URL
   -> Deployer for Git pulls that theme into WordPress
 ```
+
+To make WordPress update automatically, copy the Deployer for Git **Show Push-to-Deploy URL** value and add it as a GitHub webhook on `errpenk/luxureat-wordpress-theme`.
+
+Webhook settings:
+
+```text
+Payload URL: paste the Push-to-Deploy URL
+Content type: application/json
+Secret: leave blank unless Deployer for Git provides one
+Events: Just the push event
+Active: checked
+```
+
+Keep the Push-to-Deploy URL private. Treat it like a deploy token.
 
 ## After Installing
 
@@ -59,4 +76,4 @@ Activate:
 LuxurEat Static
 ```
 
-Future changes should be made in `errpenk/CNWeb_Prototyping`. The generated theme repository should be treated as a deployment target.
+Future source changes should be made in `errpenk/luxureat-website-source`. The generated theme repository should be treated as a deployment target.

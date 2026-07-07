@@ -7,7 +7,11 @@ const workflowPath = path.join(root, '.github/workflows/publish-theme-repo.yml')
 const oldSshWorkflowPath = path.join(root, '.github/workflows/deploy-theme.yml');
 const dependabotPath = path.join(root, '.github/dependabot.yml');
 const codeqlPath = path.join(root, '.github/workflows/codeql.yml');
+const phpLintPath = path.join(root, '.github/workflows/php-lint.yml');
 const docsPath = path.join(root, 'docs/deployer-for-git.md');
+const readmePath = path.join(root, 'README.md');
+const themeBuilderPath = path.join(root, 'scripts/build-luxureat-theme.mjs');
+const oldSourceRepositoryName = ['CNWeb', 'Prototyping'].join('_');
 
 const failures = [];
 
@@ -23,7 +27,9 @@ assert(fs.existsSync(workflowPath), '.github/workflows/publish-theme-repo.yml ex
 assert(!fs.existsSync(oldSshWorkflowPath), 'legacy SSH deploy workflow is not present');
 assert(fs.existsSync(dependabotPath), '.github/dependabot.yml exists');
 assert(fs.existsSync(codeqlPath), '.github/workflows/codeql.yml exists');
+assert(fs.existsSync(phpLintPath), '.github/workflows/php-lint.yml exists');
 assert(fs.existsSync(docsPath), 'docs/deployer-for-git.md exists');
+assert(fs.existsSync(readmePath), 'README.md exists');
 
 const workflow = read(workflowPath);
 assert(/name:\s*Publish Theme Repository/.test(workflow), 'workflow has a clear publish name');
@@ -42,9 +48,16 @@ assert(!/password\s*[:=]/i.test(workflow), 'workflow does not contain a password
 
 const docs = read(docsPath);
 assert(docs.includes('Deployer for Git'), 'docs name the WordPress plugin');
+assert(docs.includes('errpenk/luxureat-website-source'), 'docs include the source repository name');
 assert(docs.includes('errpenk/luxureat-wordpress-theme'), 'docs include the theme repository name');
 assert(docs.includes('Install Theme'), 'docs explain which plugin page to use');
 assert(docs.includes('main'), 'docs mention the branch to install');
+
+const readme = read(readmePath);
+assert(readme.includes('LuxurEat Website Source'), 'README uses the new source repository name');
+assert(readme.includes('wordpress-plugins/luxureat-github-sync'), 'README documents the WordPress content sync plugin');
+assert(readme.includes('errpenk/luxureat-website-source'), 'README recommends the source repository');
+assert(readme.includes('errpenk/luxureat-wordpress-theme'), 'README documents the theme repository');
 
 const dependabot = read(dependabotPath);
 assert(dependabot.includes('package-ecosystem: github-actions'), 'Dependabot monitors GitHub Actions');
@@ -56,6 +69,17 @@ assert(codeql.includes('github/codeql-action/analyze@v4'), 'CodeQL workflow runs
 assert(codeql.includes('security-events: write'), 'CodeQL workflow can upload security results');
 assert(codeql.includes('javascript-typescript'), 'CodeQL scans JavaScript and TypeScript');
 assert(!codeql.includes('language: php'), 'CodeQL workflow does not request unsupported PHP analysis');
+
+const phpLint = read(phpLintPath);
+assert(phpLint.includes('name: PHP Lint'), 'PHP lint workflow has a clear name');
+assert(phpLint.includes("wordpress-plugins/**/*.php"), 'PHP lint workflow watches plugin PHP files');
+assert(phpLint.includes('php -l'), 'PHP lint workflow runs PHP syntax lint');
+assert(phpLint.includes('node tools/build-github-sync-plugin.mjs'), 'PHP lint workflow builds the plugin zip');
+assert(phpLint.includes('node tools/verify-github-sync-plugin.mjs'), 'PHP lint workflow verifies the plugin zip');
+
+const themeBuilder = read(themeBuilderPath);
+assert(themeBuilder.includes('https://github.com/errpenk/luxureat-website-source'), 'theme builder uses the new source repository URL');
+assert(!themeBuilder.includes(oldSourceRepositoryName), 'theme builder does not reference the old source repository name');
 
 if (failures.length) {
   console.error(`Theme repo publish workflow verification failed with ${failures.length} issue(s):`);
