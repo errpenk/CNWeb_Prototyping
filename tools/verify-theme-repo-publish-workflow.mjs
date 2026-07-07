@@ -78,7 +78,7 @@ assert(phpLint.includes('node tools/build-github-sync-plugin.mjs'), 'PHP lint wo
 assert(phpLint.includes('node tools/verify-github-sync-plugin.mjs'), 'PHP lint workflow verifies the plugin zip');
 
 const themeBuilder = read(themeBuilderPath);
-assert(themeBuilder.includes('https://github.com/errpenk/luxureat-website-source'), 'theme builder uses the new source repository URL');
+assert(/^Theme URI:\s*https:\/\/github\.com\/errpenk\/luxureat-website-source$/m.test(themeBuilder), 'theme builder uses the new source repository URL');
 assert(!themeBuilder.includes(oldSourceRepositoryName), 'theme builder does not reference the old source repository name');
 
 if (failures.length) {
