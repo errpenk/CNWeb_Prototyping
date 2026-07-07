@@ -32,6 +32,7 @@ assert(/push:\s*\n\s*branches:\s*\n\s*-\s*main/.test(workflow), 'workflow runs o
 assert(/workflow_dispatch:/.test(workflow), 'workflow can be run manually');
 assert(/node scripts\/build-luxureat-theme\.mjs/.test(workflow), 'workflow builds the WordPress theme');
 assert(/node tools\/verify-theme\.mjs/.test(workflow), 'workflow verifies the built theme');
+assert(/php -l/.test(workflow), 'workflow lints generated PHP files');
 assert(/THEME_REPO_DEPLOY_KEY:\s*\$\{\{\s*secrets\.THEME_REPO_DEPLOY_KEY\s*\}\}/.test(workflow), 'workflow reads deploy key from GitHub Secrets');
 assert(/git@github\.com:errpenk\/luxureat-wordpress-theme\.git/.test(workflow), 'workflow pushes to the theme repository');
 assert(/\.publish\/theme/.test(workflow), 'workflow publishes only the built theme folder');
@@ -54,7 +55,7 @@ assert(codeql.includes('github/codeql-action/init@v4'), 'CodeQL workflow initial
 assert(codeql.includes('github/codeql-action/analyze@v4'), 'CodeQL workflow runs the official analyzer');
 assert(codeql.includes('security-events: write'), 'CodeQL workflow can upload security results');
 assert(codeql.includes('javascript-typescript'), 'CodeQL scans JavaScript and TypeScript');
-assert(codeql.includes('php'), 'CodeQL scans PHP');
+assert(!codeql.includes('language: php'), 'CodeQL workflow does not request unsupported PHP analysis');
 
 if (failures.length) {
   console.error(`Theme repo publish workflow verification failed with ${failures.length} issue(s):`);
