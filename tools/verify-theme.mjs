@@ -108,6 +108,35 @@ for (const file of pageFiles) {
   assert(source.includes('luxureat_static_url('), `${rel} uses host-compatible route URLs`);
 }
 
+const zhCaviar = read(path.join(themeDir, 'pages/zh/caviar.php'));
+assert(zhCaviar.includes('data-lux-caviar-controls'), 'Chinese caviar page marks the filter toolbar for caviar controls');
+assert(!zhCaviar.includes('top-[89px]'), 'Chinese caviar filter toolbar does not leave an 89px sticky gap under the header');
+assert(zhCaviar.includes('top-[78px]'), 'Chinese caviar filter toolbar sticks directly below the desktop header');
+assert(zhCaviar.includes('data-caviar-filter="all"'), 'Chinese caviar page has an all filter button');
+assert(zhCaviar.includes('data-caviar-filter="beluga"'), 'Chinese caviar page has a Beluga filter button');
+assert(zhCaviar.includes('data-caviar-filter="oscetra"'), 'Chinese caviar page has an Oscetra filter button');
+assert(zhCaviar.includes('data-caviar-filter="baeri"'), 'Chinese caviar page has a Baeri filter button');
+assert(zhCaviar.includes('data-caviar-view="grid"'), 'Chinese caviar page has a grid view button');
+assert(zhCaviar.includes('data-caviar-view="list"'), 'Chinese caviar page has a list view button');
+assert(zhCaviar.includes('data-caviar-sort'), 'Chinese caviar page has a sort control');
+assert(zhCaviar.includes('data-caviar-grid'), 'Chinese caviar page marks the product grid');
+assert(zhCaviar.includes('data-caviar-item'), 'Chinese caviar page marks product cards');
+assert(zhCaviar.includes('data-species="beluga"'), 'Chinese caviar page marks Beluga product species');
+assert(zhCaviar.includes('data-species="oscetra"'), 'Chinese caviar page marks Oscetra product species');
+assert(zhCaviar.includes('data-price='), 'Chinese caviar product cards expose prices for sorting');
+
+const mainJs = read(path.join(themeDir, 'main.js'));
+assert(mainJs.includes('initLuxCaviarControls'), 'main.js initializes caviar filter, view, and sort controls');
+assert(mainJs.includes('data-caviar-filter'), 'main.js listens to caviar filter buttons');
+assert(mainJs.includes('data-caviar-view'), 'main.js listens to caviar view buttons');
+assert(mainJs.includes('data-caviar-sort'), 'main.js listens to the caviar sort control');
+assert(mainJs.includes('aria-pressed'), 'main.js updates pressed states for caviar toolbar buttons');
+assert(mainJs.includes('.hidden ='), 'main.js hides filtered-out caviar product cards');
+
+const integrationCss = read(path.join(themeDir, 'integration.css'));
+assert(integrationCss.includes('[data-caviar-grid].is-list'), 'integration.css defines the caviar list view layout');
+assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css hides filtered caviar product cards reliably');
+
 assert(fs.existsSync(zipFile), 'theme zip exists');
 if (fs.existsSync(zipFile)) {
   try {
