@@ -37,8 +37,23 @@ function read(file) {
 }
 
 function hasExactHref(source, href) {
-  const escaped = href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return new RegExp(`href=["']${escaped}["']`).test(source);
+  const values = [];
+  let offset = 0;
+  while (offset < source.length) {
+    const index = source.indexOf('href=', offset);
+    if (index === -1) break;
+    const quote = source[index + 5];
+    if (quote !== '"' && quote !== "'") {
+      offset = index + 5;
+      continue;
+    }
+    const start = index + 6;
+    const end = source.indexOf(quote, start);
+    if (end === -1) break;
+    values.push(source.slice(start, end));
+    offset = end + 1;
+  }
+  return values.includes(href);
 }
 
 function walk(dir) {
