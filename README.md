@@ -39,6 +39,12 @@ errpenk/luxureat-wordpress-theme
 
 Treat that repository as a deployment target, not the place for long-term source edits.
 
+## Backup Preview Flow
+
+Use the `backup` branch for review changes. Every push to `backup` deploys the static site to GitHub Pages through `.github/workflows/deploy-backup-pages.yml`.
+
+Review the Pages preview first, then merge `backup` into `main` only after approval. The `main` branch remains the source for publishing the WordPress theme.
+
 ## WordPress Content Sync Plugin
 
 The plugin source lives in:
