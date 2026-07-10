@@ -352,9 +352,9 @@
   justify-content: space-between;
   gap: 12px;
   padding: 10px 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, .08);
-  background: rgba(24, 24, 24, .48);
-  backdrop-filter: blur(16px) saturate(1.2);
+  border-bottom: 0;
+  background: rgba(240,238,235,.54);
+  backdrop-filter: blur(16px) saturate(1.15);
   position: relative;
   z-index: 3;
 }
@@ -654,7 +654,7 @@
   z-index: 2;
   pointer-events: none;
   background: rgba(240,238,235,.54);
-  border-bottom: 1px solid rgba(28,27,27,.08);
+  border-bottom: 0;
   backdrop-filter: blur(16px) saturate(1.15);
 }
 .lux-product-back,
@@ -827,19 +827,21 @@
   text-transform: none;
 }
 .lux-product-cart-state button {
+  display: inline-flex;
   color: #8f2f24;
   border-bottom: 1px solid currentColor;
   font: inherit;
   text-transform: uppercase;
-  transition: color .18s ease, background .18s ease;
+  transform-origin: center;
+  transition: color .18s ease, transform .18s ease;
 }
 .lux-product-cart-state button:hover,
 .lux-product-cart-state button:focus-visible {
   color: #8f2f24;
-  background: rgba(143,47,36,.08);
+  transform: scale(1.04);
 }
 .lux-product-cart-state button:active {
-  background: rgba(143,47,36,.14);
+  transform: scale(.98);
 }
 .lux-product-specs {
   display: grid;
@@ -875,6 +877,7 @@
   color: #1c1b1b;
 }
 .lux-product-recent-inner {
+  position: relative;
   width: min(780px, calc(100% - 48px));
   margin: 0 auto;
 }
@@ -931,12 +934,16 @@
   color: #fff;
 }
 .lux-product-recent-nav {
+  position: absolute;
+  inset: 0 -86px auto;
+  top: clamp(168px, 20vw, 186px);
+  z-index: 2;
+  pointer-events: none;
   display: flex;
-  justify-content: flex-end;
-  gap: 20px;
-  margin-top: 24px;
+  justify-content: space-between;
 }
 .lux-product-recent-nav button {
+  pointer-events: auto;
   width: 64px;
   height: 64px;
   display: grid;
@@ -968,15 +975,16 @@
 .lux-bag-item [data-bag-change] { color: #1c1b1b; }
 .lux-bag-item [data-bag-remove] {
   color: #3e4947 !important;
-  transition: color .18s ease, background .18s ease;
+  transform-origin: center;
+  transition: color .18s ease, transform .18s ease;
 }
 .lux-bag-item [data-bag-remove]:hover,
 .lux-bag-item [data-bag-remove]:focus-visible {
   color: #8f2f24 !important;
-  background: rgba(143,47,36,.08);
+  transform: scale(1.04);
 }
 .lux-bag-item [data-bag-remove]:active {
-  background: rgba(143,47,36,.14);
+  transform: scale(.98);
 }
 .lux-bag-image {
   position: relative;
@@ -1193,4 +1201,5 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-product-thumb { width: 100%; }
   .lux-product-specs { grid-template-columns: 1fr; padding-inline: 20px; }
   .lux-product-recent-inner { width: calc(100% - 40px); }
+  .lux-product-recent-nav { inset-inline: 8px; }
 }
