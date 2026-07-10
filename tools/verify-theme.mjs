@@ -167,6 +167,10 @@ assert(mainJs.includes('data-product-gallery'), 'main.js supports product-detail
 assert(mainJs.includes('data-product-main-image'), 'main.js switches the product-detail main image');
 assert(mainJs.includes('lux-product-recent'), 'main.js renders product-detail recommendations');
 assert(mainJs.includes('data-product-open="${escapeHtml(key)}"'), 'product-detail recommendations can open other product details');
+assert(mainJs.includes('data-product-back'), 'product-detail recommendations expose an in-modal back button');
+assert(mainJs.includes('data-product-cart-state'), 'product details show existing cart quantity');
+assert(mainJs.includes('data-product-total'), 'product details show multi-quantity totals');
+assert(mainJs.includes('lux-bag-line-total'), 'bag items show multi-quantity totals');
 assert(mainJs.includes('data-bag-quantity'), 'main.js carries selected product quantities into the bag');
 assert(mainJs.includes('initLuxFooterActions'), 'main.js initializes footer policy and social popups');
 assert(mainJs.includes('data-footer-modal'), 'main.js listens to footer modal buttons');
@@ -188,7 +192,9 @@ assert(integrationCss.includes('.lux-product-detail'), 'integration.css styles t
 assert(integrationCss.includes('.lux-product-gallery'), 'integration.css styles product image galleries');
 assert(integrationCss.includes('.lux-product-qty'), 'integration.css styles product quantity controls');
 assert(integrationCss.includes('.lux-product-recent-grid'), 'integration.css styles product-detail recommendation grids');
-assert(integrationCss.includes('.lux-footprint-card'), 'integration.css styles clickable global footprint cards');
+assert(integrationCss.includes('.lux-product-cart-state'), 'integration.css styles product-detail cart state');
+assert(integrationCss.includes('.lux-bag-item'), 'integration.css styles light bag item cards');
+assert(integrationCss.includes('.lux-footprint-card'), 'integration.css styles global footprint cards');
 assert(integrationCss.includes('[data-caviar-grid] [data-bag-add]'), 'integration.css gives product-card add buttons the heavier border');
 assert(integrationCss.includes('[data-caviar-grid] [data-product-open]'), 'integration.css gives product-card detail buttons the lighter border');
 assert(integrationCss.includes('.lux-dark-photo-block'), 'integration.css provides reusable dark photo backgrounds');
@@ -251,13 +257,16 @@ const zhContact = read(path.join(themeDir, 'pages/zh/contact.php'));
 assert(zhContact.includes('lux-dark-photo-block'), 'Chinese contact hero uses a dark photo background');
 assert(zhContact.includes('Italy • United States • Thailand • China'), 'Chinese contact footprint lists the requested countries');
 assert(zhContact.includes('上海市闵行区联明路389号A栋505室') && zhContact.includes('邮编: 201101'), 'Chinese contact HQ address is updated');
+assert(zhContact.includes('lux-footprint-heading') && !zhContact.includes('<details class="lux-footprint-card'), 'Chinese contact footprint cards are expanded by default');
+assert(zhContact.includes('local_dining') && zhContact.includes('temple_buddhist') && zhContact.includes('account_balance'), 'Chinese contact footprint uses country-specific icons');
 assert(zhContact.includes('info@truffleat.com') && zhContact.includes('tel:+393515111273') && zhContact.includes('https://www.truffleat.com'), 'Chinese contact Italy card has clickable contacts');
 assert(zhContact.includes('info@luxureat.com') && zhContact.includes('tel:+14256266318'), 'Chinese contact United States card has clickable contacts');
 assert(zhContact.includes('info@truffle.co.th') && zhContact.includes('https://wa.me/66811331337'), 'Chinese contact Thailand card has clickable contacts');
-assert(zhContact.includes('china@luxureat.com') && zhContact.includes('tel:15721452475'), 'Chinese contact China card has clickable contacts');
+assert(zhContact.includes('china@luxureat.com') && zhContact.includes('tel:+8615721452475') && zhContact.includes('+86 15721452475'), 'Chinese contact China card has clickable contacts');
 const enContact = read(path.join(themeDir, 'pages/en/contact.php'));
 assert(enContact.includes('Global Presence') && enContact.includes('Italy') && enContact.includes('Thailand') && enContact.includes('China'), 'English contact footprint lists the requested countries');
 assert(enContact.includes('Truffleat Srl') && enContact.includes('Luxureat LLC') && enContact.includes('Truffleat Co., Ltd') && enContact.includes('LuxurEat China Ltd'), 'English contact footprint uses the requested entities');
+assert(enContact.includes('lux-footprint-heading') && !enContact.includes('<details class="lux-footprint-card'), 'English contact footprint cards are expanded by default');
 
 const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));
@@ -270,8 +279,8 @@ assert(zhHome.includes('小红书') && zhHome.includes('data-footer-modal="wecha
 assert(enHome.includes('Rednote') && enHome.includes('WeChat') && enHome.includes('Weibo'), 'English footer exposes social actions');
 assert(hasExactHref(zhHome, 'https://xhslink.com/m/6Jn3PRYzjAy') && hasExactHref(zhHome, 'https://v.douyin.com/oEPE48mPS48/'), 'Chinese footer uses the updated Rednote and Douyin links');
 assert(hasExactHref(enHome, 'https://xhslink.com/m/6Jn3PRYzjAy') && hasExactHref(enHome, 'https://v.douyin.com/oEPE48mPS48/'), 'English footer uses the updated Rednote and Douyin links');
-assert(zhHome.includes('mailto:china@luxureat.com') && zhHome.includes('tel:15721452475'), 'Chinese footer contact actions are clickable');
-assert(enHome.includes('mailto:china@luxureat.com') && enHome.includes('tel:15721452475'), 'English footer contact actions are clickable');
+assert(zhHome.includes('mailto:china@luxureat.com') && zhHome.includes('tel:+8615721452475'), 'Chinese footer contact actions are clickable');
+assert(enHome.includes('mailto:china@luxureat.com') && enHome.includes('tel:+8615721452475'), 'English footer contact actions are clickable');
 
 assert(fs.existsSync(zipFile), 'theme zip exists');
 if (fs.existsSync(zipFile)) {

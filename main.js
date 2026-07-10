@@ -543,9 +543,13 @@ function initLuxProductDetails() {
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[char]));
+  const formatMoney = (currency, amount) => `${currency}${amount.toLocaleString(undefined, {
+    minimumFractionDigits: currency === "$" ? 2 : 0,
+    maximumFractionDigits: currency === "$" ? 2 : 0,
+  })}`;
   const copy = () => document.documentElement.lang?.startsWith("zh")
-    ? { close: "关闭", add: "加入购物袋", detail: "查看详情", qty: "数量", recent: "最近浏览过", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
-    : { close: "Close", add: "Add to Cart", detail: "View Details", qty: "Qty", recent: "Recently Viewed", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
+    ? { back: "返回", close: "关闭", add: "加入购物袋", detail: "查看详情", qty: "数量", total: "总价", remove: "移除", recent: "最近浏览过", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
+    : { back: "Back", close: "Close", add: "Add to Cart", detail: "View Details", qty: "Qty", total: "Total", remove: "Remove", recent: "Recently Viewed", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
   const galleryFor = (product) => {
     if (product.id.includes("beluga")) return galleries.beluga;
     if (product.id.includes("oscetra")) return galleries.oscetra;
@@ -559,15 +563,45 @@ function initLuxProductDetails() {
   const detail = document.createElement("div");
   detail.className = "lux-product-detail";
   detail.hidden = true;
-  detail.innerHTML = `<div class="lux-product-backdrop" data-product-close></div><section class="lux-product-panel" role="dialog" aria-modal="true" aria-labelledby="lux-product-title"><button class="lux-product-close" type="button" data-product-close></button><div class="lux-product-body" tabindex="-1"></div></section>`;
+  detail.innerHTML = `<div class="lux-product-backdrop" data-product-close></div><section class="lux-product-panel" role="dialog" aria-modal="true" aria-labelledby="lux-product-title"><button class="lux-product-back" type="button" data-product-back hidden></button><button class="lux-product-close" type="button" data-product-close></button><div class="lux-product-body" tabindex="-1"></div></section>`;
   document.body.appendChild(detail);
   const body = detail.querySelector(".lux-product-body");
+  const backButton = detail.querySelector(".lux-product-back");
   const closeButton = detail.querySelector(".lux-product-close");
   let openedByPush = false;
+  let currentProductId = "";
+  const productStack = [];
+
+  const updateSelectedTotal = (quantity) => {
+    const labels = copy();
+    const addButton = detail.querySelector(".lux-product-purchase [data-bag-add]");
+    const total = detail.querySelector("[data-product-total]");
+    const amount = Number(addButton?.dataset.bagPrice || 0);
+    if (!total || !amount || quantity <= 1) {
+      if (total) total.hidden = true;
+      return;
+    }
+    total.hidden = false;
+    total.textContent = `${labels.total}: ${formatMoney(addButton.dataset.bagCurrency || "$", amount * quantity)}`;
+  };
+
+  const updateProductBagState = () => {
+    const product = products[currentProductId];
+    const state = detail.querySelector("[data-product-cart-state]");
+    if (!product || !state) return;
+    const labels = copy();
+    const quantity = window.LuxureatBag?.items().find((item) => item.id === product.id)?.quantity || 0;
+    state.hidden = !quantity;
+    const text = state.querySelector("[data-product-cart-text]");
+    const total = quantity > 1 ? ` · ${labels.total}: ${formatMoney(product.currency, product.amount * quantity)}` : "";
+    if (text) text.textContent = document.documentElement.lang?.startsWith("zh") ? `已加入购物袋：${quantity}${total}` : `In Cart: ${quantity}${total}`;
+  };
 
   const render = (id, push) => {
     const product = products[id];
     if (!product) return;
+    if (push && !detail.hidden && currentProductId && currentProductId !== id) productStack.push(currentProductId);
+    currentProductId = id;
     const labels = copy();
     const galleryImages = Array.from(new Set(galleryFor(product).filter(Boolean)));
     const prefix = id.startsWith("zh-") ? "zh-" : "en-";
@@ -585,7 +619,7 @@ function initLuxProductDetails() {
             <span>${escapeHtml(product.eyebrow)}</span>
             <h2 id="lux-product-title">${escapeHtml(product.title)}</h2>
             <p>${escapeHtml(product.desc)}</p>
-            <strong>${escapeHtml(product.price)} <small>/ ${escapeHtml(product.unit)}</small></strong>
+            <strong class="lux-product-price">${escapeHtml(product.price)} <small>/ ${escapeHtml(product.unit)}</small><em data-product-total hidden></em></strong>
             <div class="lux-product-purchase">
               <div class="lux-product-qty" aria-label="${escapeHtml(labels.qty)}">
                 <button type="button" data-product-quantity="-1" aria-label="${escapeHtml(labels.qty)} -">−</button>
@@ -593,6 +627,10 @@ function initLuxProductDetails() {
                 <button type="button" data-product-quantity="1" aria-label="${escapeHtml(labels.qty)} +">+</button>
               </div>
               <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${escapeHtml(product.id)}" data-bag-title="${escapeHtml(product.title)}" data-bag-subtitle="${escapeHtml(product.subtitle)}" data-bag-price="${escapeHtml(product.amount)}" data-bag-currency="${escapeHtml(product.currency)}" data-bag-image="${escapeHtml(product.image)}">${labels.add}</button>
+            </div>
+            <div class="lux-product-cart-state" data-product-cart-state hidden>
+              <span data-product-cart-text></span>
+              <button type="button" data-bag-remove="${escapeHtml(product.id)}">${escapeHtml(labels.remove)}</button>
             </div>
           </div>
         </section>
@@ -604,6 +642,7 @@ function initLuxProductDetails() {
           <p>${escapeHtml(product.desc)} ${escapeHtml(labels.note)}</p>
         </section>
         ${recommendations.length ? `<section class="lux-product-recent">
+          <div class="lux-product-recent-inner">
           <h3>${escapeHtml(labels.recent)}</h3>
           <div class="lux-product-recent-grid">
             ${recommendations.map(([key, item]) => `<article class="lux-product-recent-card">
@@ -616,9 +655,14 @@ function initLuxProductDetails() {
               </div>
             </article>`).join("")}
           </div>
+          </div>
         </section>` : ""}
       </article>`;
+    backButton.textContent = labels.back;
+    backButton.hidden = !productStack.length;
     closeButton.textContent = labels.close;
+    updateSelectedTotal(1);
+    updateProductBagState();
     detail.hidden = false;
     document.body.classList.add("lux-reader-open");
     body.focus();
@@ -629,6 +673,15 @@ function initLuxProductDetails() {
     }
   };
   detail.addEventListener("click", (event) => {
+    const productBack = event.target.closest("[data-product-back]");
+    if (productBack) {
+      const previous = productStack.pop();
+      if (previous) {
+        render(previous, false);
+        history.replaceState({ luxProduct: previous }, "", `#product-${previous}`);
+      }
+      return;
+    }
     const galleryButton = event.target.closest("[data-product-gallery]");
     if (galleryButton) {
       const thumbImage = galleryButton.querySelector("img");
@@ -651,13 +704,18 @@ function initLuxProductDetails() {
       output.textContent = String(next);
     }
     if (addButton) addButton.dataset.bagQuantity = String(next);
+    updateSelectedTotal(next);
   });
   const close = () => {
     detail.hidden = true;
     document.body.classList.remove("lux-reader-open");
     if (openedByPush) history.replaceState(null, "", `${location.pathname}${location.search}`);
     openedByPush = false;
+    currentProductId = "";
+    productStack.length = 0;
   };
+
+  document.addEventListener("lux-bag-change", updateProductBagState);
 
   document.addEventListener("click", (event) => {
     const trigger = event.target.closest("[data-product-open]");
@@ -769,6 +827,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const save = (items) => {
     localStorage.setItem(key, JSON.stringify(items));
     renderBag();
+    document.dispatchEvent?.(new CustomEvent("lux-bag-change"));
     return items;
   };
 
@@ -851,8 +910,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const locale = () => document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
 
-  const itemHtml = (item, lang) => `
-    <div class="flex flex-col md:flex-row gap-6 p-6 border border-outline-variant/30 bg-surface-container-lowest group" data-bag-item="${escapeHtml(item.id)}">
+  const itemHtml = (item, lang) => {
+    const lineTotal = item.quantity > 1 ? `<small class="lux-bag-line-total">${lang === "zh" ? "总价" : "Total"} ${money(item.currency, item.price * item.quantity)}</small>` : "";
+    return `
+    <div class="lux-bag-item flex flex-col md:flex-row gap-6 p-6 border border-outline-variant/30 bg-surface-container-lowest group" data-bag-item="${escapeHtml(item.id)}">
       <div class="w-full md:w-48 h-48 overflow-hidden bg-surface-container">
         ${item.image ? `<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">` : ""}
       </div>
@@ -862,7 +923,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <h3 class="font-headline-sm text-headline-sm mb-1">${escapeHtml(item.title)}</h3>
             <p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-4">${escapeHtml(item.subtitle)}</p>
           </div>
-          <span class="font-headline-sm text-headline-sm text-primary whitespace-nowrap">${money(item.currency, item.price)}</span>
+          <span class="lux-bag-price font-headline-sm text-headline-sm text-primary whitespace-nowrap">${money(item.currency, item.price)}${lineTotal}</span>
         </div>
         <div class="flex justify-between items-end mt-8">
           <div class="flex items-center gap-4">
@@ -880,6 +941,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
     </div>`;
+  };
 
   const updateNavCount = () => {
     document.querySelectorAll(".lux-actions a[href*='bag']").forEach((link) => {
