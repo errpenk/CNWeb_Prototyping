@@ -165,6 +165,8 @@ assert(mainJs.includes('data-product-open'), 'main.js listens to product-detail 
 assert(mainJs.includes('data-product-quantity'), 'main.js supports product-detail quantity controls');
 assert(mainJs.includes('data-product-gallery'), 'main.js supports product-detail gallery thumbnails');
 assert(mainJs.includes('data-product-main-image'), 'main.js switches the product-detail main image');
+assert(mainJs.includes('lux-product-recent'), 'main.js renders product-detail recommendations');
+assert(mainJs.includes('data-product-open="${escapeHtml(key)}"'), 'product-detail recommendations can open other product details');
 assert(mainJs.includes('data-bag-quantity'), 'main.js carries selected product quantities into the bag');
 assert(mainJs.includes('initLuxFooterActions'), 'main.js initializes footer policy and social popups');
 assert(mainJs.includes('data-footer-modal'), 'main.js listens to footer modal buttons');
@@ -185,6 +187,8 @@ assert(integrationCss.includes('.lux-reader'), 'integration.css styles the share
 assert(integrationCss.includes('.lux-product-detail'), 'integration.css styles the shared product-detail view');
 assert(integrationCss.includes('.lux-product-gallery'), 'integration.css styles product image galleries');
 assert(integrationCss.includes('.lux-product-qty'), 'integration.css styles product quantity controls');
+assert(integrationCss.includes('.lux-product-recent-grid'), 'integration.css styles product-detail recommendation grids');
+assert(integrationCss.includes('.lux-footprint-card'), 'integration.css styles clickable global footprint cards');
 assert(integrationCss.includes('[data-caviar-grid] [data-bag-add]'), 'integration.css gives product-card add buttons the heavier border');
 assert(integrationCss.includes('[data-caviar-grid] [data-product-open]'), 'integration.css gives product-card detail buttons the lighter border');
 assert(integrationCss.includes('.lux-dark-photo-block'), 'integration.css provides reusable dark photo backgrounds');
@@ -245,6 +249,15 @@ assert(enProducts.includes("luxureat_static_url('en/rituals'"), 'English product
 
 const zhContact = read(path.join(themeDir, 'pages/zh/contact.php'));
 assert(zhContact.includes('lux-dark-photo-block'), 'Chinese contact hero uses a dark photo background');
+assert(zhContact.includes('Italy • United States • Thailand • China'), 'Chinese contact footprint lists the requested countries');
+assert(zhContact.includes('上海市闵行区联明路389号A栋505室') && zhContact.includes('邮编: 201101'), 'Chinese contact HQ address is updated');
+assert(zhContact.includes('info@truffleat.com') && zhContact.includes('tel:+393515111273') && zhContact.includes('https://www.truffleat.com'), 'Chinese contact Italy card has clickable contacts');
+assert(zhContact.includes('info@luxureat.com') && zhContact.includes('tel:+14256266318'), 'Chinese contact United States card has clickable contacts');
+assert(zhContact.includes('info@truffle.co.th') && zhContact.includes('https://wa.me/66811331337'), 'Chinese contact Thailand card has clickable contacts');
+assert(zhContact.includes('china@luxureat.com') && zhContact.includes('tel:15721452475'), 'Chinese contact China card has clickable contacts');
+const enContact = read(path.join(themeDir, 'pages/en/contact.php'));
+assert(enContact.includes('Global Presence') && enContact.includes('Italy') && enContact.includes('Thailand') && enContact.includes('China'), 'English contact footprint lists the requested countries');
+assert(enContact.includes('Truffleat Srl') && enContact.includes('Luxureat LLC') && enContact.includes('Truffleat Co., Ltd') && enContact.includes('LuxurEat China Ltd'), 'English contact footprint uses the requested entities');
 
 const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));

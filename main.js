@@ -544,8 +544,8 @@ function initLuxProductDetails() {
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[char]));
   const copy = () => document.documentElement.lang?.startsWith("zh")
-    ? { close: "关闭", add: "加入购物袋", qty: "数量", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
-    : { close: "Close", add: "Add to Cart", qty: "Qty", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
+    ? { close: "关闭", add: "加入购物袋", detail: "查看详情", qty: "数量", recent: "最近浏览过", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
+    : { close: "Close", add: "Add to Cart", detail: "View Details", qty: "Qty", recent: "Recently Viewed", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
   const galleryFor = (product) => {
     if (product.id.includes("beluga")) return galleries.beluga;
     if (product.id.includes("oscetra")) return galleries.oscetra;
@@ -570,6 +570,8 @@ function initLuxProductDetails() {
     if (!product) return;
     const labels = copy();
     const galleryImages = Array.from(new Set(galleryFor(product).filter(Boolean)));
+    const prefix = id.startsWith("zh-") ? "zh-" : "en-";
+    const recommendations = Object.entries(products).filter(([key]) => key !== id && key.startsWith(prefix)).slice(0, 4);
     body.innerHTML = `
       <article>
         <section class="lux-product-hero">
@@ -601,6 +603,20 @@ function initLuxProductDetails() {
           <h3>${labels.story}</h3>
           <p>${escapeHtml(product.desc)} ${escapeHtml(labels.note)}</p>
         </section>
+        ${recommendations.length ? `<section class="lux-product-recent">
+          <h3>${escapeHtml(labels.recent)}</h3>
+          <div class="lux-product-recent-grid">
+            ${recommendations.map(([key, item]) => `<article class="lux-product-recent-card">
+              <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">
+              <strong>${escapeHtml(item.title)}</strong>
+              <small>${escapeHtml(item.price)} / ${escapeHtml(item.unit)}</small>
+              <div class="lux-product-recent-actions">
+                <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${escapeHtml(item.id)}" data-bag-title="${escapeHtml(item.title)}" data-bag-subtitle="${escapeHtml(item.subtitle)}" data-bag-price="${escapeHtml(item.amount)}" data-bag-currency="${escapeHtml(item.currency)}" data-bag-image="${escapeHtml(item.image)}">${escapeHtml(labels.add)}</button>
+                <button type="button" data-product-open="${escapeHtml(key)}">${escapeHtml(labels.detail)}</button>
+              </div>
+            </article>`).join("")}
+          </div>
+        </section>` : ""}
       </article>`;
     closeButton.textContent = labels.close;
     detail.hidden = false;
