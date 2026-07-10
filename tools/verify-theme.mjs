@@ -36,6 +36,11 @@ function read(file) {
   return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
 }
 
+function hasExactHref(source, href) {
+  const escaped = href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`href=["']${escaped}["']`).test(source);
+}
+
 function walk(dir) {
   if (!fs.existsSync(dir)) return [];
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -222,8 +227,8 @@ assert(zhGifting.indexOf("luxureat_static_url('zh/certification'") < zhGifting.i
 assert(zhGifting.includes('lux-partner-card') && zhGifting.includes("luxureat_static_url('zh/contact'"), 'Chinese gifting inquiry card links to contact');
 assert(zhHome.includes('小红书') && zhHome.includes('data-footer-modal="wechat"') && zhHome.includes('微博'), 'Chinese footer exposes localized social actions');
 assert(enHome.includes('Rednote') && enHome.includes('WeChat') && enHome.includes('Weibo'), 'English footer exposes social actions');
-assert(zhHome.includes('https://xhslink.com/m/6Jn3PRYzjAy') && zhHome.includes('https://v.douyin.com/oEPE48mPS48/'), 'Chinese footer uses the updated Rednote and Douyin links');
-assert(enHome.includes('https://xhslink.com/m/6Jn3PRYzjAy') && enHome.includes('https://v.douyin.com/oEPE48mPS48/'), 'English footer uses the updated Rednote and Douyin links');
+assert(hasExactHref(zhHome, 'https://xhslink.com/m/6Jn3PRYzjAy') && hasExactHref(zhHome, 'https://v.douyin.com/oEPE48mPS48/'), 'Chinese footer uses the updated Rednote and Douyin links');
+assert(hasExactHref(enHome, 'https://xhslink.com/m/6Jn3PRYzjAy') && hasExactHref(enHome, 'https://v.douyin.com/oEPE48mPS48/'), 'English footer uses the updated Rednote and Douyin links');
 assert(zhHome.includes('mailto:china@luxureat.com') && zhHome.includes('tel:15721452475'), 'Chinese footer contact actions are clickable');
 assert(enHome.includes('mailto:china@luxureat.com') && enHome.includes('tel:15721452475'), 'English footer contact actions are clickable');
 
