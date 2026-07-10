@@ -53,6 +53,7 @@ for (const file of [
   'integration.css',
   'main.js',
   'assets/luxureat-logo.png',
+  'assets/wechat-qr.png',
   'screenshot.png',
   'README.md',
 ]) {
@@ -139,8 +140,13 @@ assert(mainJs.includes('initLuxReader'), 'main.js initializes the shared reading
 assert(mainJs.includes('data-reader-open'), 'main.js listens to reading-detail triggers');
 assert(mainJs.includes('initLuxProductDetails'), 'main.js initializes shared product-detail views');
 assert(mainJs.includes('data-product-open'), 'main.js listens to product-detail triggers');
+assert(mainJs.includes('data-product-quantity'), 'main.js supports product-detail quantity controls');
+assert(mainJs.includes('data-bag-quantity'), 'main.js carries selected product quantities into the bag');
+assert(mainJs.includes('initLuxFooterActions'), 'main.js initializes footer policy and social popups');
+assert(mainJs.includes('data-footer-modal'), 'main.js listens to footer modal buttons');
 assert(mainJs.includes('mouseenter'), 'main.js opens gift scenario info on hover');
 assert(mainJs.includes('lux-reader-layout'), 'main.js renders the editorial article reader layout');
+assert(mainJs.includes('lux-reader-wide-image'), 'main.js renders the editorial article body images');
 assert(mainJs.includes('scrollRestoration'), 'main.js restores saved scroll positions manually');
 assert(mainJs.includes('lux-back-to-top'), 'main.js adds the back-to-top floating action button');
 assert(mainJs.includes('aria-pressed'), 'main.js updates pressed states for caviar toolbar buttons');
@@ -153,6 +159,9 @@ assert(integrationCss.includes('.lux-sort-menu'), 'integration.css styles the so
 assert(integrationCss.includes('.lux-back-to-top'), 'integration.css styles the back-to-top button');
 assert(integrationCss.includes('.lux-reader'), 'integration.css styles the shared reading container');
 assert(integrationCss.includes('.lux-product-detail'), 'integration.css styles the shared product-detail view');
+assert(integrationCss.includes('.lux-product-qty'), 'integration.css styles product quantity controls');
+assert(integrationCss.includes('.lux-footer-modal'), 'integration.css styles footer light-background modals');
+assert(!integrationCss.includes('.lux-reader-layout .lux-reader-intro:first-letter'), 'article reader does not enlarge or recolor the first character');
 assert(integrationCss.includes('.lux-reader-cta'), 'integration.css styles card reading hover calls to action');
 assert(integrationCss.includes('.lux-info-popover'), 'integration.css styles the frosted gift scenario popover');
 
@@ -163,6 +172,8 @@ const zhGifting = read(path.join(themeDir, 'pages/zh/gifting.php'));
 const enGifting = read(path.join(themeDir, 'pages/en/gifting.php'));
 assert(zhGifting.includes('data-info-popover'), 'Chinese gifting page marks scenario info buttons');
 assert(enGifting.includes('data-info-popover'), 'English gifting page marks scenario info buttons');
+assert(zhGifting.includes('<strong>参考方案</strong>') && !zhGifting.includes('<span>专业合作</span>') && !zhGifting.includes('开启企业礼赠方案'), 'Chinese gifting partner card uses the requested reference-plan wording');
+assert(enGifting.includes('<strong>Reference Plan</strong>') && !enGifting.includes('<span>Professional Partnership</span>') && !enGifting.includes('Start a Corporate Program'), 'English gifting partner card mirrors the reference-plan wording');
 
 const zhBag = read(path.join(themeDir, 'pages/zh/bag.php'));
 const enBag = read(path.join(themeDir, 'pages/en/bag.php'));
@@ -196,6 +207,10 @@ assert(zhHome.includes('data-product-open="zh-imperial-beluga"'), 'Chinese home 
 assert(enHome.includes('data-product-open="en-imperial-beluga"'), 'English home shop CTA opens product detail');
 assert(zhGifting.indexOf("luxureat_static_url('zh/certification'") < zhGifting.indexOf("luxureat_static_url('zh/gifting'"), 'Chinese nav puts certification before gifting');
 assert(zhGifting.includes('lux-partner-card') && zhGifting.includes("luxureat_static_url('zh/contact'"), 'Chinese gifting inquiry card links to contact');
+assert(zhHome.includes('小红书') && zhHome.includes('data-footer-modal="wechat"') && zhHome.includes('微博'), 'Chinese footer exposes localized social actions');
+assert(enHome.includes('Rednote') && enHome.includes('WeChat') && enHome.includes('Weibo'), 'English footer exposes social actions');
+assert(zhHome.includes('mailto:china@luxureat.com') && zhHome.includes('tel:15721452475'), 'Chinese footer contact actions are clickable');
+assert(enHome.includes('mailto:china@luxureat.com') && enHome.includes('tel:15721452475'), 'English footer contact actions are clickable');
 
 assert(fs.existsSync(zipFile), 'theme zip exists');
 if (fs.existsSync(zipFile)) {
@@ -207,6 +222,7 @@ if (fs.existsSync(zipFile)) {
     assert(entries.includes('luxureat-static/index.php'), 'zip contains luxureat-static/index.php');
     assert(entries.includes('luxureat-static/functions.php'), 'zip contains luxureat-static/functions.php');
     assert(entries.includes('luxureat-static/assets/luxureat-logo.png'), 'zip contains logo asset');
+    assert(entries.includes('luxureat-static/assets/wechat-qr.png'), 'zip contains WeChat QR asset');
     assert(!entries.some((entry) => entry.startsWith('__MACOSX/')), 'zip has no __MACOSX metadata');
   } catch (error) {
     failures.push(`zip can be inspected with unzip: ${error.message}`);

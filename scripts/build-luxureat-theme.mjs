@@ -28,7 +28,7 @@ const pageInputs = [
 ];
 
 function ensureSource() {
-  for (const file of ['README.md', 'integration.css', 'main.js', 'assets/luxureat-logo.png']) {
+  for (const file of ['README.md', 'integration.css', 'main.js', 'assets/luxureat-logo.png', 'assets/wechat-qr.png']) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
     }
@@ -400,6 +400,7 @@ function build() {
   fs.copyFileSync(path.join(sourceDir, 'main.js'), path.join(themeDir, 'main.js'));
   mkdirp(path.join(themeDir, 'assets'));
   fs.copyFileSync(path.join(sourceDir, 'assets/luxureat-logo.png'), path.join(themeDir, 'assets/luxureat-logo.png'));
+  fs.copyFileSync(path.join(sourceDir, 'assets/wechat-qr.png'), path.join(themeDir, 'assets/wechat-qr.png'));
 
   const screenshotSource = path.join(sourceDir, 'qa/zh-home-desktop.png');
   fs.copyFileSync(

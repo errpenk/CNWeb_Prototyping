@@ -78,13 +78,30 @@
   gap: 30px;
 }
 .lux-footer img { width: 96px; height: 96px; object-fit: contain; filter: invert(1) brightness(1.35); margin-bottom: 16px; }
-.lux-footer a, .lux-footer p {
+.lux-footer a, .lux-footer button, .lux-footer p {
   display: block;
   color: #bdc9c7;
   text-decoration: none;
   margin: 0 0 10px;
   font-size: 14px;
 }
+.lux-footer button {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color .18s ease, transform .18s ease;
+}
+.lux-footer a { transition: color .18s ease, transform .18s ease; }
+.lux-footer a:hover, .lux-footer button:hover { color: #9df5ec; transform: translateX(3px); }
+.lux-footer a:active, .lux-footer button:active { transform: translateX(3px) scale(.98); }
+.lux-footer-social { display: grid; align-content: start; }
+.lux-footer-legal { display: flex; flex-wrap: wrap; gap: 0 8px; margin-top: 6px; }
+.lux-footer-legal button { margin: 0; }
+.lux-footer-legal button:not(:last-child)::after { content: "·"; margin-left: 8px; color: #565f5d; }
 .lux-footer nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; align-content: start; }
 .lux-footer-bottom { max-width: 1440px; margin: 38px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.08); color: #bdc9c7; font-size: 13px; }
 [data-caviar-item][hidden] { display: none !important; }
@@ -365,9 +382,9 @@
 .lux-reader-panel {
   width: min(1160px, 100%);
   height: min(90vh, 1040px);
-  background: #131313;
+  background: #181818;
 }
-.lux-reader-layout { min-height: 100%; background: #131313; }
+.lux-reader-layout { min-height: 100%; background: #181818; }
 .lux-reader-layout .lux-reader-hero {
   position: relative;
   min-height: min(72vh, 760px);
@@ -380,7 +397,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(19,19,19,0) 0%, #131313 100%);
+  background: linear-gradient(to bottom, rgba(24,24,24,0) 0%, #181818 100%);
 }
 .lux-reader-hero-copy {
   position: relative;
@@ -399,11 +416,36 @@
   width: min(860px, calc(100% - 48px));
   padding: clamp(56px, 8vw, 110px) 0;
 }
-.lux-reader-layout .lux-reader-intro:first-letter {
-  float: left;
-  margin: .1em .16em 0 0;
-  color: #e9c349;
-  font: 400 4.8em/0.8 "Bodoni Moda", Georgia, serif;
+.lux-reader-section {
+  display: grid;
+  gap: 24px;
+}
+.lux-reader-section-split {
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 42%);
+  align-items: center;
+}
+.lux-reader-section figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: #20201f;
+}
+.lux-reader-section figure:not(.lux-reader-wide-image) {
+  aspect-ratio: 4 / 5;
+}
+.lux-reader-wide-image {
+  aspect-ratio: 16 / 9;
+  margin-top: 18px;
+}
+.lux-reader-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.86) saturate(.9);
+  transition: transform .7s ease;
+}
+.lux-reader-section figure:hover img {
+  transform: scale(1.04);
 }
 .lux-reader-related-media {
   position: relative;
@@ -461,7 +503,7 @@
   width: min(1180px, 100%);
   height: min(90vh, 1040px);
   overflow: hidden;
-  background: #fcf9f8;
+  background: #f0eeeb;
   color: #1c1b1b;
   border: 1px solid rgba(189,201,199,.5);
 }
@@ -474,7 +516,7 @@
   padding: 8px 12px;
   border: 1px solid rgba(0,106,100,.35);
   color: #006a64;
-  background: rgba(252,249,248,.82);
+  background: rgba(240,238,235,.86);
   font: 700 12px/1 Montserrat, Arial, sans-serif;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -495,7 +537,7 @@
 .lux-product-image {
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: #f6f3f2;
+  background: #e5e2df;
 }
 .lux-product-image img {
   width: 100%;
@@ -531,7 +573,37 @@
   font: 500 32px/1 "Bodoni Moda", Georgia, serif;
 }
 .lux-product-summary small { color: #3e4947; font: 700 13px/1 Montserrat, Arial, sans-serif; }
-.lux-product-summary button {
+.lux-product-purchase {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+.lux-product-qty {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(0,106,100,.28);
+  background: rgba(255,255,255,.34);
+}
+.lux-product-qty button {
+  width: 46px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  color: #006a64;
+}
+.lux-product-qty button:hover {
+  background: rgba(0,106,100,.08);
+}
+.lux-product-qty output {
+  min-width: 40px;
+  text-align: center;
+  color: #1c1b1b;
+  font: 700 14px/1 Montserrat, Arial, sans-serif;
+}
+.lux-product-summary > button,
+.lux-product-purchase > button {
   width: fit-content;
   display: inline-flex;
   align-items: center;
@@ -543,13 +615,14 @@
   letter-spacing: .14em;
   text-transform: uppercase;
 }
-.lux-product-summary button:hover { background: #006a64; color: #fff; }
+.lux-product-summary > button:hover,
+.lux-product-purchase > button:hover { background: #006a64; color: #fff; }
 .lux-product-specs {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
   padding: 40px clamp(32px, 6vw, 78px);
-  background: #f6f3f2;
+  background: #e7e4e1;
   border-block: 1px solid rgba(189,201,199,.55);
 }
 .lux-product-specs div {
@@ -622,6 +695,68 @@
   font: normal 700 12px/1 Montserrat, Arial, sans-serif;
   letter-spacing: .18em;
   text-transform: uppercase;
+  transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+.lux-partner-card:hover em,
+.lux-partner-card:focus-visible em {
+  background: #e9c349;
+  color: #201806;
+}
+.lux-partner-card:active em { transform: scale(.97); }
+.lux-footer-modal[hidden] { display: none !important; }
+.lux-footer-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 42px);
+}
+.lux-footer-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.62);
+  backdrop-filter: blur(10px);
+}
+.lux-footer-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 100%);
+  background: #eeeae5;
+  color: #1c1b1b;
+  border: 1px solid rgba(189,201,199,.7);
+  box-shadow: 0 24px 74px rgba(0,0,0,.42);
+  padding: clamp(28px, 5vw, 48px);
+}
+.lux-footer-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0,106,100,.28);
+  color: #006a64;
+  font: 700 12px/1 Montserrat, Arial, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.lux-footer-modal-body { outline: none; }
+.lux-footer-modal-body h2 {
+  margin: 0 0 18px;
+  color: #1c1b1b;
+  font: 500 clamp(30px, 5vw, 44px)/1.1 "Bodoni Moda", Georgia, serif;
+}
+.lux-footer-modal-body p {
+  margin: 0;
+  color: #3e4947;
+  font: 400 16px/1.75 Montserrat, Arial, sans-serif;
+}
+.lux-footer-qr {
+  width: min(280px, 100%);
+  aspect-ratio: 1;
+  margin-top: 24px;
+  object-fit: contain;
+  border: 12px solid #fff;
 }
 html.dark body {
   background: #131313;
@@ -657,6 +792,7 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-reader { padding: 0; }
   .lux-reader-panel { width: 100%; height: 100%; }
   .lux-reader-related-grid { grid-template-columns: 1fr; }
+  .lux-reader-section-split { grid-template-columns: 1fr; }
   .lux-product-detail { padding: 0; }
   .lux-product-panel { width: 100%; height: 100%; }
   .lux-product-hero { grid-template-columns: 1fr; padding: 28px 20px 48px; }

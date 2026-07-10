@@ -234,42 +234,42 @@ function initLuxReader() {
       image: images.truffle,
       intro: "阿尔巴白松露的价值来自短暂季节与不可复制的土壤气息，它适合作为鱼子酱菜单的香气延伸。",
       sections: [["产地筛选", "我们关注采收时间、湿度与香气完整度，只保留能在餐桌上清晰表达产区的批次。"]],
-      related: ["zh-harvest", "zh-service"],
+      related: ["zh-harvest", "zh-service", "zh-malossol"],
     },
     "zh-service": {
       lang: "zh", eyebrow: "精致生活", title: "味觉传承：现代侍酒服务", meta: "COURSE · 服务礼仪",
       image: images.service,
       intro: "真正好的服务，是让器具、温度与酒款都退到幕后，只留下鱼子酱的第一口冲击。",
       sections: [["贝母匙", "贝母不带金属气味，能保护鱼子酱脆弱的原色原味，是餐桌上最小但最关键的器具。"]],
-      related: ["zh-champagne", "zh-mother-of-pearl"],
+      related: ["zh-champagne", "zh-mother-of-pearl", "zh-harvest"],
     },
     "zh-malossol": {
       lang: "zh", eyebrow: "匠心工艺", title: "盐的科学：轻盐渍大师课", meta: "CRAFT · Malossol",
       image: images.malossol,
       intro: "低于 3% 的盐分让海洋感、坚果香与奶油质地自然展开，考验的是原料与师傅的稳定度。",
       sections: [["低盐的边界", "盐分越克制，对冷链、成熟度和装罐时间的要求越高。"]],
-      related: ["zh-harvest", "zh-service"],
+      related: ["zh-harvest", "zh-service", "zh-champagne"],
     },
     "zh-champagne": {
       lang: "zh", eyebrow: "配餐艺术", title: "香槟之韵", meta: "PAIRING · Brut",
       image: images.champagne,
       intro: "年份干型香槟用酸度与气泡清理味蕾，让鱼子酱的油脂感变得更轻、更清晰。",
       sections: [["选择方式", "优先选择酸度明亮、桶味克制的酒款，让酒体承担刷新口腔的角色。"]],
-      related: ["zh-mother-of-pearl", "zh-harvest"],
+      related: ["zh-mother-of-pearl", "zh-harvest", "zh-service"],
     },
     "zh-mother-of-pearl": {
       lang: "zh", eyebrow: "品鉴器具", title: "贝母触感", meta: "SERVICE · Spoon",
       image: images.spoon,
       intro: "白贝母匙避免金属氧化味，是保护鱼子酱风味最简单也最有效的选择。",
       sections: [["为什么不用金属", "银器会带来明显的金属尾韵，尤其会破坏低盐鱼子酱的细腻乳香。"]],
-      related: ["zh-service", "zh-champagne"],
+      related: ["zh-service", "zh-champagne", "zh-harvest"],
     },
     "zh-ice-server": {
       lang: "zh", eyebrow: "品鉴器具", title: "现代主义银质冰镇座", meta: "SERVICE · Ice",
       image: images.ice,
       intro: "双层冰镇座负责稳定温度，让开罐后的香气缓慢释放，而不是迅速失衡。",
       sections: [["温度控制", "碎冰承托罐体，避免直接冻结鱼卵，同时让服务过程保持在理想区间。"]],
-      related: ["zh-harvest", "zh-mother-of-pearl"],
+      related: ["zh-harvest", "zh-mother-of-pearl", "zh-service"],
     },
     "en-harvest": {
       lang: "en", eyebrow: "Maison Heritage", title: "The Art of the Harvest", meta: "MASTERCLASS · October 2024",
@@ -283,42 +283,42 @@ function initLuxReader() {
       image: images.truffle,
       intro: "Alba truffles carry a short season and unmistakable soil perfume, making them a natural aromatic extension of a caviar menu.",
       sections: [["Source Discipline", "Harvest timing, humidity, and intact aroma decide whether a lot belongs on a LuxurEat table."]],
-      related: ["en-harvest", "en-service"],
+      related: ["en-harvest", "en-service", "en-malossol"],
     },
     "en-service": {
       lang: "en", eyebrow: "Epicurean Life", title: "A Legacy of Taste: Modern Service", meta: "COURSE · Service",
       image: images.service,
       intro: "Great service lets the vessel, temperature, and wine step back so the first spoon of caviar can speak clearly.",
       sections: [["Mother-of-Pearl", "Mother-of-pearl brings no metallic note, preserving the fragile texture and clean finish of the roe."]],
-      related: ["en-champagne", "en-mother-of-pearl"],
+      related: ["en-champagne", "en-mother-of-pearl", "en-harvest"],
     },
     "en-malossol": {
       lang: "en", eyebrow: "Craftsmanship", title: "The Science of Salt: Malossol Mastery", meta: "CRAFT · Malossol",
       image: images.malossol,
       intro: "Less than 3% salt exposes the roe's marine depth, nutty notes, and creamy texture, demanding better raw material and handling.",
       sections: [["The Edge of Low Salt", "The less salt you use, the more cold-chain discipline and timing matter."]],
-      related: ["en-harvest", "en-service"],
+      related: ["en-harvest", "en-service", "en-champagne"],
     },
     "en-champagne": {
       lang: "en", eyebrow: "Pairing", title: "Champagne", meta: "PAIRING · Brut",
       image: images.champagne,
       intro: "Vintage brut Champagne brings acidity and fine bubbles that refresh the palate between rich, saline tastes.",
       sections: [["How to Choose", "Favor bright acidity and restrained oak so the wine cleanses rather than competes."]],
-      related: ["en-mother-of-pearl", "en-harvest"],
+      related: ["en-mother-of-pearl", "en-harvest", "en-service"],
     },
     "en-mother-of-pearl": {
       lang: "en", eyebrow: "Service Ware", title: "Mother-of-Pearl Spoon", meta: "SERVICE · Spoon",
       image: images.spoon,
       intro: "Mother-of-pearl is the simplest way to protect the roe from metallic flavors during service.",
       sections: [["Why Not Metal", "Silver can leave an oxidative finish that overwhelms low-salt caviar's creamy delicacy."]],
-      related: ["en-service", "en-champagne"],
+      related: ["en-service", "en-champagne", "en-harvest"],
     },
     "en-ice-server": {
       lang: "en", eyebrow: "Service Ware", title: "Modern Silver Ice Server", meta: "SERVICE · Ice",
       image: images.ice,
       intro: "A double-walled server stabilizes temperature after opening, keeping the tasting ritual calm and precise.",
       sections: [["Temperature Control", "Crushed ice supports the tin without freezing the roe, preserving texture through service."]],
-      related: ["en-harvest", "en-mother-of-pearl"],
+      related: ["en-harvest", "en-mother-of-pearl", "en-service"],
     },
   };
 
@@ -326,8 +326,8 @@ function initLuxReader() {
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[char]));
   const labels = () => document.documentElement.lang?.startsWith("zh")
-    ? { back: "返回", close: "关闭", related: "延伸阅读", read: "阅读详情" }
-    : { back: "Back", close: "Close", related: "Further Reading", read: "Read Details" };
+    ? { back: "返回", close: "关闭", related: "延伸阅读", read: "阅读详情", note: "品鉴笔记", noteText: "温度、器具与节奏共同决定入口的第一层印象；真正的奢华来自克制而准确的服务。" }
+    : { back: "Back", close: "Close", related: "Further Reading", read: "Read Details", note: "Tasting Notes", noteText: "Temperature, service ware, and pacing shape the first impression; luxury is restraint made precise." };
 
   const reader = document.createElement("div");
   reader.className = "lux-reader";
@@ -355,6 +355,9 @@ function initLuxReader() {
     if (push && currentId) stack.push(currentId);
     currentId = id;
     const copy = labels();
+    const articleSections = article.sections.length > 1 ? article.sections : [...article.sections, [copy.note, copy.noteText]];
+    const media = article.related.map((relatedId) => articles[relatedId]?.image).filter(Boolean);
+    const contentImages = [media[0] || article.image, media[1] || article.image];
 
     body.innerHTML = `
       <article class="lux-reader-layout">
@@ -367,11 +370,18 @@ function initLuxReader() {
         </section>
         <div class="lux-reader-copy">
           <p class="lux-reader-intro">${escapeHtml(article.intro)}</p>
-          ${article.sections.map(([heading, text]) => `
-            <section>
-              <h3>${escapeHtml(heading)}</h3>
-              <p>${escapeHtml(text)}</p>
-            </section>`).join("")}
+          <section class="lux-reader-section lux-reader-section-split">
+            <div>
+              <h3>${escapeHtml(articleSections[0][0])}</h3>
+              <p>${escapeHtml(articleSections[0][1])}</p>
+            </div>
+            <figure><img src="${escapeHtml(contentImages[0])}" alt=""></figure>
+          </section>
+          <section class="lux-reader-section">
+            <h3>${escapeHtml(articleSections[1][0])}</h3>
+            <p>${escapeHtml(articleSections[1][1])}</p>
+            <figure class="lux-reader-wide-image"><img src="${escapeHtml(contentImages[1])}" alt=""></figure>
+          </section>
           <section class="lux-reader-related">
             <div class="lux-reader-related-head">
               <h3>${copy.related}</h3>
@@ -520,8 +530,8 @@ function initLuxProductDetails() {
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[char]));
   const copy = () => document.documentElement.lang?.startsWith("zh")
-    ? { close: "关闭", add: "加入购物袋", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
-    : { close: "Close", add: "Add to Cart", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
+    ? { close: "关闭", add: "加入购物袋", qty: "数量", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
+    : { close: "Close", add: "Add to Cart", qty: "Qty", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
 
   const detail = document.createElement("div");
   detail.className = "lux-product-detail";
@@ -545,7 +555,14 @@ function initLuxProductDetails() {
             <h2 id="lux-product-title">${escapeHtml(product.title)}</h2>
             <p>${escapeHtml(product.desc)}</p>
             <strong>${escapeHtml(product.price)} <small>/ ${escapeHtml(product.unit)}</small></strong>
-            <button type="button" data-bag-add data-bag-id="${escapeHtml(product.id)}" data-bag-title="${escapeHtml(product.title)}" data-bag-subtitle="${escapeHtml(product.subtitle)}" data-bag-price="${escapeHtml(product.amount)}" data-bag-currency="${escapeHtml(product.currency)}" data-bag-image="${escapeHtml(product.image)}">${labels.add}<span class="material-symbols-outlined">arrow_forward</span></button>
+            <div class="lux-product-purchase">
+              <div class="lux-product-qty" aria-label="${escapeHtml(labels.qty)}">
+                <button type="button" data-product-quantity="-1"><span class="material-symbols-outlined" aria-hidden="true">remove</span></button>
+                <output data-product-quantity-value>1</output>
+                <button type="button" data-product-quantity="1"><span class="material-symbols-outlined" aria-hidden="true">add</span></button>
+              </div>
+              <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${escapeHtml(product.id)}" data-bag-title="${escapeHtml(product.title)}" data-bag-subtitle="${escapeHtml(product.subtitle)}" data-bag-price="${escapeHtml(product.amount)}" data-bag-currency="${escapeHtml(product.currency)}" data-bag-image="${escapeHtml(product.image)}">${labels.add}</button>
+            </div>
           </div>
         </section>
         <section class="lux-product-specs">
@@ -566,6 +583,18 @@ function initLuxProductDetails() {
       openedByPush = true;
     }
   };
+  detail.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-product-quantity]");
+    if (!button) return;
+    const output = detail.querySelector("[data-product-quantity-value]");
+    const addButton = detail.querySelector("[data-bag-add]");
+    const next = Math.max(1, Number(output?.value || output?.textContent || 1) + Number(button.dataset.productQuantity));
+    if (output) {
+      output.value = String(next);
+      output.textContent = String(next);
+    }
+    if (addButton) addButton.dataset.bagQuantity = String(next);
+  });
   const close = () => {
     detail.hidden = true;
     document.body.classList.remove("lux-reader-open");
@@ -594,10 +623,78 @@ function initLuxProductDetails() {
   if (products[initialId]) render(initialId, false);
 }
 
+function initLuxFooterActions() {
+  const triggers = document.querySelectorAll("[data-footer-modal]");
+  if (!triggers.length) return;
+
+  const isZh = document.documentElement.lang?.startsWith("zh");
+  const scriptSrc = document.querySelector("script[src*='main.js']")?.src || `${location.origin}/main.js`;
+  const asset = (file) => new URL(`assets/${file}`, scriptSrc).href;
+  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[char]));
+  const copy = isZh
+    ? {
+      close: "关闭",
+      privacy: ["隐私政策", "我们仅收集咨询、订单与售后服务所需的信息，并用于客户沟通、冷链履约、合规记录与服务改进。未经许可，我们不会出售您的个人信息。"],
+      terms: ["销售条款", "所有商品以确认订单与付款记录为准。鱼子酱等冷链商品因食品安全原因，发出后非质量问题不支持退换；如运输异常，请在签收后 24 小时内联系我们。"],
+      shipping: ["配送说明", "我们采用 0-4°C 冷链包装与预约配送。发货前会确认收货时间，偏远地区或特殊活动订单将由顾问单独确认时效。"],
+      wechat: ["微信", "请扫描二维码联系 LuxurEat 中国顾问。"],
+    }
+    : {
+      close: "Close",
+      privacy: ["Privacy Policy", "We collect only the information needed for inquiries, orders, after-sales support, cold-chain fulfillment, compliance records, and service improvement. We do not sell personal information."],
+      terms: ["Terms of Sale", "Orders are confirmed by written order details and payment records. For food-safety reasons, shipped cold-chain goods are not returnable unless quality or transport issues are reported within 24 hours of delivery."],
+      shipping: ["Shipping", "We ship with 0-4°C cold-chain packaging and scheduled delivery. Timing is confirmed before dispatch; remote areas and special-event orders are coordinated by a concierge."],
+      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat China concierge."],
+    };
+
+  const modal = document.createElement("div");
+  modal.className = "lux-footer-modal";
+  modal.hidden = true;
+  modal.innerHTML = `
+    <div class="lux-footer-modal-backdrop" data-footer-close></div>
+    <section class="lux-footer-modal-panel" role="dialog" aria-modal="true">
+      <button type="button" class="lux-footer-modal-close" data-footer-close></button>
+      <div class="lux-footer-modal-body" tabindex="-1"></div>
+    </section>`;
+  document.body.appendChild(modal);
+
+  const body = modal.querySelector(".lux-footer-modal-body");
+  const closeButton = modal.querySelector(".lux-footer-modal-close");
+  const open = (key) => {
+    const item = copy[key];
+    if (!item) return;
+    const qr = key === "wechat" ? `<img class="lux-footer-qr" src="${asset("wechat-qr.png")}" alt="WeChat QR">` : "";
+    body.innerHTML = `<h2>${escapeHtml(item[0])}</h2><p>${escapeHtml(item[1])}</p>${qr}`;
+    closeButton.textContent = copy.close;
+    modal.hidden = false;
+    document.body.classList.add("lux-reader-open");
+    body.focus();
+  };
+  const close = () => {
+    modal.hidden = true;
+    document.body.classList.remove("lux-reader-open");
+  };
+
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-footer-modal]");
+    if (trigger) {
+      event.preventDefault();
+      open(trigger.dataset.footerModal);
+    }
+  });
+  modal.querySelectorAll("[data-footer-close]").forEach((button) => button.addEventListener("click", close));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !modal.hidden) close();
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initLuxReader();
   initLuxInfoPopovers();
   initLuxProductDetails();
+  initLuxFooterActions();
 });
 
 (() => {
@@ -692,6 +789,7 @@ document.addEventListener("DOMContentLoaded", () => {
     price: button.dataset.bagPrice,
     currency: button.dataset.bagCurrency,
     image: button.dataset.bagImage || productImage(button),
+    quantity: button.dataset.bagQuantity,
   });
 
   const locale = () => document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
