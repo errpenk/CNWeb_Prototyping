@@ -1,3 +1,6 @@
+const luxAssetBase = new URL(".", document.currentScript?.src || location.href);
+const luxAsset = (path) => new URL(path, luxAssetBase).href;
+
 const luxNav = document.querySelector(".lux-nav");
 const luxMenu = document.querySelector(".lux-menu");
 
@@ -210,13 +213,13 @@ function initLuxReader() {
   if (!triggers.length) return;
 
   const images = {
-    harvest: "https://lh3.googleusercontent.com/aida-public/AB6AXuC7anz-XTzA8rUvCwVCN3tnA2c2twxLvw5xTeZY8fdjIZx32wdxnrD3FxOkWKlNvm-lgNGcFXJCyBj6zyugVzHui1X1JEmJm2xV1CW1pVSRih5-WGvyDCI05Ag5b61L7EC6aMY72hjaavZ8QDnbAnLP8g_Ld-MkMHDgHqV6-zNhyFZDw_IcQgZ44UN1BVPwAqB8BghU0PrSUYfiL-_Yq2tfmk0qAvC5_uurJz-kivVfokBHxreXKApDBA_qKdUTevydltWgjTFXeRo",
-    truffle: "https://lh3.googleusercontent.com/aida-public/AB6AXuBQy_7QgEhJXRb9TVE_qzhuDOz-7NCGBa_j5-U9QAjY-RgkJ2ZQHX_5SO79aYEFnsmh__rooT1ufKKtESdCxIDI6AKK5cskDxVD5oMSArK_A-w8eZYyBq6M901sPa1EICBL1VKmnbf8fDFvZoZ_WKcozP-dEw8yZPP_5H1A26D2NuC1k-Y5wKcxiXZD1R99ifx-tOOWICpWqnVpIrkftwymdfHoUs6G_63VZqke4f15-qB_VQ2iKl62ZxITlbpb4UVfs_kj11XG2E8",
-    service: "https://lh3.googleusercontent.com/aida-public/AB6AXuAAg7keSD5fHP8vQ477QdjOPGaMu0dEKrV3C-or5erPbi9FooRm3f-gqK9jsQmWVqRty8-JYMdaGQrZH09RfQKdhEbCW7r-8kA8Ow2g38LJWJSt-uLuompA3zl2DjXfylHLAFug2zSiBkisJovH4dz3kyg_RpayvCeghiRuxKbORpOPhWFWBW2M-d8RxRYsW9DZDxi0dPc5YtudATgrihhdU45o2T_6ZdY5FNOBxb3IaJRenUHk_a_444WorRvwedmX_ZWSCN4tQMM",
-    malossol: "https://lh3.googleusercontent.com/aida-public/AB6AXuDfbNuFAT9ZgIgOwkTaahfs0NsdQcBPQoxt-Ged22Ov4fxMRtVjhrlsSuvUvYzVnOnp1iayJXEui5QoYCH-gS85o09LHojk52rTWmcSRnQwnYDsBoE3T0gHFRY5J-HQn-deQqgNVuoCv6DxPqMp14M5CCpsJPaZZkTOA6uS8vrXJIEQRaae53cX__4tffkuuhWlz0MBpR7xO85jaPBJguBeZGYyP5rtfOFtBKVwS_-3WLRaNHYRm0aaKqUj-aYT5d412hKENpYGiok",
-    champagne: "https://lh3.googleusercontent.com/aida-public/AB6AXuBoPRwxvQOmHqNT232yA2aUY2zRh1_cnBBvXcKRHewJ4aG_PfIFz8MXLQLsJiLIyUXslsOfWrXxfollJKQF6lQZQfCsqqVLbIZiJHunsWkso0aiISFUQcyq8_4wO9J3Gt25hLpv-iiHdTqLalW-P_sHArq8JlUO0ycSBH8zid4OLED2c4J6FFIv6GMMsKRoK5L5dWur-IHLjpXYq8hv7Zw8bHiNvjDBEhV7eZA6fU9Hu0wvOQ4k0uci3OHhrWTZdOOQ4ZT-wkRW13Y",
-    spoon: "https://lh3.googleusercontent.com/aida-public/AB6AXuAZQcq4hfiLU3hNPVytnsfWjFbSXPVMC0ZEe6Jo0kK6b7vRdcaEs3ISV22gseD6C-hcP_-8Er8ha6yZzwUFvnUXMiye9wgrs0mVPIJCsgrJ4hqtlDG_lMYdPdnPPpHg_rQ4kSoSoMBKB0vJwAV_7niM0AX1Yc-AEeuvZl8k8cuLTBQZHKeAPPZLu6dE00svFteMahQNJ-2gt8rqXByzIrJgj0kF-BM29DieNSBStG8btLmXTHvM3d1vdSLqFMsjHj7m8DVKZCXWZE8",
-    ice: "https://lh3.googleusercontent.com/aida-public/AB6AXuCbRm7T-vUyLcLqFrQuOXykQjzwhdpDRZMcSbGFjeVpdb76MZnZ28gQBKlrdLjIc_T6WjQjfb9fKyBVe5FExMY-kpE-b4sG25R8qhkpNGJAlJP28iPnyPtCbQYT5ZdpDuLAhtScGkzGtfa55QEl-UcC8bncCNITmhCjb8RDhdB8hzDBWSWgpLLudYILlxAIcaXTQ2fMzaUXyQJZUcPC8Rg_RqNGkNslWq8L7t_OuWsc9fIRvbrYWlI1r5EErsUZte_sRwyldQQwu0Q",
+    harvest: luxAsset("assets/images/lux-032.jpg"),
+    truffle: luxAsset("assets/images/lux-026.jpg"),
+    service: luxAsset("assets/images/lux-003.jpg"),
+    malossol: luxAsset("assets/images/lux-048.jpg"),
+    champagne: luxAsset("assets/images/lux-029.jpg"),
+    spoon: luxAsset("assets/images/lux-014.jpg"),
+    ice: luxAsset("assets/images/lux-039.jpg"),
   };
   const articles = {
     "zh-harvest": {
@@ -600,41 +603,12 @@ function initLuxInfoPopovers() {
 
 function initLuxProductDetails() {
   const triggers = document.querySelectorAll("[data-product-open]");
-  const images = {
-    beluga: "https://lh3.googleusercontent.com/aida-public/AB6AXuACJOnyTg87lVs0EJCu5fRU4HTMa17EXiWif-_i75wx6YuLlPpTlUwQiwdFkPLBhE5gXWVrGU04jUdKhTd3PZyQ8bpW4mSkIcPhMfmwfLClntQ4vY6NJOAkUb1bivTdXI2YitlmukK1D3dGNNAc9g0rboUlkemDceyJT1Btw5n3mxvGXpJcax2iqf2VFHX_HTTpZ0_isZ13U-FDO7Je8sxIZsTLFEBEIacseGoW2VqzxbwZ1rF1OohLNzwRwOuv7bjFFmj_ZFkv0MI",
-    oscetra: "https://lh3.googleusercontent.com/aida-public/AB6AXuBw_tDFhLpvYsM-QXpGZ1LlENLhyBbuXDFWoGotLU0shCFfsNIC3PfJmEYbC2sjUwEwrJvOFjhPdv3klNWbI3lo9ggNI9xeczWfnQCahE6pVj58uH2z_J8upHhFnzGm0rbGwDAy-H5sFaPfBzB98QvxUPHEq9JCsuO_rAtoOX11FRMIlt1iaeib6XCJ1IpoX2K9ihttS8BLMf5ZZVkr_nWpd-9xRNwnOOT38v50QuJ8jz1PhP-YouPd4QkysuGMfZM1pXUKiQDfGt8",
-    spoon: "https://lh3.googleusercontent.com/aida-public/AB6AXuB2P5yZoNq2-PBMLXeFcbruH1kXuUuYjkMfzKDIKD21IWS8cj0gPO1qmelr-FXL-acV_eTP1vy8o3A4GM_cEf7CbFJBvIC-lHvsziLOZ3iplbm7luEgBN6adnsaNysgBmwJOBwEXJi6SIVoBYAIc4NI1mnCc3W5B4wVTHPQtpnMbcldWMuiDawngtY4iNSVWWR0hreOxU8Hly_d_-706XymQuHqyuDgiHCwEVt1PrdI5fL_9VifYaPDt2uoGGeMYzvCFBOq47acuNM",
-    champagne: "https://lh3.googleusercontent.com/aida-public/AB6AXuDAdvQdleYAsN8UYpwdMZHwnWbgcUDtdpGFWKWXj6I4SEE02s8aPf4txi8Rpn1-chBzWrO8914w5sx-2WEDKip-qC5r2bPujAoMIpbq3nWejA1XxdaO5pHuXsnPvkQPugM0_E-Vvl6d6b_YNERpu69jkWlW40vMcDgKuRh5rduZrycRhd_o3nUIJ0a5sm0gSODr_UOnhAj09zHnvw2DNfjnxNATC4OJ7w87gZJg5AhNewIQ_wKbxqHKc_mx-71usoOmX0uisxRI5Tw",
-    ice: "https://lh3.googleusercontent.com/aida-public/AB6AXuCbRm7T-vUyLcLqFrQuOXykQjzwhdpDRZMcSbGFjeVpdb76MZnZ28gQBKlrdLjIc_T6WjQjfb9fKyBVe5FExMY-kpE-b4sG25R8qhkpNGJAlJP28iPnyPtCbQYT5ZdpDuLAhtScGkzGtfa55QEl-UcC8bncCNITmhCjb8RDhdB8hzDBWSWgpLLudYILlxAIcaXTQ2fMzaUXyQJZUcPC8Rg_RqNGkNslWq8L7t_OuWsc9fIRvbrYWlI1r5EErsUZte_sRwyldQQwu0Q",
-    truffle: "https://lh3.googleusercontent.com/aida-public/AB6AXuBQy_7QgEhJXRb9TVE_qzhuDOz-7NCGBa_j5-U9QAjY-RgkJ2ZQHX_5SO79aYEFnsmh__rooT1ufKKtESdCxIDI6AKK5cskDxVD5oMSArK_A-w8eZYyBq6M901sPa1EICBL1VKmnbf8fDFvZoZ_WKcozP-dEw8yZPP_5H1A26D2NuC1k-Y5wKcxiXZD1R99ifx-tOOWICpWqnVpIrkftwymdfHoUs6G_63VZqke4f15-qB_VQ2iKl62ZxITlbpb4UVfs_kj11XG2E8",
-  };
-  const galleries = {
-    beluga: [
-      images.beluga,
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCDKyZdxU0kGF8Vd-zMlJdzsTr4siYTL8YgOEAlYupJwzsaN5mzFBD-W_ipZxBtWxInFokoDgH7cm7h5-5QPLGoSz0vpME_P6a0qrr-Y2y2VakxcC3vg1EYL-3UDQPI2nYhxCq34ENlKNl-kNGcA5waTnTOm8fxAxjpJJWFQhjCZ50Ik9jZhh_NSGXX3ZlXzw_kTgXFOcEWhH_a2_7GLr7-x_Z81gogm3T6Cs5jofzP_2_UFZ86UPvvHCja9qW79efyY2ZcXBFvjUk",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAQG35wvIpjHg3dO9aAqS8DyvQTpm_WWe89Uo6iHhEKHas-8N69c_tKuMELvL0NFW0qe67sWPKN_oBqBfGL00mRsknlGPt-R0KXIgMB1bGemgFMJMROABnT66UaotrHNezYujj8ApVJUUurxkjkr9U6J4ThUGrsXg5252uPdSK34NlDj31o4BeSdPRJcrjgm8cA693wzq1WFWmmuYFd4Dt69JkeOLzViDCDn8NGdxRv6m4qijpjT2ZpSdk60u9WeLKAu1emAC3IBMk",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD5nzBWcTBNa6X7Vo61aOmU6wugtUwUu3Gxb-wumiWYodKCw7DoMFVY0oZp2_gA9lXB2c3ov0s9_wLPVff3abDSnJqJwABLZLr-lzdZfje7C-bzA7X_1_FiZr8UXnGHayvNtRxUUvJZKH41bzMCyD1PpXNgvYfArVffkYZQxflAXDhlv_A-jHthPCAJo7c5x5Xyg3ZLNg1HnEn31SkcIeVImzSOChtyArtj500F3ExSkBvUurl8uz1Xj4mwR5vFVyZ9OK99lCIxNno",
-    ],
-    oscetra: [images.oscetra, images.beluga, images.truffle],
-    spoon: [images.spoon, images.beluga, "https://lh3.googleusercontent.com/aida-public/AB6AXuAmATWC8-Wd1yng8-EUZvY9jZdTbpQu8tpAT7VeRaUsiwM4pzEOdMprJ1hiPv2A9b38FvL6BbqVHvfmTqFd2P_m8v_67SspNoJGljgNeheLHNuZcld5f0GRwAXic62Ux6qt_SFlmjTwHP0sWBO7ftycDJ3-jXA_MW_dII9WLKFtSn7nhavfVil7EeusjZa8Jsq4AAPjVhCLEQ9FNt4oOkZWX9LAQRra1szFveLxJiZfHSIo_bv_fQc5KPBixeFnT1tuaDTEPlE4pis"],
-    champagne: [images.champagne, images.beluga],
-    ice: [images.ice, images.champagne, images.spoon],
-    truffle: [images.truffle, images.oscetra],
-  };
-  const products = {
-    "zh-imperial-beluga": { title: "至臻帝王鲟鱼子酱", eyebrow: "Rare Harvest", desc: "源自帝王鲟的银灰色大颗粒，入口即化，呈现奶油、海洋与矿物的长尾。", price: "¥2,480", unit: "30G", image: images.beluga, id: "imperial-beluga-30g", subtitle: "Imperial Beluga / 30g", currency: "¥", amount: 2480, specs: ["Huso Huso", "3.2 - 3.5 MM", "Pearl Grey", "奶油/海洋/矿物"] },
-    "zh-royal-oscetra": { title: "皇家奥西特拉鱼子酱", eyebrow: "Nutty Reserve", desc: "金棕色鱼子带来紧实颗粒感与烘焙坚果香，是进阶品鉴与商务宴请的稳妥选择。", price: "¥1,280", unit: "30G", image: images.oscetra, id: "royal-oscetra-30g", subtitle: "Royal Oscetra / 30g", currency: "¥", amount: 1280, specs: ["Acipenser Gueldenstaedtii", "2.8 - 3.1 MM", "Amber Gold", "坚果/黄油/海盐"] },
-    "zh-mother-of-pearl": { title: "手工打磨珍珠母贝匙", eyebrow: "Service Ware", desc: "非金属贝母材质避免氧化味，保护鱼子酱最细腻的乳香与矿物尾韵。", price: "¥1,280", unit: "Set", image: images.spoon, id: "zh-spoons", subtitle: "经典对装", currency: "¥", amount: 1280, specs: ["Mother-of-Pearl", "Pair Set", "Hand Polished", "无金属气味"] },
-    "zh-champagne": { title: "Krug 陈年香槟", eyebrow: "Pairing", desc: "以明亮酸度和细腻气泡刷新味蕾，适合作为鱼子酱品鉴的经典搭配。", price: "¥2,850", unit: "Bottle", image: images.champagne, id: "zh-champagne", subtitle: "Grand Cuvée 171ème Édition", currency: "¥", amount: 2850, specs: ["Brut", "Grand Cuvée", "Chilled", "酸度/气泡/清爽"] },
-    "zh-ice-server": { title: "现代主义银质冰镇座", eyebrow: "Service Ware", desc: "双层冰镇结构稳定开罐后的服务温度，让鱼子酱保持清晰弹性。", price: "¥12,400", unit: "Piece", image: images.ice, id: "zh-ice-server", subtitle: "纯银工艺", currency: "¥", amount: 12400, specs: ["Silver", "Double Wall", "Crushed Ice", "稳定温控"] },
-    "en-imperial-beluga": { title: "Imperial Beluga Caviar", eyebrow: "Rare Harvest", desc: "Large steel-grey pearls from Huso Huso sturgeon, with a creamy finish and long oceanic minerality.", price: "$350", unit: "30G", image: images.beluga, id: "imperial-beluga-30g", subtitle: "Maison Reserve / 30g", currency: "$", amount: 350, specs: ["Huso Huso", "3.2 - 3.5 MM", "Pearl Grey", "Cream / Ocean / Mineral"] },
-    "en-royal-oscetra": { title: "Royal Oscetra Caviar", eyebrow: "Nutty Reserve", desc: "Golden-brown pearls with firm texture, toasted nut complexity, and a long savory finish.", price: "$180", unit: "30G", image: images.oscetra, id: "royal-oscetra-30g", subtitle: "Royal Oscetra / 30g", currency: "$", amount: 180, specs: ["Acipenser Gueldenstaedtii", "2.8 - 3.1 MM", "Amber Gold", "Nut / Butter / Sea Salt"] },
-    "en-mother-of-pearl": { title: "Mother-of-Pearl Spoon", eyebrow: "Service Ware", desc: "A non-reactive spoon that preserves the roe's clean flavor without metallic notes.", price: "$45", unit: "Set", image: images.spoon, id: "en-spoons", subtitle: "Hand-Crafted / Artisan", currency: "$", amount: 45, specs: ["Mother-of-Pearl", "Pair Set", "Hand Polished", "No Metallic Note"] },
-    "en-champagne": { title: "Maison Vintage Brut", eyebrow: "Pairing", desc: "Bright acidity and fine bubbles refresh the palate between rich caviar tastings.", price: "$320", unit: "Bottle", image: images.champagne, id: "en-champagne", subtitle: "Grand Cru / 2012", currency: "$", amount: 320, specs: ["Brut", "Grand Cru", "Chilled", "Acidity / Bubbles"] },
-    "en-truffle": { title: "Truffle Pairing Set", eyebrow: "Pairing", desc: "A dark, aromatic pairing set for menus that extend beyond the first spoon of caviar.", price: "$185", unit: "Set", image: images.truffle, id: "en-truffle-set", subtitle: "Winter Black / White Alba", currency: "$", amount: 185, specs: ["Winter Black", "White Alba", "Gift Set", "Aromatic Finish"] },
-  };
+  const productData = window.LUXUREAT_PRODUCT_DATA || {};
+  const galleries = productData.galleries || {};
+  const products = productData.products || {};
   const hash = location.hash || "";
   if (!triggers.length && !hash.startsWith("#product-")) return;
+  if (!Object.keys(products).length) return;
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",

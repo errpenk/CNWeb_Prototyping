@@ -4,6 +4,7 @@ import vm from 'node:vm';
 
 const store = new Map();
 const context = {
+  URL,
   document: {
     documentElement: { lang: 'en' },
     body: { appendChild() {} },
@@ -28,7 +29,7 @@ const context = {
     scrollY: 0,
   },
   history: {},
-  location: { pathname: '/en/caviar.html' },
+  location: { href: 'https://example.com/en/caviar.html', pathname: '/en/caviar.html' },
   localStorage: {
     getItem(key) {
       return store.get(key) ?? null;

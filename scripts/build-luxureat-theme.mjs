@@ -29,7 +29,7 @@ const pageInputs = [
 ];
 
 function ensureSource() {
-  for (const file of ['README.md', 'integration.css', 'main.js', 'assets/luxureat-logo.png', 'assets/wechat-qr.png']) {
+  for (const file of ['README.md', 'integration.css', 'main.js', 'assets/luxureat-logo.png', 'assets/wechat-qr.png', 'assets/data/products.js']) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
     }
@@ -50,6 +50,19 @@ function write(file, contents) {
   fs.writeFileSync(file, contents);
 }
 
+function copyDir(src, dest) {
+  mkdirp(dest);
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const sourcePath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    if (entry.isDirectory()) {
+      copyDir(sourcePath, destPath);
+    } else if (entry.isFile()) {
+      fs.copyFileSync(sourcePath, destPath);
+    }
+  }
+}
+
 function routeKey(lang, slug) {
   return slug === 'index' ? lang : `${lang}/${slug}`;
 }
@@ -62,17 +75,24 @@ function phpRouteUrl(lang, slug, suffix = '') {
   return `<?php echo esc_url(luxureat_static_url('${routeKey(lang, slug)}', '${escapePhpString(suffix)}')); ?>`;
 }
 
+function phpThemeAsset(assetPath) {
+  return `<?php echo esc_url(get_template_directory_uri() . '/assets/${escapePhpString(assetPath)}'); ?>`;
+}
+
 function hasUrlScheme(href) {
   return /^[A-Za-z][A-Za-z0-9+.-]*:/.test(href.trimStart());
 }
 
 function stripKnownLocalIncludes(html) {
   const localStylesheetTag = '<link rel="stylesheet" href="../integration.css">';
+  const productDataTag = '<script src="../assets/data/products.js"></script>';
   const scriptOpen = '<script src="../main.js">';
   const scriptClose = '</script>';
 
   return html
     .split(localStylesheetTag)
+    .join('')
+    .split(productDataTag)
     .join('')
     .split(`${scriptOpen}${scriptClose}`)
     .join('');
@@ -108,8 +128,14 @@ function convertHtml(file, lang) {
 
   html = stripKnownLocalIncludes(html);
 
-  html = html.replace(/\b(src|href)=(["'])\.\.\/assets\/luxureat-logo\.png\2/g, (_match, attr, quote) => {
-    return `${attr}=${quote}<?php echo esc_url(get_template_directory_uri() . '/assets/luxureat-logo.png'); ?>${quote}`;
+  html = html.replace(/\b(src|href)=(["'])\.\.\/assets\/([^"']+)\2/g, (_match, attr, quote, assetPath) => {
+    return `${attr}=${quote}${phpThemeAsset(assetPath)}${quote}`;
+  });
+  html = html.replace(/url\((['"]?)\.\.\/assets\/([^'")]+)\1\)/g, (_match, quote, assetPath) => {
+    return `url(${quote}${phpThemeAsset(assetPath)}${quote})`;
+  });
+  html = html.replace(/url\(&quot;\.\.\/assets\/([^&]+)&quot;\)/g, (_match, assetPath) => {
+    return `url(&quot;${phpThemeAsset(assetPath)}&quot;)`;
   });
 
   html = html.replace(/\bhref=(["'])([^"']+)\1/g, (match, quote, href) => {
@@ -261,9 +287,17 @@ function luxureat_static_assets() {
     );
 
     wp_enqueue_script(
+        'luxureat-product-data',
+        $theme_uri . '/assets/data/products.js',
+        array(),
+        filemtime($theme_dir . '/assets/data/products.js'),
+        true
+    );
+
+    wp_enqueue_script(
         'luxureat-main',
         $theme_uri . '/main.js',
-        array(),
+        array('luxureat-product-data'),
         filemtime($theme_dir . '/main.js'),
         true
     );
@@ -387,7 +421,7 @@ This package wraps the static bilingual LuxurEat website source from https://git
 
 - The current version prioritizes visual fidelity and static routing.
 - Local assets, \`integration.css\`, and \`main.js\` are loaded through WordPress theme APIs.
-- Most photographic images remain the original external prototype image URLs.
+- Photographic assets live in \`assets/images/\`; product copy and gallery data live in \`assets/data/products.js\`.
 `;
 }
 
@@ -400,9 +434,7 @@ function build() {
 
   fs.copyFileSync(path.join(sourceDir, 'integration.css'), path.join(themeDir, 'integration.css'));
   fs.copyFileSync(path.join(sourceDir, 'main.js'), path.join(themeDir, 'main.js'));
-  mkdirp(path.join(themeDir, 'assets'));
-  fs.copyFileSync(path.join(sourceDir, 'assets/luxureat-logo.png'), path.join(themeDir, 'assets/luxureat-logo.png'));
-  fs.copyFileSync(path.join(sourceDir, 'assets/wechat-qr.png'), path.join(themeDir, 'assets/wechat-qr.png'));
+  copyDir(path.join(sourceDir, 'assets'), path.join(themeDir, 'assets'));
 
   const screenshotSource = path.join(sourceDir, 'qa/zh-home-desktop.png');
   fs.copyFileSync(

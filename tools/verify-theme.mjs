@@ -75,6 +75,7 @@ for (const file of [
   'main.js',
   'assets/luxureat-logo.png',
   'assets/wechat-qr.png',
+  'assets/data/products.js',
   'screenshot.png',
   'README.md',
 ]) {
@@ -86,6 +87,7 @@ assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the 
 
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
+assert(functionsPhp.includes('luxureat-product-data') && functionsPhp.includes("array('luxureat-product-data')"), 'functions.php loads product data before main.js');
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
 assert(functionsPhp.includes('add_rewrite_rule'), 'functions.php registers rewrite rules');
 assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewrite rules on theme switch');
@@ -185,6 +187,11 @@ assert(mainJs.includes('lux-back-to-top'), 'main.js adds the back-to-top floatin
 assert(mainJs.includes('aria-pressed'), 'main.js updates pressed states for caviar toolbar buttons');
 assert(mainJs.includes('.hidden ='), 'main.js hides filtered-out caviar product cards');
 
+const productDataJs = read(path.join(themeDir, 'assets/data/products.js'));
+assert(productDataJs.includes('window.LUXUREAT_PRODUCT_DATA'), 'product data is separated into assets/data/products.js');
+assert(productDataJs.includes('"zh-imperial-beluga"') && productDataJs.includes('"en-royal-oscetra"'), 'product data file contains bilingual product records');
+assert(!walk(themeDir).some((file) => /\.(php|css|js)$/i.test(file) && /googleusercontent|transparenttextures/.test(read(file))), 'theme uses local image assets instead of external prototype image URLs');
+
 const integrationCss = read(path.join(themeDir, 'integration.css'));
 assert(integrationCss.includes('[data-caviar-grid].is-list'), 'integration.css defines the caviar list view layout');
 assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css hides filtered caviar product cards reliably');
@@ -198,8 +205,9 @@ assert(integrationCss.includes('.lux-product-recent-grid'), 'integration.css sty
 assert(integrationCss.includes('.lux-product-recent-nav') && integrationCss.includes('scrollbar-width: none'), 'integration.css hides recommendation scrollbars and styles arrow controls');
 assert(integrationCss.includes('inset: 0 -86px auto'), 'recommendation arrows sit on both sides of the carousel');
 assert(integrationCss.includes('.lux-product-cart-state'), 'integration.css styles product-detail cart state');
-assert(integrationCss.includes('.lux-reader-header') && integrationCss.includes('backdrop-filter: blur(16px)') && integrationCss.includes('border-bottom: 0'), 'integration.css gives reader and product headers glass blur without a divider line');
-assert(integrationCss.includes('background: rgba(24,24,24,.58)'), 'reader header uses dark glass instead of a light bar');
+assert(integrationCss.includes('.lux-reader-panel::before') && integrationCss.includes('backdrop-filter: blur(16px)') && integrationCss.includes('border-bottom: 0'), 'integration.css gives reader and product headers glass blur without a divider line');
+assert(integrationCss.includes('background: rgba(24,24,24,.34)'), 'reader header uses dark glass instead of a light bar');
+assert(integrationCss.includes('.lux-ceremony-copy'), 'ritual cards fade copy out before showing the reader CTA');
 assert(integrationCss.includes('.lux-products-main'), 'product listing pages can align their hero directly under the fixed navigation');
 assert(integrationCss.includes('.lux-reader-archive'), 'integration.css styles journal archive reader lists');
 assert(integrationCss.includes('.lux-product-panel::before'), 'integration.css gives product details a glass top layer');
@@ -311,6 +319,8 @@ if (fs.existsSync(zipFile)) {
     assert(entries.includes('luxureat-static/functions.php'), 'zip contains luxureat-static/functions.php');
     assert(entries.includes('luxureat-static/assets/luxureat-logo.png'), 'zip contains logo asset');
     assert(entries.includes('luxureat-static/assets/wechat-qr.png'), 'zip contains WeChat QR asset');
+    assert(entries.includes('luxureat-static/assets/data/products.js'), 'zip contains product data asset');
+    assert(entries.some((entry) => entry.startsWith('luxureat-static/assets/images/')), 'zip contains local image assets');
     assert(!entries.some((entry) => entry.startsWith('__MACOSX/')), 'zip has no __MACOSX metadata');
   } catch (error) {
     failures.push(`zip can be inspected with unzip: ${error.message}`);

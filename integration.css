@@ -217,10 +217,10 @@
   opacity: .34;
   transform: scale(1.07);
 }
-.lux-card-photo-one { --lux-card-bg: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDI95D4H3N8ISKIn4CP30WZlSRdlqhBKd1IC9yMCpcWcUEiTE_G45g5Zf4VUb20pB7OGvmHXAnaODY726JGfvja-8jDMQCUHIOcNzpFcBsWLlP5iW4sPVMgoK4VuTDRgyiiUhfcr4nxfqktFMW8sCTg_DbyE1nMiymFoecp9UXVThav8CYMi8lSk0YEWWyOVwXsfO8lREh3v5J0ffp2Ljo2TTZN4IPABAJjTvFenRYkegjwNBWbd0n2Pkbz6IHWD4pbQNGsr_leyxw"); }
-.lux-card-photo-two { --lux-card-bg: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBoPRwxvQOmHqNT232yA2aUY2zRh1_cnBBvXcKRHewJ4aG_PfIFz8MXLQLsJiLIyUXslsOfWrXxfollJKQF6lQZQfCsqqVLbIZiJHunsWkso0aiISFUQcyq8_4wO9J3Gt25hLpv-iiHdTqLalW-P_sHArq8JlUO0ycSBH8zid4OLED2c4J6FFIv6GMMsKRoK5L5dWur-IHLjpXYq8hv7Zw8bHiNvjDBEhV7eZA6fU9Hu0wvOQ4k0uci3OHhrWTZdOOQ4ZT-wkRW13Y"); }
-.lux-card-photo-three { --lux-card-bg: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADwWdrVYVRUkrlBm4W9LycdW_xNkYRwFyp73MClJI2A9wIndxAASUdmSBqgw-5w7wLCbcID5DEwutPNDv5D9wi9GrQOlW6wOEWICxWUQom4_MEzkhgA4CfvcVoZNRwlnAfMSzJqL0T-80HyzxCJEPLVJvj3V0Wgwf1rgIp8RF0HXI1aqalnAmgfM7xMSV18pld6Bp2BHfP6Oy1nBWmi7zDZly36ZnoaF4FmxOI4xCHypTTtiwins2yjgU7irJaRA2IzgHpoj7CuKI"); }
-.lux-card-photo-four { --lux-card-bg: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBE7ARWk_njftqnb8aC9fGuVZMZTq74j_LYXIhmdqqHDnK5f9ys54Rw5w-958ow_KbSD_9uO9C6mEBMRWufm5CSGGFz7wu9vg2SvVdOqERFc1kRGjzW9dL02FK_iSNWGXHSKQogw9whtXQJMUEESwgPV7sRJqwM98lOEfy88ixumv8KqKt3GTHpG8ouelqbUFLFCOoTVYF7V_lZOfzsfaHjhYXmQWTmb77d_dz0Gi2Wz6wwKUqkIzujQKH_08EadCCYK6HJccUPOrE"); }
+.lux-card-photo-one { --lux-card-bg: url("assets/images/lux-044.jpg"); }
+.lux-card-photo-two { --lux-card-bg: url("assets/images/lux-029.jpg"); }
+.lux-card-photo-three { --lux-card-bg: url("assets/images/lux-008.jpg"); }
+.lux-card-photo-four { --lux-card-bg: url("assets/images/lux-001.jpg"); }
 [data-caviar-item][hidden] { display: none !important; }
 [data-caviar-grid].is-list {
   display: flex;
@@ -338,12 +338,21 @@
   z-index: 1;
   width: min(1040px, 100%);
   height: min(86vh, 980px);
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: block;
   border: 1px solid rgba(157, 245, 236, .18);
   background: rgba(16, 16, 16, .92);
   box-shadow: 0 24px 80px rgba(0, 0, 0, .55);
   overflow: hidden;
+}
+.lux-reader-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 64px;
+  z-index: 3;
+  pointer-events: none;
+  background: rgba(24,24,24,.34);
+  backdrop-filter: blur(16px) saturate(1.15);
 }
 .lux-reader-header {
   min-height: 56px;
@@ -353,10 +362,11 @@
   gap: 12px;
   padding: 10px 14px;
   border-bottom: 0;
-  background: rgba(24,24,24,.58);
-  backdrop-filter: blur(16px) saturate(1.15);
-  position: relative;
-  z-index: 3;
+  background: transparent;
+  backdrop-filter: none;
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 4;
 }
 .lux-reader-back,
 .lux-reader-close {
@@ -541,6 +551,9 @@
   width: min(1160px, 100%);
   height: min(90vh, 1040px);
   background: #181818;
+}
+.lux-reader-body {
+  height: 100%;
 }
 .lux-reader-layout { min-height: 100%; background: #181818; }
 .lux-reader-layout .lux-reader-hero {
@@ -1115,6 +1128,15 @@
 .lux-dark-photo-block.lux-reader-card:focus-within .lux-dark-photo-bg {
   opacity: .58;
   filter: grayscale(0) brightness(.72) contrast(1.08);
+}
+.lux-ceremony-copy {
+  transition: opacity .22s ease, transform .22s ease;
+}
+.lux-reader-card:hover .lux-ceremony-copy,
+.lux-reader-card:focus-within .lux-ceremony-copy {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
 }
 .lux-bag-price {
   display: grid;
