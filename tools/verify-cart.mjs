@@ -69,6 +69,9 @@ assert.equal(bag.subtotal(), 700);
 
 bag.change('beluga-30g', -1);
 assert.equal(bag.items()[0].quantity, 1);
+bag.change('beluga-30g', -1);
+assert.equal(bag.items()[0].quantity, 1);
+assert.equal(bag.items().length, 1);
 
 bag.remove('beluga-30g');
 assert.equal(bag.items().length, 0);

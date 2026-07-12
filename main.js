@@ -1127,8 +1127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     change(id, delta) {
       const items = read()
-        .map((item) => item.id === id ? { ...item, quantity: item.quantity + delta } : item)
-        .filter((item) => item.quantity > 0);
+        .map((item) => item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item);
       return save(items);
     },
     remove(id) {
