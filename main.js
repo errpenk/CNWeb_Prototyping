@@ -1204,7 +1204,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const itemHtml = (item, lang) => {
     const quantity = clampQuantity(item.quantity);
-    const lineTotal = quantity > 1 ? `<small class="lux-bag-line-total">${lang === "zh" ? `${quantity}件总价` : `${quantity}-item total`} ${money(item.currency, item.price * quantity)}</small>` : "";
+    const lineTotal = quantity > 1 ? `<small class="lux-bag-line-total">${lang === "zh" ? `${item.quantity}件总价` : `${item.quantity}-item total`} ${money(item.currency, item.price * quantity)}</small>` : "";
     const detailId = detailProductId(item, lang);
     const minDisabled = quantity <= 1 ? " disabled aria-disabled=\"true\"" : "";
     const maxDisabled = quantity >= maxQuantity ? " disabled aria-disabled=\"true\"" : "";
@@ -1242,8 +1242,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const updateNavCount = () => {
     document.querySelectorAll(".lux-actions a[href*='bag']").forEach((link) => {
-      link.dataset.bagLabel ||= link.textContent.trim().replace(/\s*\(\d+\)$/, "");
       const count = api.count();
+      const badge = link.querySelector("[data-bag-count]");
+      if (badge) {
+        badge.textContent = count ? String(count) : "";
+        badge.hidden = count === 0;
+        return;
+      }
+
+      link.dataset.bagLabel ||= link.textContent.trim().replace(/\s*\(\d+\)$/, "");
       link.textContent = count ? `${link.dataset.bagLabel} (${count})` : link.dataset.bagLabel;
     });
   };
@@ -1291,4 +1298,104 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("DOMContentLoaded", renderBag);
+})();
+
+(() => {
+  const modalHtml = () => {
+    const logoSrc = document.querySelector(".lux-brand img")?.src || "../assets/luxureat-logo.png";
+    const backdropSrc = document.querySelector("header.relative img[src*='assets/images'], main img[src*='assets/images'], img[src*='lux-044']")?.src || logoSrc;
+    return `
+    <div class="lux-account-modal" data-account-modal aria-hidden="true">
+      <div class="lux-account-dialog" role="dialog" aria-modal="true" aria-labelledby="lux-account-title">
+        <section class="lux-account-visual" style="background-image: linear-gradient(90deg, rgba(0,0,0,.16), rgba(0,0,0,.62)), url('${backdropSrc}')" aria-hidden="true">
+          <div>
+            <div class="lux-account-mark"><img src="${logoSrc}" alt=""></div>
+            <div class="lux-account-brand">LuxurEat</div>
+          </div>
+          <p class="lux-account-quote">The luxury of taste:<br>Made In Italy,<br>Around the world.</p>
+        </section>
+        <section class="lux-account-form">
+          <button class="lux-account-close" type="button" data-account-close aria-label="Close">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+          <div class="lux-account-head">
+            <div>
+              <h2 id="lux-account-title" data-account-title>Sign In</h2>
+              <p data-account-subtitle>Welcome back to the sanctuary of fine taste.</p>
+            </div>
+            <button class="lux-account-toggle" type="button" data-account-toggle>Create Account</button>
+          </div>
+          <form>
+            <label class="lux-account-field">
+              <span>Email Address</span>
+              <input type="email" placeholder="concierge@luxureat.com" autocomplete="email">
+            </label>
+            <label class="lux-account-field">
+              <span>Password</span>
+              <input type="password" placeholder="••••••••" autocomplete="current-password">
+            </label>
+            <div class="lux-account-row">
+              <label><input type="checkbox"><span>Remember Me</span></label>
+              <a href="contact.html">Forgot Password?</a>
+            </div>
+            <button class="lux-account-submit" type="submit" data-account-submit>Enter the Vault</button>
+          </form>
+          <div class="lux-account-divider">Or Sign In With</div>
+          <div class="lux-account-social">
+            <button type="button"><span class="material-symbols-outlined" aria-hidden="true">radio_button_unchecked</span>Google</button>
+            <button type="button"><span class="material-symbols-outlined" aria-hidden="true">chat</span>WeChat</button>
+          </div>
+        </section>
+      </div>
+    </div>`;
+  };
+
+  let lastFocus = null;
+
+  const modal = () => document.querySelector("[data-account-modal]");
+
+  const ensureModal = () => {
+    if (!modal()) document.body.insertAdjacentHTML("beforeend", modalHtml());
+    return modal();
+  };
+
+  const setOpen = (open) => {
+    const node = ensureModal();
+    node.classList.toggle("is-open", open);
+    node.setAttribute("aria-hidden", String(!open));
+    document.body.style.overflow = open ? "hidden" : "";
+    if (open) {
+      lastFocus = document.activeElement;
+      requestAnimationFrame(() => node.querySelector("input")?.focus());
+    } else {
+      lastFocus?.focus?.();
+    }
+  };
+
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("[data-account-open]")) {
+      setOpen(true);
+      return;
+    }
+    if (event.target.closest("[data-account-close]") || event.target === modal()) {
+      setOpen(false);
+      return;
+    }
+    if (event.target.closest("[data-account-toggle]")) {
+      const node = ensureModal();
+      const title = node.querySelector("[data-account-title]");
+      const subtitle = node.querySelector("[data-account-subtitle]");
+      const toggle = node.querySelector("[data-account-toggle]");
+      const submit = node.querySelector("[data-account-submit]");
+      const creating = title.textContent === "Sign In";
+      title.textContent = creating ? "Create Account" : "Sign In";
+      subtitle.textContent = creating ? "Join our inner circle of international connoisseurs." : "Welcome back to the sanctuary of fine taste.";
+      toggle.textContent = creating ? "Sign In" : "Create Account";
+      submit.textContent = creating ? "Begin Journey" : "Enter the Vault";
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal()?.classList.contains("is-open")) setOpen(false);
+  });
 })();
