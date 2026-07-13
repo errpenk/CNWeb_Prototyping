@@ -2068,3 +2068,49 @@ h1.zh-display-title {
   font-weight: 700 !important;
   letter-spacing: 0 !important;
 }
+
+h1.zh-glass-title {
+  color: rgba(245, 248, 248, .56) !important;
+  -webkit-text-fill-color: rgba(245, 248, 248, .46);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, .55);
+  mix-blend-mode: screen;
+  text-shadow: 0 0 18px rgba(255,255,255,.18), 0 1px 0 rgba(255,255,255,.28);
+}
+
+.lux-latest-event {
+  padding: clamp(70px, 8vw, 118px) clamp(22px, 5vw, 80px);
+  background: #131313;
+  color: #e5e2e1;
+}
+.lux-latest-event-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  gap: 30px;
+}
+.lux-latest-event h2 {
+  margin: 0;
+  color: #9df5ec;
+  font: 700 12px/1 Montserrat, Arial, sans-serif;
+  letter-spacing: .32em;
+}
+.lux-event-frame {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: #050505;
+}
+.lux-event-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #131313 0%, rgba(19,19,19,.68) 7%, rgba(19,19,19,0) 20%, rgba(19,19,19,0) 80%, rgba(19,19,19,.68) 93%, #131313 100%),
+    linear-gradient(180deg, #131313 0%, rgba(19,19,19,.62) 8%, rgba(19,19,19,0) 22%, rgba(19,19,19,0) 78%, rgba(19,19,19,.72) 92%, #131313 100%);
+}
+.lux-event-frame img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
