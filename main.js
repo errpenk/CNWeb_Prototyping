@@ -1241,7 +1241,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const updateNavCount = () => {
-    document.querySelectorAll(".lux-actions a[href*='bag']").forEach((link) => {
+    document.querySelectorAll(".lux-actions .lux-bag-link").forEach((link) => {
       const count = api.count();
       const badge = link.querySelector("[data-bag-count]");
       if (badge) {
@@ -1301,9 +1301,15 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 
 (() => {
+  const icons = {
+    x: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>',
+    circle: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg>',
+    message: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
+  };
+
   const modalHtml = () => {
     const logoSrc = document.querySelector(".lux-brand img")?.src || "../assets/luxureat-logo.png";
-    const backdropSrc = document.querySelector("header.relative img[src*='assets/images'], main img[src*='assets/images'], img[src*='lux-044']")?.src || logoSrc;
+    const backdropSrc = logoSrc.replace(/assets\/luxureat-logo\.png(?:\?.*)?$/, "assets/images/lux-044.jpg");
     return `
     <div class="lux-account-modal" data-account-modal aria-hidden="true">
       <div class="lux-account-dialog" role="dialog" aria-modal="true" aria-labelledby="lux-account-title">
@@ -1316,7 +1322,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </section>
         <section class="lux-account-form">
           <button class="lux-account-close" type="button" data-account-close aria-label="Close">
-            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+            ${icons.x}
           </button>
           <div class="lux-account-head">
             <div>
@@ -1342,8 +1348,8 @@ document.addEventListener("DOMContentLoaded", () => {
           </form>
           <div class="lux-account-divider">Or Sign In With</div>
           <div class="lux-account-social">
-            <button type="button"><span class="material-symbols-outlined" aria-hidden="true">radio_button_unchecked</span>Google</button>
-            <button type="button"><span class="material-symbols-outlined" aria-hidden="true">chat</span>WeChat</button>
+            <button type="button">${icons.circle}Google</button>
+            <button type="button">${icons.message}WeChat</button>
           </div>
         </section>
       </div>

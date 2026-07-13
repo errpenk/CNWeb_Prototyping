@@ -61,8 +61,11 @@
   transform: translateY(-1px);
   opacity: 1;
 }
+.lux-icon-action .lux-lucide,
 .lux-icon-action .material-symbols-outlined {
   font-size: 22px;
+  width: 22px;
+  height: 22px;
   line-height: 1;
   font-variation-settings: 'FILL' 0, 'wght' 250, 'GRAD' 0, 'opsz' 24;
 }
@@ -1981,4 +1984,86 @@ button,
   .lux-reader-archive h2 {
     font-size: var(--lux-type-lg) !important;
   }
+}
+
+.lux-account-dialog {
+  width: min(1060px, calc(100vw - 48px));
+  grid-template-columns: minmax(420px, 1.04fr) minmax(430px, .96fr);
+}
+.lux-account-form {
+  padding: clamp(54px, 6vw, 76px) clamp(58px, 6vw, 78px);
+}
+.lux-account-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 28px;
+  margin-bottom: 34px;
+}
+.lux-account-head h2 {
+  margin: 0 0 8px !important;
+  font: 400 48px/.95 "Bodoni Moda", Georgia, serif !important;
+  letter-spacing: 0 !important;
+}
+.lux-account-head p {
+  max-width: 330px;
+  margin: 0 !important;
+  font: 400 14px/1.45 Montserrat, Arial, sans-serif !important;
+}
+.lux-account-toggle {
+  width: max-content;
+  margin-top: 34px;
+  text-align: right;
+  white-space: nowrap;
+  font: 800 11px/1.25 Montserrat, Arial, sans-serif !important;
+  letter-spacing: .18em;
+}
+.lux-account-quote {
+  max-width: 430px;
+  font: italic 400 clamp(46px, 5vw, 58px)/1.05 "Bodoni Moda", Georgia, serif !important;
+  letter-spacing: 0 !important;
+}
+.lux-account-field span,
+.lux-account-row span,
+.lux-account-row a,
+.lux-account-divider,
+.lux-account-social button {
+  font-size: 11px !important;
+}
+.lux-account-row {
+  align-items: center;
+  margin: 18px 0 36px;
+}
+.lux-account-row label {
+  align-items: center;
+}
+.lux-account-row span {
+  margin: 0;
+  line-height: 1 !important;
+}
+.lux-account-row a {
+  line-height: 1 !important;
+  white-space: nowrap;
+}
+.lux-account-submit {
+  font-size: 12px !important;
+  line-height: 1 !important;
+}
+.lux-account-close .lux-lucide,
+.lux-account-social .lux-lucide {
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+}
+.lux-account-social .lux-lucide {
+  margin-right: 8px;
+}
+
+@media (max-width: 860px) {
+  .lux-account-dialog { width: 100%; min-height: 100vh; grid-template-columns: 1fr; }
+  .lux-account-visual { display: none; }
+  .lux-account-form { min-height: 100vh; padding: 104px 28px 42px; }
+  .lux-account-head { grid-template-columns: 1fr; gap: 14px; }
+  .lux-account-toggle { margin-top: 0; text-align: left; }
+  .lux-account-social { grid-template-columns: 1fr; }
 }
