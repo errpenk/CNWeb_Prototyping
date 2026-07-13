@@ -1306,43 +1306,73 @@ document.addEventListener("DOMContentLoaded", () => {
     mail: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>',
     lock: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>',
     logIn: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" x2="3" y1="12" y2="12"></line></svg>',
+    logOut: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>',
     userPlus: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>',
     circle: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg>',
     message: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
   };
 
+  const isZh = () => document.documentElement.lang?.toLowerCase().startsWith("zh") || location.pathname.includes("/zh/");
+  const copy = () => isZh() ? {
+    close: "关闭",
+    signIn: "登录账号",
+    create: "创建账号",
+    subtitleSignIn: "欢迎回到您的 LuxurEat 账户。",
+    subtitleCreate: "创建您的 LuxurEat 账户。",
+    email: "电子邮箱",
+    password: "密码",
+    remember: "记住我",
+    forgot: "忘记密码？",
+    divider: "或使用以下方式登录",
+    signOut: "退出登录",
+  } : {
+    close: "Close",
+    signIn: "Sign In",
+    create: "Create Account",
+    subtitleSignIn: "Welcome back to your LuxurEat account.",
+    subtitleCreate: "Create your LuxurEat account.",
+    email: "Email Address",
+    password: "Password",
+    remember: "Remember Me",
+    forgot: "Forgot Password?",
+    divider: "Or Sign In With",
+    signOut: "Sign Out",
+  };
+
   const modalHtml = () => {
+    const text = copy();
     return `
     <div class="lux-account-modal" data-account-modal aria-hidden="true">
       <div class="lux-account-dialog" role="dialog" aria-modal="true" aria-labelledby="lux-account-title">
-        <button class="lux-account-close" type="button" data-account-close aria-label="Close">${icons.x}</button>
+        <button class="lux-account-close" type="button" data-account-close aria-label="${text.close}">${icons.x}</button>
         <section class="lux-account-form">
           <header class="lux-account-head">
-            <span class="lux-account-icon">${icons.logIn}</span>
-            <h2 id="lux-account-title" data-account-title>Sign In</h2>
-            <p data-account-subtitle>Welcome back to your LuxurEat account.</p>
+            <span class="lux-account-icon" data-account-icon>${icons.logIn}</span>
+            <h2 id="lux-account-title" data-account-title>${text.signIn}</h2>
+            <p data-account-subtitle>${text.subtitleSignIn}</p>
           </header>
           <form>
             <label class="lux-account-field">
-              <span>Email Address</span>
+              <span>${text.email}</span>
               <div class="lux-account-input">${icons.mail}<input type="email" placeholder="concierge@luxureat.com" autocomplete="email"></div>
             </label>
             <label class="lux-account-field">
-              <span>Password</span>
+              <span>${text.password}</span>
               <div class="lux-account-input">${icons.lock}<input type="password" placeholder="••••••••" autocomplete="current-password"></div>
             </label>
             <div class="lux-account-row">
-              <label><input type="checkbox"><span>Remember Me</span></label>
-              <a href="contact.html">Forgot Password?</a>
+              <label><input type="checkbox"><span>${text.remember}</span></label>
+              <a href="contact.html">${text.forgot}</a>
             </div>
-            <button class="lux-account-submit" type="submit" data-account-submit>${icons.logIn}<span>Sign In</span></button>
+            <button class="lux-account-submit" type="submit" data-account-submit>${icons.logIn}<span>${text.signIn}</span></button>
           </form>
-          <div class="lux-account-divider">Or Sign In With</div>
+          <div class="lux-account-divider">${text.divider}</div>
           <div class="lux-account-social">
             <button type="button">${icons.circle}Google</button>
             <button type="button">${icons.message}WeChat</button>
           </div>
-          <button class="lux-account-toggle" type="button" data-account-toggle>${icons.userPlus}<span>Create Account</span></button>
+          <button class="lux-account-toggle" type="button" data-account-toggle>${icons.userPlus}<span>${text.create}</span></button>
+          <button class="lux-account-logout" type="button">${icons.logOut}<span>${text.signOut}</span></button>
         </section>
       </div>
     </div>`;
@@ -1385,15 +1415,46 @@ document.addEventListener("DOMContentLoaded", () => {
       const subtitle = node.querySelector("[data-account-subtitle]");
       const toggle = node.querySelector("[data-account-toggle]");
       const submit = node.querySelector("[data-account-submit]");
-      const creating = title.textContent === "Sign In";
-      title.textContent = creating ? "Create Account" : "Sign In";
-      subtitle.textContent = creating ? "Create your LuxurEat account." : "Welcome back to your LuxurEat account.";
-      toggle.innerHTML = creating ? `${icons.logIn}<span>Sign In</span>` : `${icons.userPlus}<span>Create Account</span>`;
-      submit.innerHTML = creating ? `${icons.userPlus}<span>Create Account</span>` : `${icons.logIn}<span>Sign In</span>`;
+      const headerIcon = node.querySelector("[data-account-icon]");
+      const text = copy();
+      const creating = title.textContent === text.signIn;
+      title.textContent = creating ? text.create : text.signIn;
+      subtitle.textContent = creating ? text.subtitleCreate : text.subtitleSignIn;
+      headerIcon.innerHTML = creating ? icons.userPlus : icons.logIn;
+      toggle.innerHTML = creating ? `${icons.logIn}<span>${text.signIn}</span>` : `${icons.userPlus}<span>${text.create}</span>`;
+      submit.innerHTML = creating ? `${icons.userPlus}<span>${text.create}</span>` : `${icons.logIn}<span>${text.signIn}</span>`;
     }
   });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && modal()?.classList.contains("is-open")) setOpen(false);
+  });
+})();
+
+(() => {
+  const icons = {
+    mail: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>',
+    phone: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.91.33 1.8.62 2.65a2 2 0 0 1-.45 2.11L8 9.71a16 16 0 0 0 6.29 6.29l1.23-1.23a2 2 0 0 1 2.11-.45c.85.29 1.74.5 2.65.62A2 2 0 0 1 22 16.92z"></path></svg>',
+    message: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
+    external: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>',
+    shield: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>',
+    file: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>',
+    truck: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg>',
+  };
+
+  const prependIcon = (node, icon) => {
+    if (!node || node.classList.contains("lux-with-icon")) return;
+    node.classList.add("lux-with-icon");
+    node.insertAdjacentHTML("afterbegin", icon);
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".lux-footer a[href^='mailto:']").forEach((node) => prependIcon(node, icons.mail));
+    document.querySelectorAll(".lux-footer a[href^='tel:']").forEach((node) => prependIcon(node, icons.phone));
+    document.querySelectorAll(".lux-footer-social a").forEach((node) => prependIcon(node, icons.external));
+    document.querySelectorAll(".lux-footer [data-footer-modal='wechat']").forEach((node) => prependIcon(node, icons.message));
+    document.querySelectorAll(".lux-footer [data-footer-modal='privacy']").forEach((node) => prependIcon(node, icons.shield));
+    document.querySelectorAll(".lux-footer [data-footer-modal='terms']").forEach((node) => prependIcon(node, icons.file));
+    document.querySelectorAll(".lux-footer [data-footer-modal='shipping']").forEach((node) => prependIcon(node, icons.truck));
   });
 })();

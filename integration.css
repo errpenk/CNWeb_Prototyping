@@ -2076,7 +2076,7 @@ button,
   color: #1f2424 !important;
   background: #fbfaf7 !important;
   border: 1px solid rgba(31,36,36,.12) !important;
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   box-shadow: 0 28px 90px rgba(0,0,0,.35) !important;
 }
 .lux-account-form {
@@ -2096,7 +2096,7 @@ button,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
+  border-radius: 0;
   color: #003734;
   background: #9df5ec;
 }
@@ -2114,10 +2114,11 @@ button,
 .lux-account-close {
   top: 14px !important;
   right: 14px !important;
-  border-color: rgba(31,36,36,.12) !important;
-  border-radius: 999px !important;
-  background: #fff !important;
-  color: #4b5553 !important;
+  z-index: 3 !important;
+  border: 1px solid #151818 !important;
+  border-radius: 0 !important;
+  background: #151818 !important;
+  color: #fbfaf7 !important;
 }
 .lux-account-field {
   display: grid !important;
@@ -2130,7 +2131,8 @@ button,
 .lux-account-divider,
 .lux-account-social button,
 .lux-account-toggle,
-.lux-account-submit {
+.lux-account-submit,
+.lux-account-logout {
   font-family: Montserrat, Arial, sans-serif !important;
   letter-spacing: .08em !important;
   text-transform: uppercase !important;
@@ -2148,7 +2150,7 @@ button,
   min-height: 46px;
   padding: 0 13px;
   border: 1px solid rgba(31,36,36,.14);
-  border-radius: 6px;
+  border-radius: 0;
   background: #fff;
   color: #66716f;
 }
@@ -2196,7 +2198,7 @@ button,
   justify-content: center !important;
   gap: 10px !important;
   border: 0 !important;
-  border-radius: 6px !important;
+  border-radius: 0 !important;
   background: #003734 !important;
   color: #9df5ec !important;
   font-size: 12px !important;
@@ -2215,14 +2217,15 @@ button,
   gap: 12px !important;
 }
 .lux-account-social button,
-.lux-account-toggle {
+.lux-account-toggle,
+.lux-account-logout {
   min-height: 42px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 8px !important;
   border: 1px solid rgba(31,36,36,.14) !important;
-  border-radius: 6px !important;
+  border-radius: 0 !important;
   background: #fff !important;
   color: #2d3433 !important;
   font-size: 12px !important;
@@ -2232,6 +2235,12 @@ button,
   margin-top: 12px !important;
   text-align: center !important;
 }
+.lux-account-logout {
+  width: 100% !important;
+  margin-top: 10px !important;
+  color: #8b2f28 !important;
+  border-color: rgba(139,47,40,.22) !important;
+}
 .lux-account-dialog .lux-lucide {
   width: 18px !important;
   height: 18px !important;
@@ -2240,4 +2249,20 @@ button,
 .lux-account-icon .lux-lucide {
   width: 22px !important;
   height: 22px !important;
+}
+
+.lux-footer .lux-with-icon {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+.lux-footer-legal .lux-with-icon {
+  margin-right: 6px;
+}
+.lux-footer .lux-inline-icon {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  color: #9df5ec;
+  opacity: .9;
 }
