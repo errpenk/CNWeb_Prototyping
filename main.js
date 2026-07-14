@@ -62,6 +62,37 @@ function renderLuxProductCatalog() {
     </article>`).join("");
 }
 
+function syncLuxProductBindings() {
+  const products = window.LUXUREAT_PRODUCT_DATA?.products;
+  if (!products) return;
+
+  const formatMoney = (product) => `${product.currency || ""}${Math.round(Number(product.amount) || 0)} / ${product.unit || ""}`;
+  const fields = {
+    title: (product) => product.title,
+    desc: (product) => product.desc,
+    eyebrow: (product) => product.eyebrow,
+    price: formatMoney,
+  };
+
+  document.querySelectorAll("[data-product-bind]").forEach((root) => {
+    const product = products[root.dataset.productBind];
+    if (!product) return;
+
+    root.querySelectorAll("[data-product-field]").forEach((node) => {
+      const value = fields[node.dataset.productField]?.(product);
+      if (value) node.textContent = value;
+    });
+    root.querySelectorAll("[data-bag-add]").forEach((button) => {
+      button.dataset.bagId = product.id;
+      button.dataset.bagTitle = product.title;
+      button.dataset.bagSubtitle = product.subtitle;
+      button.dataset.bagPrice = product.amount;
+      button.dataset.bagCurrency = product.currency;
+      button.dataset.bagImage = product.image;
+    });
+  });
+}
+
 function initLuxCaviarControls() {
   const controls = document.querySelector("[data-lux-caviar-controls]");
   const grid = document.querySelector("[data-caviar-grid]");
@@ -209,6 +240,7 @@ function initLuxCaviarControls() {
 }
 
 renderLuxProductCatalog();
+syncLuxProductBindings();
 initLuxCaviarControls();
 
 (() => {

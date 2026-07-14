@@ -285,8 +285,8 @@ assert(zhCaviar.includes('系列产品') && !zhCaviar.includes('鱼子酱系列'
 assert(zhCaviar.includes('lux-products-main'), 'Chinese product listing hero starts flush below the fixed nav');
 const enCaviar = read(path.join(themeDir, 'pages/en/caviar.php'));
 assert(enCaviar.includes('data-product-open="en-imperial-beluga"'), 'English caviar page opens product details');
-assert(enCaviar.includes("luxureat_static_url('en/products'"), 'English caviar page sends shopping traffic to products');
-assert(enCaviar.includes('lux-caviar-pairings'), 'English caviar page exposes pairing information without auto-opening shopping');
+assert(enCaviar.includes('data-product-bind="en-imperial-beluga"'), 'English caviar page binds hero product data from products.js');
+assert(enCaviar.includes('Tasting Profile') && enCaviar.includes('Origin &amp; Harvest'), 'English caviar page keeps the editorial caviar layout');
 const enProducts = read(path.join(themeDir, 'pages/en/products.php'));
 assert(enProducts.includes('Premium Products') && enProducts.includes('data-lux-caviar-controls'), 'English products page translates the Chinese product listing');
 assert(enProducts.includes('lux-products-main'), 'English product listing hero starts flush below the fixed nav');
