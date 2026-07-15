@@ -87,7 +87,6 @@ for (const file of [
 
 const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
-
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
 assert(functionsPhp.includes('luxureat-product-data') && functionsPhp.includes("array('luxureat-product-data')"), 'functions.php loads product data before main.js');
@@ -200,6 +199,7 @@ assert(articleDataJs.includes('window.LUXUREAT_ARTICLE_DATA') && articleDataJs.i
 assert(!walk(themeDir).some((file) => /\.(php|css|js)$/i.test(file) && /googleusercontent|transparenttextures/.test(read(file))), 'theme uses local image assets instead of external prototype image URLs');
 
 const integrationCss = read(path.join(themeDir, 'integration.css'));
+assert(integrationCss.includes('html[lang^="zh"]') && integrationCss.includes('AlimamaShuHeiTi-Bold.woff2'), 'Chinese headline typography uses the bundled Alimama font');
 assert(integrationCss.includes('[data-caviar-grid].is-list'), 'integration.css defines the caviar list view layout');
 assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css hides filtered caviar product cards reliably');
 assert(integrationCss.includes('.lux-sort-menu'), 'integration.css styles the sort menu');

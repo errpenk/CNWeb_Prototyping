@@ -1783,6 +1783,22 @@ h1.zh-display-title {
   letter-spacing: 0 !important;
 }
 
+html[lang^="zh"] :is(
+  .zh-display-title,
+  .font-display,
+  .font-headline,
+  .font-display-lg,
+  .font-display-lg-mobile,
+  .font-headline-lg,
+  .font-headline-lg-mobile,
+  .font-headline-md,
+  .font-headline-sm
+) {
+  font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+}
+
 .lux-latest-event {
   position: relative;
   overflow: hidden;
