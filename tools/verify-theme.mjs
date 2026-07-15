@@ -72,13 +72,19 @@ for (const file of [
   'functions.php',
   'routes.php',
   'integration.css',
-  'main.js',
-  'latest-event.js',
-  'assets/luxureat-logo.png',
-  'assets/wechat-qr.png',
-  'assets/article-images/harvest-hero.jpg',
-  'assets/article-images/champagne-hero.jpg',
+  'assets/js/core.js',
+  'assets/js/products.js',
+  'assets/js/events.js',
+  'assets/js/journal.js',
+  'assets/js/brand.js',
+  'assets/media/brand/luxureat-logo.png',
+  'assets/media/brand/wechat-qr.png',
+  'assets/media/journal/harvest-hero.jpg',
+  'assets/media/journal/champagne-hero.jpg',
   'assets/data/products.js',
+  'assets/data/events.js',
+  'assets/data/journal.js',
+  'assets/data/brand.js',
   'screenshot.png',
   'README.md',
 ]) {
@@ -89,8 +95,8 @@ const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
-assert(functionsPhp.includes('luxureat-product-data') && functionsPhp.includes("array('luxureat-product-data')"), 'functions.php loads product data before main.js');
-assert(functionsPhp.includes('luxureat-latest-event'), 'functions.php enqueues the latest event template script');
+assert(functionsPhp.includes('luxureat-product-data') && functionsPhp.includes("array('luxureat-product-data')"), 'functions.php loads product data before product behavior');
+assert(functionsPhp.includes('luxureat-events') && functionsPhp.includes('luxureat-journal'), 'functions.php enqueues event and journal domain scripts');
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
 assert(functionsPhp.includes('add_rewrite_rule'), 'functions.php registers rewrite rules');
 assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewrite rules on theme switch');
@@ -129,8 +135,8 @@ for (const file of pageFiles) {
   assert(source.includes('wp_head();'), `${rel} calls wp_head()`);
   assert(source.includes('wp_footer();'), `${rel} calls wp_footer()`);
   assert(!source.includes('../integration.css'), `${rel} does not link ../integration.css directly`);
-  assert(!source.includes('../main.js'), `${rel} does not load ../main.js directly`);
-  assert(!source.includes('../latest-event.js'), `${rel} does not load ../latest-event.js directly`);
+  assert(!source.includes('../main.js'), `${rel} does not load obsolete root main.js`);
+  assert(!source.includes('../latest-event.js'), `${rel} does not load obsolete root latest-event.js`);
   assert(!source.includes('../assets/'), `${rel} does not use relative asset paths`);
   assert(!/href=["'][^"']*\.html(?:[#?][^"']*)?["']/.test(source), `${rel} has no .html internal hrefs`);
   assert(!source.includes("home_url('/zh/") && !source.includes("home_url('/en/"), `${rel} does not require pretty permalink routes`);
@@ -156,49 +162,53 @@ assert(zhCaviar.includes('data-caviar-sort-option="price-asc"'), 'Chinese caviar
 assert(zhCaviar.includes('data-caviar-sort-option="price-desc"'), 'Chinese caviar sort menu has a high-price option');
 assert(zhCaviar.includes('data-caviar-grid'), 'Chinese caviar page marks the product grid');
 
-const mainJs = read(path.join(themeDir, 'main.js'));
-assert(mainJs.includes('initLuxCaviarControls'), 'main.js initializes caviar filter, view, and sort controls');
-assert(mainJs.includes('data-caviar-item data-species') && mainJs.includes('data-price="${Number(product.amount) || 0}"'), 'main.js renders sortable product cards from product data');
-assert(mainJs.includes('data-caviar-filter'), 'main.js listens to caviar filter buttons');
-assert(mainJs.includes('data-caviar-view'), 'main.js listens to caviar view buttons');
-assert(mainJs.includes('data-caviar-sort'), 'main.js listens to the caviar sort control');
-assert(mainJs.includes('data-caviar-sort-option'), 'main.js listens to explicit sort menu options');
-assert(mainJs.includes('initLuxReader'), 'main.js initializes the shared reading container');
-assert(mainJs.includes('data-reader-open'), 'main.js listens to reading-detail triggers');
-assert(mainJs.includes('data-reader-archive') && mainJs.includes('lux-reader-archive'), 'main.js renders journal archive lists inside the shared reader');
-assert(mainJs.includes('data-reader-archive-filter') && mainJs.includes('syncReaderTop'), 'main.js filters the journal archive and hides reader glass at the top');
-assert(mainJs.includes('initLuxProductDetails'), 'main.js initializes shared product-detail views');
-assert(mainJs.includes('data-product-open'), 'main.js listens to product-detail triggers');
-assert(mainJs.includes('data-product-quantity'), 'main.js supports product-detail quantity controls');
-assert(mainJs.includes('data-product-gallery'), 'main.js supports product-detail gallery thumbnails');
-assert(mainJs.includes('data-product-main-image'), 'main.js switches the product-detail main image');
-assert(mainJs.includes('lux-product-recent'), 'main.js renders product-detail recommendations');
-assert(mainJs.includes('data-product-open="${escapeHtml(key)}"'), 'product-detail recommendations can open other product details');
-assert(mainJs.includes('data-product-back'), 'product-detail recommendations expose an in-modal back button');
-assert(!mainJs.includes('!triggers.length && !hash.startsWith("#product-")'), 'product detail listener handles dynamically rendered bag buttons');
-assert(mainJs.includes('data-product-cart-state'), 'product details show existing cart quantity');
-assert(mainJs.includes('data-product-total'), 'product details show multi-quantity totals');
-assert(mainJs.includes('data-product-recent-scroll') && mainJs.includes('scrollBy'), 'product-detail recommendations have horizontal arrow controls');
-assert(mainJs.includes('lux-bag-line-total'), 'bag items show multi-quantity totals');
-assert(mainJs.includes('${item.quantity}件总价') && mainJs.includes('lux-bag-detail'), 'bag items show quantity-specific totals and image detail actions');
-assert(mainJs.includes('data-bag-quantity'), 'main.js carries selected product quantities into the bag');
-assert(mainJs.includes('initLuxFooterActions'), 'main.js initializes footer policy and social popups');
-assert(mainJs.includes('data-footer-modal'), 'main.js listens to footer modal buttons');
-assert(mainJs.includes('mouseenter'), 'main.js opens gift scenario info on hover');
-assert(mainJs.includes('lux-reader-layout'), 'main.js renders the editorial article reader layout');
-assert(mainJs.includes('lux-reader-cover') && mainJs.includes('lux-reader-related-media'), 'main.js renders the editorial article images');
-assert(mainJs.includes('lux-reader-layout') && mainJs.includes('lux-reader-quote'), 'main.js renders long-form reader articles');
-assert(mainJs.includes('scrollRestoration'), 'main.js restores saved scroll positions manually');
-assert(mainJs.includes('lux-back-to-top'), 'main.js adds the back-to-top floating action button');
-assert(mainJs.includes('link.rel = "prefetch"') && mainJs.includes('pointerover') && mainJs.includes('touchstart'), 'main.js prefetches internal pages when users hover, focus, or touch links');
-assert(mainJs.includes('aria-pressed'), 'main.js updates pressed states for caviar toolbar buttons');
-assert(mainJs.includes('.hidden ='), 'main.js hides filtered-out caviar product cards');
+const runtimeJs = [
+  'assets/js/core.js',
+  'assets/js/products.js',
+  'assets/js/journal.js',
+].map((file) => read(path.join(themeDir, file))).join('\n');
+assert(runtimeJs.includes('initLuxCaviarControls'), 'runtime scripts initializes caviar filter, view, and sort controls');
+assert(runtimeJs.includes('data-caviar-item data-species') && runtimeJs.includes('data-price="${Number(product.amount) || 0}"'), 'runtime scripts renders sortable product cards from product data');
+assert(runtimeJs.includes('data-caviar-filter'), 'runtime scripts listens to caviar filter buttons');
+assert(runtimeJs.includes('data-caviar-view'), 'runtime scripts listens to caviar view buttons');
+assert(runtimeJs.includes('data-caviar-sort'), 'runtime scripts listens to the caviar sort control');
+assert(runtimeJs.includes('data-caviar-sort-option'), 'runtime scripts listens to explicit sort menu options');
+assert(runtimeJs.includes('initLuxReader'), 'runtime scripts initializes the shared reading container');
+assert(runtimeJs.includes('data-reader-open'), 'runtime scripts listens to reading-detail triggers');
+assert(runtimeJs.includes('data-reader-archive') && runtimeJs.includes('lux-reader-archive'), 'runtime scripts renders journal archive lists inside the shared reader');
+assert(runtimeJs.includes('data-reader-archive-filter') && runtimeJs.includes('syncReaderTop'), 'runtime scripts filters the journal archive and hides reader glass at the top');
+assert(runtimeJs.includes('initLuxProductDetails'), 'runtime scripts initializes shared product-detail views');
+assert(runtimeJs.includes('data-product-open'), 'runtime scripts listens to product-detail triggers');
+assert(runtimeJs.includes('data-product-quantity'), 'runtime scripts supports product-detail quantity controls');
+assert(runtimeJs.includes('data-product-gallery'), 'runtime scripts supports product-detail gallery thumbnails');
+assert(runtimeJs.includes('data-product-main-image'), 'runtime scripts switches the product-detail main image');
+assert(runtimeJs.includes('lux-product-recent'), 'runtime scripts renders product-detail recommendations');
+assert(runtimeJs.includes('data-product-open="${escapeHtml(key)}"'), 'product-detail recommendations can open other product details');
+assert(runtimeJs.includes('data-product-back'), 'product-detail recommendations expose an in-modal back button');
+assert(!runtimeJs.includes('!triggers.length && !hash.startsWith("#product-")'), 'product detail listener handles dynamically rendered bag buttons');
+assert(runtimeJs.includes('data-product-cart-state'), 'product details show existing cart quantity');
+assert(runtimeJs.includes('data-product-total'), 'product details show multi-quantity totals');
+assert(runtimeJs.includes('data-product-recent-scroll') && runtimeJs.includes('scrollBy'), 'product-detail recommendations have horizontal arrow controls');
+assert(runtimeJs.includes('lux-bag-line-total'), 'bag items show multi-quantity totals');
+assert(runtimeJs.includes('${item.quantity}件总价') && runtimeJs.includes('lux-bag-detail'), 'bag items show quantity-specific totals and image detail actions');
+assert(runtimeJs.includes('data-bag-quantity'), 'runtime scripts carries selected product quantities into the bag');
+assert(runtimeJs.includes('initLuxFooterActions'), 'runtime scripts initializes footer policy and social popups');
+assert(runtimeJs.includes('data-footer-modal'), 'runtime scripts listens to footer modal buttons');
+assert(runtimeJs.includes('mouseenter'), 'runtime scripts opens gift scenario info on hover');
+assert(runtimeJs.includes('lux-reader-layout'), 'runtime scripts renders the editorial article reader layout');
+assert(runtimeJs.includes('lux-reader-cover') && runtimeJs.includes('lux-reader-related-media'), 'runtime scripts renders the editorial article images');
+assert(runtimeJs.includes('lux-reader-layout') && runtimeJs.includes('lux-reader-quote'), 'runtime scripts renders long-form reader articles');
+assert(runtimeJs.includes('scrollRestoration'), 'runtime scripts restores saved scroll positions manually');
+assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-top floating action button');
+assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
+assert(runtimeJs.includes('aria-pressed'), 'runtime scripts updates pressed states for caviar toolbar buttons');
+assert(runtimeJs.includes('.hidden ='), 'runtime scripts hides filtered-out caviar product cards');
 
 const productDataJs = read(path.join(themeDir, 'assets/data/products.js'));
 assert(productDataJs.includes('window.LUXUREAT_PRODUCT_DATA'), 'product data is separated into assets/data/products.js');
 assert(productDataJs.includes('"zh-imperial-beluga"') && productDataJs.includes('"en-royal-oscetra"'), 'product data file contains bilingual product records');
-const articleDataJs = read(path.join(themeDir, 'assets/data/articles.js'));
-assert(articleDataJs.includes('window.LUXUREAT_ARTICLE_DATA') && articleDataJs.includes('article-images'), 'article data is separated into assets/data/articles.js');
+const articleDataJs = read(path.join(themeDir, 'assets/data/journal.js'));
+assert(articleDataJs.includes('window.LUXUREAT_ARTICLE_DATA') && articleDataJs.includes('media/journal'), 'journal data is separated into assets/data/journal.js');
 assert(!walk(themeDir).some((file) => /\.(php|css|js)$/i.test(file) && /googleusercontent|transparenttextures/.test(read(file))), 'theme uses local image assets instead of external prototype image URLs');
 
 const integrationCss = read(path.join(themeDir, 'integration.css'));
@@ -265,7 +275,7 @@ const zhBag = read(path.join(themeDir, 'pages/zh/bag.php'));
 const enBag = read(path.join(themeDir, 'pages/en/bag.php'));
 assert(zhBag.includes('浏览全部') && zhBag.includes("luxureat_static_url('zh/caviar'"), 'Chinese bag browse-all link goes to caviar');
 assert(enBag.includes('Browse All') && enBag.includes("luxureat_static_url('en/products'"), 'English bag browse-all link goes to products');
-assert(mainJs.includes('renderRecommendations') && mainJs.includes('data-product-open="${escapeHtml(key)}"'), 'bag recommendations render product-detail actions from product data');
+assert(runtimeJs.includes('renderRecommendations') && runtimeJs.includes('data-product-open="${escapeHtml(key)}"'), 'bag recommendations render product-detail actions from product data');
 
 const zhJournal = read(path.join(themeDir, 'pages/zh/journal.php'));
 const enJournal = read(path.join(themeDir, 'pages/en/journal.php'));
@@ -286,7 +296,7 @@ assert(zhRituals.includes('即刻购买') && zhRituals.includes('系列产品') 
 assert(enRituals.includes('Buy Now') && enRituals.includes('Products') && !enRituals.includes('>Shop Now<'), 'English rituals shopping CTA mirrors the requested wording');
 assert((zhRituals.match(/lux-dark-photo-block/g) || []).length >= 3, 'Chinese rituals ceremony cards use dark photo backgrounds');
 
-assert(mainJs.includes('data-product-open="${escapeHtml(key)}"') && productDataJs.includes('"zh-imperial-beluga"'), 'Chinese caviar product card opens product details from product data');
+assert(runtimeJs.includes('data-product-open="${escapeHtml(key)}"') && productDataJs.includes('"zh-imperial-beluga"'), 'Chinese caviar product card opens product details from product data');
 assert(zhCaviar.includes("luxureat_static_url('zh/rituals'"), 'Chinese caviar ritual CTA links to rituals');
 assert(zhCaviar.includes('lux-dark-photo-block'), 'Chinese caviar page uses dark photo backgrounds');
 assert(zhCaviar.includes('系列产品') && !zhCaviar.includes('鱼子酱系列'), 'Chinese product listing uses the requested series label');
@@ -298,7 +308,7 @@ assert(enCaviar.includes('Tasting Profile') && enCaviar.includes('Origin &amp; H
 const enProducts = read(path.join(themeDir, 'pages/en/products.php'));
 assert(enProducts.includes('Premium Products') && enProducts.includes('data-lux-caviar-controls'), 'English products page translates the Chinese product listing');
 assert(enProducts.includes('lux-products-main'), 'English product listing hero starts flush below the fixed nav');
-assert(mainJs.includes('data-product-open="${escapeHtml(key)}"') && productDataJs.includes('"en-royal-oscetra"'), 'English products page renders Oscetra product details from product data');
+assert(runtimeJs.includes('data-product-open="${escapeHtml(key)}"') && productDataJs.includes('"en-royal-oscetra"'), 'English products page renders Oscetra product details from product data');
 assert(enProducts.includes("luxureat_static_url('en/rituals'"), 'English products ritual CTA links to rituals');
 
 const zhContact = read(path.join(themeDir, 'pages/zh/contact.php'));
@@ -318,9 +328,11 @@ assert(enContact.includes('lux-footprint-heading') && !enContact.includes('<deta
 
 const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));
-const latestEventJs = read(path.join(themeDir, 'latest-event.js'));
+const latestEventJs = read(path.join(themeDir, 'assets/js/events.js'));
+const eventDataJs = read(path.join(themeDir, 'assets/data/events.js'));
 assert(zhHome.includes('data-latest-event'), 'Chinese home has the latest event mount point');
-assert(latestEventJs.includes('marca-china-2026.jpeg') && latestEventJs.includes('document.currentScript'), 'latest event script renders the event from theme-relative assets');
+assert(latestEventJs.includes('LUXUREAT_EVENT_DATA') && !latestEventJs.includes('marca-china-2026.jpeg'), 'latest event script renders shared event data without duplicated content');
+assert(eventDataJs.includes('marca-china-2026') && fs.existsSync(path.join(themeDir, 'assets/media/events/marca-china-2026.png')), 'theme includes shared event data and its article image');
 assert(zhHome.includes('data-product-open="zh-imperial-beluga"'), 'Chinese home shop CTA opens product detail');
 assert(enHome.includes("luxureat_static_url('en/products', '#product-en-imperial-beluga')"), 'English home shop CTA opens product detail through products');
 assert(enHome.includes("luxureat_static_url('en/products'"), 'English navigation exposes the products page');
@@ -342,10 +354,10 @@ if (fs.existsSync(zipFile)) {
     assert(entries.includes('luxureat-static/style.css'), 'zip contains luxureat-static/style.css');
     assert(entries.includes('luxureat-static/index.php'), 'zip contains luxureat-static/index.php');
     assert(entries.includes('luxureat-static/functions.php'), 'zip contains luxureat-static/functions.php');
-    assert(entries.includes('luxureat-static/assets/luxureat-logo.png'), 'zip contains logo asset');
-    assert(entries.includes('luxureat-static/assets/wechat-qr.png'), 'zip contains WeChat QR asset');
+    assert(entries.includes('luxureat-static/assets/media/brand/luxureat-logo.png'), 'zip contains logo asset');
+    assert(entries.includes('luxureat-static/assets/media/brand/wechat-qr.png'), 'zip contains WeChat QR asset');
     assert(entries.includes('luxureat-static/assets/data/products.js'), 'zip contains product data asset');
-    assert(entries.some((entry) => entry.startsWith('luxureat-static/assets/images/')), 'zip contains local image assets');
+    assert(entries.some((entry) => entry.startsWith('luxureat-static/assets/media/brand/')), 'zip contains local image assets');
     assert(!entries.some((entry) => entry.startsWith('__MACOSX/')), 'zip has no __MACOSX metadata');
   } catch (error) {
     failures.push(`zip can be inspected with unzip: ${error.message}`);

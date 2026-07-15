@@ -1,7 +1,7 @@
 (() => {
   const assetBase = new URL("../", document.currentScript?.src || location.href);
   const asset = (path) => new URL(path, assetBase).href;
-  const articleImage = (file) => asset(`article-images/${file}`);
+  const articleImage = (file) => asset(`media/journal/${file}`);
   const images = {
     harvest: articleImage("harvest-hero.jpg"),
     harvestDetail: articleImage("harvest-detail.jpg"),

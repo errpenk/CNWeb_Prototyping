@@ -3,22 +3,22 @@
   const asset = (path) => new URL(path, assetBase).href;
 
   const images = {
-    beluga: asset("images/lux-005.jpg"),
-    oscetra: asset("images/lux-030.jpg"),
-    spoon: asset("images/lux-022.jpg"),
-    champagne: asset("images/lux-042.jpg"),
-    ice: asset("images/lux-039.jpg"),
-    truffle: asset("images/lux-026.jpg"),
+    beluga: asset("media/products/lux-005.jpg"),
+    oscetra: asset("media/products/lux-030.jpg"),
+    spoon: asset("media/products/lux-022.jpg"),
+    champagne: asset("media/products/lux-042.jpg"),
+    ice: asset("media/products/lux-039.jpg"),
+    truffle: asset("media/products/lux-026.jpg"),
   };
   const galleries = {
     beluga: [
       images.beluga,
-      asset("images/lux-034.jpg"),
-      asset("images/lux-010.jpg"),
-      asset("images/lux-041.jpg"),
+      asset("media/products/lux-034.jpg"),
+      asset("media/products/lux-010.jpg"),
+      asset("media/products/lux-041.jpg"),
     ],
     oscetra: [images.oscetra, images.beluga, images.truffle],
-    spoon: [images.spoon, images.beluga, asset("images/lux-018.jpg")],
+    spoon: [images.spoon, images.beluga, asset("media/products/lux-018.jpg")],
     champagne: [images.champagne, images.beluga],
     ice: [images.ice, images.champagne, images.spoon],
     truffle: [images.truffle, images.oscetra],

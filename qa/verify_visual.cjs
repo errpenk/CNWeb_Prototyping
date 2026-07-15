@@ -3,7 +3,7 @@ const path = require("path");
 const { chromium } = require("playwright");
 
 const BASE_URL = process.env.BASE_URL || "http://127.0.0.1:8000";
-const QA_DIR = path.join(__dirname, "qa");
+const QA_DIR = __dirname;
 
 function fail(message) {
   throw new Error(message);

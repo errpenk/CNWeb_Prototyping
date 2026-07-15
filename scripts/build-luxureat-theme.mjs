@@ -29,7 +29,7 @@ const pageInputs = [
 ];
 
 function ensureSource() {
-  for (const file of ['README.md', 'integration.css', 'main.js', 'latest-event.js', 'assets/luxureat-logo.png', 'assets/wechat-qr.png', 'assets/data/products.js']) {
+  for (const file of ['README.md', 'integration.css', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.png', 'assets/data/products.js', 'assets/data/events.js', 'assets/data/journal.js', 'assets/data/brand.js', 'assets/js/core.js', 'assets/js/products.js', 'assets/js/events.js', 'assets/js/journal.js', 'assets/js/brand.js']) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
     }
@@ -137,8 +137,14 @@ function stripKnownLocalIncludes(html) {
   return [
     ['link', 'href', '../integration.css'],
     ['script', 'src', '../assets/data/products.js'],
-    ['script', 'src', '../latest-event.js'],
-    ['script', 'src', '../main.js'],
+    ['script', 'src', '../assets/data/events.js'],
+    ['script', 'src', '../assets/data/journal.js'],
+    ['script', 'src', '../assets/data/brand.js'],
+    ['script', 'src', '../assets/js/core.js'],
+    ['script', 'src', '../assets/js/products.js'],
+    ['script', 'src', '../assets/js/events.js'],
+    ['script', 'src', '../assets/js/journal.js'],
+    ['script', 'src', '../assets/js/brand.js'],
   ].reduce((source, args) => stripTagByAttr(source, ...args), html);
 }
 
@@ -338,21 +344,14 @@ function luxureat_static_assets() {
         true
     );
 
-    wp_enqueue_script(
-        'luxureat-main',
-        $theme_uri . '/main.js',
-        array('luxureat-product-data'),
-        filemtime($theme_dir . '/main.js'),
-        true
-    );
-
-    wp_enqueue_script(
-        'luxureat-latest-event',
-        $theme_uri . '/latest-event.js',
-        array(),
-        filemtime($theme_dir . '/latest-event.js'),
-        true
-    );
+    wp_enqueue_script('luxureat-event-data', $theme_uri . '/assets/data/events.js', array(), filemtime($theme_dir . '/assets/data/events.js'), true);
+    wp_enqueue_script('luxureat-journal-data', $theme_uri . '/assets/data/journal.js', array(), filemtime($theme_dir . '/assets/data/journal.js'), true);
+    wp_enqueue_script('luxureat-brand-data', $theme_uri . '/assets/data/brand.js', array(), filemtime($theme_dir . '/assets/data/brand.js'), true);
+    wp_enqueue_script('luxureat-core', $theme_uri . '/assets/js/core.js', array(), filemtime($theme_dir . '/assets/js/core.js'), true);
+    wp_enqueue_script('luxureat-products', $theme_uri . '/assets/js/products.js', array('luxureat-product-data'), filemtime($theme_dir . '/assets/js/products.js'), true);
+    wp_enqueue_script('luxureat-events', $theme_uri . '/assets/js/events.js', array('luxureat-event-data'), filemtime($theme_dir . '/assets/js/events.js'), true);
+    wp_enqueue_script('luxureat-journal', $theme_uri . '/assets/js/journal.js', array('luxureat-journal-data', 'luxureat-event-data'), filemtime($theme_dir . '/assets/js/journal.js'), true);
+    wp_enqueue_script('luxureat-brand', $theme_uri . '/assets/js/brand.js', array('luxureat-brand-data'), filemtime($theme_dir . '/assets/js/brand.js'), true);
 }
 add_action('wp_enqueue_scripts', 'luxureat_static_assets');
 
@@ -472,8 +471,8 @@ This package wraps the static bilingual LuxurEat website source from https://git
 ## Notes
 
 - The current version prioritizes visual fidelity and static routing.
-- Local assets, \`integration.css\`, \`latest-event.js\`, and \`main.js\` are loaded through WordPress theme APIs.
-- Photographic assets live in \`assets/images/\`; product copy and gallery data live in \`assets/data/products.js\`.
+- Local assets and domain scripts are loaded through WordPress theme APIs.
+- Products, events, journal, and brand content each have dedicated data, script, and media locations under \`assets/\`.
 `;
 }
 
@@ -485,13 +484,11 @@ function build() {
   mkdirp(themeDir);
 
   fs.copyFileSync(path.join(sourceDir, 'integration.css'), path.join(themeDir, 'integration.css'));
-  fs.copyFileSync(path.join(sourceDir, 'main.js'), path.join(themeDir, 'main.js'));
-  fs.copyFileSync(path.join(sourceDir, 'latest-event.js'), path.join(themeDir, 'latest-event.js'));
   copyDir(path.join(sourceDir, 'assets'), path.join(themeDir, 'assets'));
 
   const screenshotSource = path.join(sourceDir, 'qa/zh-home-desktop.png');
   fs.copyFileSync(
-    fs.existsSync(screenshotSource) ? screenshotSource : path.join(sourceDir, 'assets/luxureat-logo.png'),
+    fs.existsSync(screenshotSource) ? screenshotSource : path.join(sourceDir, 'assets/media/brand/luxureat-logo.png'),
     path.join(themeDir, 'screenshot.png')
   );
 

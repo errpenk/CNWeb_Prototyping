@@ -21,6 +21,29 @@ errpenk/luxureat-website-source
 - Static fallback entry: `index.html`
 - React/shadcn migration workspace: `react-router-app/` (not deployed to the current static Pages preview)
 
+## Content Maintenance
+
+Content shared across pages has one canonical data file. Edit the data file and its matching media directory; page templates and the shopping bag render from those sources.
+
+| Domain | Text and records | Images | Runtime |
+| --- | --- | --- | --- |
+| Products | `assets/data/products.js` | `assets/media/products/` | `assets/js/products.js` |
+| Events | `assets/data/events.js` | `assets/media/events/` | `assets/js/events.js` |
+| Journal | `assets/data/journal.js` | `assets/media/journal/` | `assets/js/journal.js` |
+| Brand/contact | `assets/data/brand.js` | `assets/media/brand/` | `assets/js/brand.js` |
+
+Shared navigation, footer, modals, and page utilities live in `assets/js/core.js`. Keep content out of runtime files unless it is interface copy rather than editable product, event, journal, or brand information.
+
+After changing content, run:
+
+```bash
+node qa/verify_content_architecture.cjs
+node qa/verify_events.cjs
+node tools/verify-cart.mjs
+node scripts/build-luxureat-theme.mjs "$PWD" "$PWD/.deploy"
+node tools/verify-theme.mjs "$PWD/.deploy"
+```
+
 ## WordPress Theme Publishing
 
 The workflow `.github/workflows/publish-theme-repo.yml` builds the static site into a classic WordPress theme named `luxureat-static`.

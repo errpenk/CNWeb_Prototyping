@@ -95,7 +95,7 @@
 <link rel="stylesheet" href="../integration.css?v=20260714-reader-spacing1">
 </head><body class="font-body-md">
 <header class="lux-header">
-  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <a class="lux-brand" href="index.html"><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
   <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">首页</a><a class="" href="caviar.html">系列产品</a><a class="" href="rituals.html">品鉴艺术</a><a class="active" href="journal.html">品牌志</a><a class="" href="certification.html">品质认证</a><a class="" href="gifting.html">礼赠合作</a><a class="" href="contact.html">联系我们</a></nav>
   <div class="lux-actions">
     <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="购物袋"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="lux-bag-count" data-bag-count hidden></span></a>
@@ -111,7 +111,7 @@
 <!-- Hero Section -->
 <section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0 transition-all duration-1000 opacity-100">
-<div class="w-full h-full bg-cover bg-center grayscale opacity-60 scale-105 transition-transform duration-10000 ease-linear" style="background-image: url('../assets/images/lux-011.jpg')">
+<div class="w-full h-full bg-cover bg-center grayscale opacity-60 scale-105 transition-transform duration-10000 ease-linear" style="background-image: url('../assets/media/journal/lux-011.jpg')">
 </div>
 <div class="absolute inset-0 lux-hero-fade-both"></div>
 </div>
@@ -130,13 +130,14 @@
 </section>
 
 <!-- Main Content Grid -->
+<section class="lux-recent-events" id="recent-events" data-recent-events></section>
 <main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mt-section-gap">
 <!-- Featured Article -->
 <section class="mb-section-gap" id="featured">
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center transition-all duration-1000 opacity-100">
 <div class="lg:col-span-7 article-card lux-reader-card group cursor-pointer">
 <div class="aspect-[16/10] overflow-hidden mb-8 border border-white/5 lux-reader-media">
-<img class="w-full h-full object-cover" src="../assets/images/lux-032.jpg">
+<img class="w-full h-full object-cover" src="../assets/media/journal/lux-032.jpg">
 <button type="button" class="lux-reader-cta" data-reader-open="zh-harvest">阅读详情</button>
 </div>
 </div>
@@ -155,20 +156,20 @@
 </section>
 
 <!-- Secondary Grid -->
-<section class="mb-section-gap">
-<div class="flex justify-between items-end mb-16 border-b border-outline-variant/30 pb-8 transition-all duration-1000 opacity-100">
+<section class="lux-journal-season mb-section-gap" id="seasonal-notes">
+<div class="lux-journal-season-head transition-all duration-1000 opacity-100">
 <div>
 <h3 class="font-headline-md text-headline-md text-on-surface">时令随笔</h3>
 </div>
 <div class="hidden md:block">
-<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#" data-reader-archive>浏览往期</a>
+<a class="lux-narrative-link" href="#" data-reader-archive>浏览往期<span class="material-symbols-outlined">arrow_forward</span></a>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-24 gap-x-gutter transition-all duration-1000 opacity-100">
+<div class="lux-journal-season-grid transition-all duration-1000 opacity-100">
 <!-- Article 1 -->
-<article class="article-card lux-reader-card group cursor-pointer transition-all duration-1000 opacity-100">
+<article class="lux-journal-season-card article-card lux-reader-card group cursor-pointer transition-all duration-1000 opacity-100">
 <div class="aspect-[4/5] overflow-hidden mb-6 border border-white/5 lux-reader-media">
-<img class="w-full h-full object-cover" src="../assets/images/lux-026.jpg">
+<img class="w-full h-full object-cover" src="../assets/media/products/lux-026.jpg">
 <button type="button" class="lux-reader-cta" data-reader-open="zh-truffle">阅读详情</button>
 </div>
 <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-3 block">寻味溯源</span>
@@ -179,9 +180,9 @@
 <div class="w-full h-[1px] bg-outline-variant/30 origin-left scale-x-100"></div>
 </article>
 <!-- Article 2 -->
-<article class="article-card lux-reader-card group cursor-pointer transition-all duration-1000 opacity-100">
+<article class="lux-journal-season-card article-card lux-reader-card group cursor-pointer transition-all duration-1000 opacity-100">
 <div class="aspect-[4/5] overflow-hidden mb-6 border border-white/5 lux-reader-media">
-<img class="w-full h-full object-cover" src="../assets/images/lux-003.jpg">
+<img class="w-full h-full object-cover" src="../assets/media/journal/lux-003.jpg">
 <button type="button" class="lux-reader-cta" data-reader-open="zh-service">阅读详情</button>
 </div>
 <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-3 block">精致生活</span>
@@ -192,9 +193,9 @@
 <div class="w-full h-[1px] bg-outline-variant/30 origin-left scale-x-100"></div>
 </article>
 <!-- Article 3 -->
-<article class="article-card lux-reader-card group cursor-pointer transition-all duration-1000 opacity-100">
+<article class="lux-journal-season-card article-card lux-reader-card group cursor-pointer transition-all duration-1000 opacity-100">
 <div class="aspect-[4/5] overflow-hidden mb-6 border border-white/5 lux-reader-media">
-<img class="w-full h-full object-cover" src="../assets/images/lux-048.jpg">
+<img class="w-full h-full object-cover" src="../assets/media/journal/lux-048.jpg">
 <button type="button" class="lux-reader-cta" data-reader-open="zh-malossol">阅读详情</button>
 </div>
 <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-3 block">匠心工艺</span>
@@ -247,7 +248,7 @@
 
 <footer class="lux-footer">
   <div class="lux-footer-grid">
-    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>一场关于味觉的奥德赛，通过可持续发展的实践与毫不妥协的质量标准，为您搜寻世间罕有的绝世美味。</p></div>
+    <div><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>一场关于味觉的奥德赛，通过可持续发展的实践与毫不妥协的质量标准，为您搜寻世间罕有的绝世美味。</p></div>
     <nav><a href="index.html">首页</a><a href="caviar.html">系列产品</a><a href="rituals.html">品鉴艺术</a><a href="journal.html">品牌志</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
     <div class="lux-footer-social"><a href="https://xhslink.com/m/6Jn3PRYzjAy" target="_blank" rel="noopener">小红书</a><button type="button" data-footer-modal="wechat">微信</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener">微博</a></div>
     <div><a href="mailto:china@luxureat.com">china@luxureat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">隐私政策</button><button type="button" data-footer-modal="terms">销售条款</button><button type="button" data-footer-modal="shipping">配送说明</button></div></div>
@@ -255,5 +256,10 @@
   <div class="lux-footer-bottom">© 2024 LUXUREAT MAISON. 已获 CITES & FDA 认证.</div>
 </footer>
 <script src="../assets/data/products.js?v=20260714-data-sync1"></script>
-<script src="../assets/data/articles.js?v=20260714-data-sync1"></script>
-<script src="../main.js?v=20260714-data-sync1"></script></body></html>
+<script src="../assets/data/events.js?v=20260715-events1"></script>
+<script src="../assets/data/journal.js?v=20260715-content1"></script>
+<script src="../assets/js/journal.js?v=20260715-content1"></script>
+<script src="../assets/data/brand.js?v=20260715-content1"></script>
+<script src="../assets/js/core.js?v=20260715-content1"></script>
+<script src="../assets/js/products.js?v=20260715-content1"></script>
+<script src="../assets/js/brand.js?v=20260715-content1"></script></body></html>

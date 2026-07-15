@@ -57,7 +57,7 @@ const context = {
 };
 
 vm.createContext(context);
-vm.runInContext(fs.readFileSync('main.js', 'utf8'), context);
+vm.runInContext(fs.readFileSync('assets/js/products.js', 'utf8'), context);
 
 const bag = context.window.LuxureatBag;
 assert.equal(typeof bag?.add, 'function');

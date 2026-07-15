@@ -75,7 +75,7 @@ function isAqua([r, g, b]) {
   assert(result.relatedCtaFontSize <= 16, `related CTA should use original small size: ${result.relatedCtaFontSize}px`);
   assert(result.tocCount >= 3, `reader toc is missing section links: ${result.tocCount}`);
   assert(result.tocFirst === "低盐的边界", `reader toc first item is wrong: ${result.tocFirst}`);
-  assert(result.relatedOpacity === "1", `related CTA should be visible before hover: ${result.relatedOpacity}`);
+  assert(parseFloat(result.relatedOpacity) < 0.02, `related CTA should be hidden before hover: ${result.relatedOpacity}`);
   assert(rgbNumbers(result.relatedBorder).every((value) => value > 240), `related CTA default border should be white: ${result.relatedBorder}`);
   assert(rgbNumbers(result.relatedBg).every((value) => value < 10), `related CTA default background should be transparent/dark: ${result.relatedBg}`);
   assert(result.overflow <= 6, `reader modal has horizontal overflow: ${result.overflow}px`);
@@ -105,7 +105,19 @@ function isAqua([r, g, b]) {
   const [closeHoverR, closeHoverG, closeHoverB] = rgbNumbers(closeHover);
   assert(isAqua([closeHoverR, closeHoverG, closeHoverB]), `reader close hover background is not aqua: ${closeHover}`);
 
-  await page.hover(".lux-reader-related-grid button");
+  await page.locator(".lux-reader-related-media").first().hover({ position: { x: 24, y: 24 } });
+  await page.waitForTimeout(220);
+  const relatedImageHover = await page.evaluate(() => {
+    const cta = document.querySelector(".lux-reader-related-cta");
+    return {
+      opacity: getComputedStyle(cta).opacity,
+      bg: getComputedStyle(cta).backgroundColor,
+    };
+  });
+  assert(parseFloat(relatedImageHover.opacity) > 0.98, `related CTA should appear on image hover: ${relatedImageHover.opacity}`);
+  assert(rgbNumbers(relatedImageHover.bg).every((value) => value < 40), `related CTA image-hover background should stay dark: ${relatedImageHover.bg}`);
+
+  await page.hover(".lux-reader-related-cta");
   await page.waitForTimeout(220);
   const relatedHover = await page.evaluate(() => {
     const cta = document.querySelector(".lux-reader-related-cta");
