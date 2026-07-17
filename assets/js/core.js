@@ -29,19 +29,30 @@ const luxNavigation = {
 
 if (luxNav && luxMenu) {
   const language = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
-  const currentPage = location.pathname.split("/").pop() || "index.html";
+  const pathParts = location.pathname.split("/").filter(Boolean);
+  const isStaticPage = location.pathname.endsWith(".html");
+  const currentSlug = isStaticPage
+    ? (pathParts[pathParts.length - 1] || "index.html").replace(/\.html$/, "")
+    : (!pathParts.length || pathParts[pathParts.length - 1] === "en" ? "index" : pathParts[pathParts.length - 1]);
+  const currentPage = `${currentSlug}.html`;
   const pageItems = luxNavigation[language];
+  const pageHref = (href, targetLanguage = language) => {
+    if (isStaticPage) return targetLanguage === language ? href : `../${targetLanguage}/${href}`;
+    const slug = href.replace(/\.html$/, "");
+    if (targetLanguage === "zh") return slug === "index" ? "/" : `/${slug}/`;
+    return slug === "index" ? "/en/" : `/en/${slug}/`;
+  };
 
   luxNav.replaceChildren(...pageItems.map(([href, label, sections], itemIndex) => {
     const item = document.createElement("div");
     item.className = "lux-nav-item";
 
     const link = document.createElement("a");
-    link.href = href;
+    link.href = pageHref(href);
     link.textContent = label;
     link.classList.toggle("active", href === currentPage);
     link.addEventListener("click", () => {
-      const target = new URL(href, location.href);
+      const target = new URL(pageHref(href), location.href);
       sessionStorage.setItem(`luxureatScroll:${target.pathname}`, "0");
     });
     item.appendChild(link);
@@ -61,7 +72,7 @@ if (luxNav && luxMenu) {
     flyout.setAttribute("aria-label", `${label} sections`);
     sections.forEach((section, index) => {
       const sectionLink = document.createElement("a");
-      sectionLink.href = `${href}#section-${index + 1}`;
+      sectionLink.href = `${pageHref(href)}#section-${index + 1}`;
       sectionLink.textContent = section;
       flyout.appendChild(sectionLink);
     });
@@ -83,7 +94,7 @@ if (luxNav && luxMenu) {
   if (footerNav) {
     footerNav.replaceChildren(...pageItems.map(([href, label]) => {
       const link = document.createElement("a");
-      link.href = href;
+      link.href = pageHref(href);
       link.textContent = label;
       return link;
     }));
@@ -94,8 +105,8 @@ if (luxNav && luxMenu) {
     : currentPage === "products.html" ? "caviar.html" : currentPage;
   const languageLinks = document.querySelectorAll(".lux-lang a");
   if (languageLinks.length === 2 && pairedPage !== "bag.html") {
-    languageLinks[0].href = language === "zh" ? "#" : `../zh/${pairedPage}`;
-    languageLinks[1].href = language === "en" ? "#" : `../en/${pairedPage}`;
+    languageLinks[0].href = language === "zh" ? "#" : pageHref(pairedPage, "zh");
+    languageLinks[1].href = language === "en" ? "#" : pageHref(pairedPage, "en");
   }
 
   if (pageItems.some(([href]) => href === currentPage)) {

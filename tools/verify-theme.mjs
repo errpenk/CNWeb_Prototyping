@@ -206,6 +206,7 @@ assert(runtimeJs.includes('lux-reader-layout') && runtimeJs.includes('lux-reader
 assert(runtimeJs.includes('scrollRestoration'), 'runtime scripts restores saved scroll positions manually');
 assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-top floating action button');
 assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
+assert(runtimeJs.includes('const pageHref =') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('`/en/${slug}/`'), 'runtime navigation keeps static links relative and WordPress links root-based');
 assert(runtimeJs.includes('aria-pressed'), 'runtime scripts updates pressed states for caviar toolbar buttons');
 assert(runtimeJs.includes('.hidden ='), 'runtime scripts hides filtered-out caviar product cards');
 
