@@ -269,7 +269,7 @@ assert(zhGifting.includes('data-info-popover'), 'Chinese gifting page marks scen
 assert(enGifting.includes('data-info-popover'), 'English gifting page marks scenario info buttons');
 assert(!zhGifting.includes('立即获取企业画册') && !zhGifting.includes('咨询专属顾问'), 'Chinese gifting hero removes the requested CTA controls');
 assert(!enGifting.includes('Explore Collections'), 'English gifting hero removes the matching CTA control');
-assert(zhGifting.includes('<strong>参考方案</strong>') && !zhGifting.includes('<span>专业合作</span>') && !zhGifting.includes('开启企业礼赠方案'), 'Chinese gifting partner card uses the requested reference-plan wording');
+assert(zhGifting.includes('>参考方案</strong>') && !zhGifting.includes('<span>专业合作</span>') && !zhGifting.includes('开启企业礼赠方案'), 'Chinese gifting partner card uses the requested reference-plan wording');
 assert(enGifting.includes('<strong>Reference Plan</strong>') && !enGifting.includes('<span>Professional Partnership</span>') && !enGifting.includes('Start a Corporate Program'), 'English gifting partner card mirrors the reference-plan wording');
 
 const zhBag = read(path.join(themeDir, 'pages/zh/bag.php'));
@@ -288,12 +288,12 @@ assert(zhJournal.includes('lux-reader-card'), 'Chinese journal cards expose hove
 assert(enJournal.includes('lux-reader-card'), 'English journal cards expose hover reader actions');
 
 const zhRituals = read(path.join(themeDir, 'pages/zh/rituals.php'));
-assert(zhRituals.includes('data-reader-open="zh-champagne"'), 'Chinese rituals pairing cards open reader details');
-assert(enRituals.includes('data-reader-open="en-champagne"'), 'English rituals pairing cards open reader details');
-assert(zhRituals.includes('data-reader-open="zh-breath"') && zhRituals.includes('data-reader-open="zh-hand-warm"') && zhRituals.includes('data-reader-open="zh-palate"'), 'Chinese rituals ceremony cards open reader details');
+assert(zhRituals.includes('data-reader-open="zh-recipe-truffle-eggs"'), 'Chinese rituals pairing cards open reader details');
+assert(enRituals.includes('data-reader-open="en-recipe-truffle-eggs"'), 'English rituals pairing cards open reader details');
+assert(zhRituals.includes('data-reader-open="zh-recipe-truffle-tagliolini"') && zhRituals.includes('data-reader-open="zh-recipe-truffle-ravioli"') && zhRituals.includes('data-reader-open="zh-recipe-black-truffle-risotto"'), 'Chinese rituals ceremony cards open reader details');
 assert(zhRituals.includes("luxureat_static_url('zh/caviar'"), 'Chinese rituals shopping CTA links to products');
 assert(enRituals.includes("luxureat_static_url('en/products'"), 'English rituals shopping CTA links to products');
-assert(zhRituals.includes('即刻购买') && zhRituals.includes('系列产品') && !zhRituals.includes('>去购物<'), 'Chinese rituals shopping CTA uses the requested wording');
+assert(zhRituals.includes('食材购买') && zhRituals.includes('系列产品') && !zhRituals.includes('>去购物<'), 'Chinese rituals shopping CTA uses the requested wording');
 assert(enRituals.includes('Buy Now') && enRituals.includes('Products') && !enRituals.includes('>Shop Now<'), 'English rituals shopping CTA mirrors the requested wording');
 assert((zhRituals.match(/lux-dark-photo-block/g) || []).length >= 3, 'Chinese rituals ceremony cards use dark photo backgrounds');
 
