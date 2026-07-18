@@ -16,7 +16,7 @@ const home = read("zh/index.html");
 ].forEach((value) => assert.ok(home.includes(value), `missing: ${value}`));
 
 assert.ok(read("zh/contact.html").includes('id="global-footprint"'));
-assert.ok(read("zh/news.html").includes("brand-news-global.png"));
+assert.ok(read("zh/news.html").includes("brand-news-global.webp"));
 assert.ok(read("zh/rituals.html").includes(">食材购买</h2>"));
 assert.ok(read("assets/js/journal.js").includes('articles[readerHash]'));
 

@@ -27,6 +27,10 @@ function assert(condition, message) {
   for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
     const page = await browser.newPage({ viewport });
     await page.goto(`${BASE_URL}/zh/certification.html`, { waitUntil: "domcontentloaded" });
+    const certificationCards = page.locator(".lux-cert-card");
+    for (let index = 0; index < await certificationCards.count(); index += 1) {
+      await certificationCards.nth(index).scrollIntoViewIfNeeded();
+    }
     await page.waitForFunction(() => [...document.querySelectorAll(".lux-cert-card img")].every((image) => image.complete && image.naturalWidth > 0));
     const result = await page.evaluate(() => ({
       title: document.querySelector("h1")?.textContent.replace(/\s+/g, "").trim(),

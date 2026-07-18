@@ -28,7 +28,7 @@ assert(
   "event image must resolve from the theme asset directory",
 );
 assert(
-  event.poster === "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/marca-china-2026-home.jpeg",
+  event.poster === "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/marca-china-2026-home.webp",
   "event poster must resolve from the theme asset directory",
 );
 assert(event.zh?.title && event.zh?.sections?.length >= 3, "Chinese event article is incomplete");

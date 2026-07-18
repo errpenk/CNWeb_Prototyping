@@ -2,19 +2,17 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { pages, scripts } from '../site.config.mjs';
 
 const sourceDir = path.resolve(process.argv[2] || process.cwd());
 const outputRoot = path.resolve(process.argv[3] || process.cwd());
 const themeDir = path.join(outputRoot, 'luxureat-static');
 const zipFile = path.join(outputRoot, 'luxureat-static-theme.zip');
 
-const pageInputs = ['zh', 'en'].flatMap((lang) => fs.readdirSync(path.join(sourceDir, lang))
-  .filter((file) => file.endsWith('.html'))
-  .sort()
-  .map((file) => [lang, path.basename(file, '.html'), `${lang}/${file}`]));
+const pageInputs = pages.map(({ lang, slug, file }) => [lang, slug, file]);
 
 function ensureSource() {
-  for (const file of ['README.md', 'integration.css', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.png', 'assets/data/products.js', 'assets/data/events.js', 'assets/data/journal.js', 'assets/data/brand.js', 'assets/js/core.js', 'assets/js/products.js', 'assets/js/events.js', 'assets/js/journal.js', 'assets/js/brand.js']) {
+  for (const file of ['README.md', '.htaccess', 'integration.css', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.png', 'assets/data/products.js', 'assets/data/events.js', 'assets/data/journal.js', 'assets/data/brand.js', 'assets/js/core.js', 'assets/js/products.js', 'assets/js/events.js', 'assets/js/journal.js', 'assets/js/brand.js']) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
     }
@@ -163,7 +161,7 @@ function convertHtml(file, lang) {
 
   html = stripKnownLocalIncludes(html);
 
-  html = html.replace(/\b(src|href)=(["'])\.\.\/assets\/([^"']+)\2/g, (_match, attr, quote, assetPath) => {
+  html = html.replace(/\b(src|href|data-lux-bg)=(["'])\.\.\/assets\/([^"']+)\2/g, (_match, attr, quote, assetPath) => {
     return `${attr}=${quote}${phpThemeAsset(assetPath)}${quote}`;
   });
   html = html.replace(/url\((['"]?)\.\.\/assets\/([^'")]+)\1\)/g, (_match, quote, assetPath) => {
@@ -211,7 +209,22 @@ Text Domain: luxureat-static
 `;
 }
 
+function phpList(values) {
+  return `array(${values.map((value) => `'${escapePhpString(value)}'`).join(', ')})`;
+}
+
+function buildAssetCatalogPhp() {
+  const catalog = Object.entries(scripts).map(([handle, script]) => {
+    return `        '${escapePhpString(handle)}' => array('src' => '${escapePhpString(script.src)}', 'dependencies' => ${phpList(script.dependencies)}),`;
+  }).join('\n');
+  const byPath = pages.map((page) => {
+    return `        '${escapePhpString(page.route)}' => ${phpList(page.scripts)},`;
+  }).join('\n');
+  return { catalog, byPath };
+}
+
 function functionsPhp() {
+  const { catalog, byPath } = buildAssetCatalogPhp();
   return `<?php
 if (!defined('ABSPATH')) {
     exit;
@@ -320,6 +333,10 @@ function luxureat_static_current_path() {
 function luxureat_static_assets() {
     $theme_dir = get_template_directory();
     $theme_uri = get_template_directory_uri();
+    $path = luxureat_static_current_path();
+    $path = $path === '' ? 'zh' : $path;
+    $aliases = luxureat_static_aliases();
+    $path = isset($aliases[$path]) ? $aliases[$path] : $path;
 
     wp_enqueue_style(
         'luxureat-integration',
@@ -328,25 +345,53 @@ function luxureat_static_assets() {
         filemtime($theme_dir . '/integration.css')
     );
 
-
-    wp_enqueue_script(
-        'luxureat-product-data',
-        $theme_uri . '/assets/data/products.js',
-        array(),
-        filemtime($theme_dir . '/assets/data/products.js'),
-        true
+    $catalog = array(
+${catalog}
+    );
+    $assets_by_path = array(
+${byPath}
     );
 
-    wp_enqueue_script('luxureat-event-data', $theme_uri . '/assets/data/events.js', array(), filemtime($theme_dir . '/assets/data/events.js'), true);
-    wp_enqueue_script('luxureat-journal-data', $theme_uri . '/assets/data/journal.js', array(), filemtime($theme_dir . '/assets/data/journal.js'), true);
-    wp_enqueue_script('luxureat-brand-data', $theme_uri . '/assets/data/brand.js', array(), filemtime($theme_dir . '/assets/data/brand.js'), true);
-    wp_enqueue_script('luxureat-core', $theme_uri . '/assets/js/core.js', array(), filemtime($theme_dir . '/assets/js/core.js'), true);
-    wp_enqueue_script('luxureat-products', $theme_uri . '/assets/js/products.js', array('luxureat-product-data'), filemtime($theme_dir . '/assets/js/products.js'), true);
-    wp_enqueue_script('luxureat-events', $theme_uri . '/assets/js/events.js', array('luxureat-event-data'), filemtime($theme_dir . '/assets/js/events.js'), true);
-    wp_enqueue_script('luxureat-journal', $theme_uri . '/assets/js/journal.js', array('luxureat-journal-data', 'luxureat-event-data'), filemtime($theme_dir . '/assets/js/journal.js'), true);
-    wp_enqueue_script('luxureat-brand', $theme_uri . '/assets/js/brand.js', array('luxureat-brand-data'), filemtime($theme_dir . '/assets/js/brand.js'), true);
+    foreach (isset($assets_by_path[$path]) ? $assets_by_path[$path] : array('core') as $handle) {
+        if (!isset($catalog[$handle])) {
+            continue;
+        }
+        $script = $catalog[$handle];
+        $source = $theme_dir . '/' . $script['src'];
+        if (!is_file($source)) {
+            continue;
+        }
+        $dependencies = array_map(function ($dependency) {
+            return 'luxureat-' . $dependency;
+        }, $script['dependencies']);
+        wp_enqueue_script(
+            'luxureat-' . $handle,
+            $theme_uri . '/' . $script['src'],
+            $dependencies,
+            filemtime($source),
+            true
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 'luxureat_static_assets');
+
+function luxureat_static_defer_scripts($tag, $handle) {
+    if (strpos($handle, 'luxureat-') !== 0 || strpos($tag, ' defer') !== false) {
+        return $tag;
+    }
+
+    return str_replace(' src=', ' defer src=', $tag);
+}
+add_filter('script_loader_tag', 'luxureat_static_defer_scripts', 10, 2);
+
+function luxureat_static_cache_headers($headers) {
+    if (!is_admin() && !is_user_logged_in()) {
+        $headers['Cache-Control'] = 'public, max-age=300, stale-while-revalidate=86400';
+    }
+
+    return $headers;
+}
+add_filter('wp_headers', 'luxureat_static_cache_headers');
 
 function luxureat_static_register_routes() {
     foreach (array_keys(luxureat_static_routes()) as $route) {
@@ -477,6 +522,7 @@ function build() {
   mkdirp(themeDir);
 
   fs.copyFileSync(path.join(sourceDir, 'integration.css'), path.join(themeDir, 'integration.css'));
+  fs.copyFileSync(path.join(sourceDir, '.htaccess'), path.join(themeDir, '.htaccess'));
   copyDir(path.join(sourceDir, 'assets'), path.join(themeDir, 'assets'));
 
   const screenshotSource = path.join(sourceDir, 'qa/zh-home-desktop.png');

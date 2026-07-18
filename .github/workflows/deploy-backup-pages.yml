@@ -26,6 +26,20 @@ jobs:
       - name: Checkout backup branch
         uses: actions/checkout@v7
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Optimize uploaded images
+        run: |
+          npm ci
+          npm run images:optimize
+
+      - name: Check generated page structure
+        run: npm run site:check
+
       - name: Prepare static preview
         run: |
           mkdir -p .pages
@@ -35,10 +49,11 @@ jobs:
             --exclude='.deploy' \
             --exclude='docs' \
             --exclude='qa' \
-            --exclude='react-router-app' \
             --exclude='scripts' \
+            --exclude='site.config.mjs' \
             --exclude='tools' \
             --exclude='wordpress-plugins' \
+            --exclude='node_modules' \
             ./ .pages/
 
       - name: Configure Pages

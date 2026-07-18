@@ -12,6 +12,13 @@ function assert(condition, message) {
     const page = await browser.newPage({ viewport });
     await page.goto(`file://${path.resolve(__dirname, "../zh/journal.html")}`, { waitUntil: "domcontentloaded" });
     await page.waitForSelector(".lux-about-story .lux-reader-layout");
+    const aboutImages = page.locator(".lux-about-image-button img");
+    for (let index = 0; index < await aboutImages.count(); index += 1) {
+      await aboutImages.nth(index).scrollIntoViewIfNeeded();
+    }
+    await page.waitForFunction(() => [...document.querySelectorAll(".lux-about-image-button img")]
+      .every((image) => image.complete && image.naturalWidth > 0));
+    await page.locator(".lux-about-carousel-track").evaluate((node) => node.scrollTo({ left: 0 }));
 
     const placement = await page.evaluate(() => {
       const events = document.querySelector("[data-recent-events]");

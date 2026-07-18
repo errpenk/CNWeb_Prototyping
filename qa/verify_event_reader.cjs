@@ -33,7 +33,7 @@ function assert(condition, message) {
 
       assert(result.title?.includes(lang === "zh" ? "LuxurEat 关注" : "LuxurEat at"), `${lang} event title is wrong`);
       assert(result.image?.includes("assets/media/events/marca-china-2026.png"), `${lang} event image is not shared`);
-      assert(result.indexImage?.includes("assets/media/events/marca-china-2026-home.jpeg"), `${lang} event index image should use the full Marca poster: ${result.indexImage}`);
+      assert(result.indexImage?.includes("assets/media/events/marca-china-2026-home.webp"), `${lang} event index image should use the full Marca poster: ${result.indexImage}`);
       assert(result.indexImageFit === "contain", `${lang} event index image should show the complete poster: ${result.indexImageFit}`);
       assert(result.sectionTitleFont.includes("Alimama ShuHei"), `${lang} event section title should use Alimama ShuHei: ${result.sectionTitleFont}`);
       assert(result.sections === 3, `${lang} event article sections are incomplete`);

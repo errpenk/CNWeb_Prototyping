@@ -2,9 +2,8 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>品质与认证 | LuxurEat Maison</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260718-performance">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;0,900&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <style>
         .material-symbols-outlined {
@@ -17,125 +16,33 @@
         .glass-header { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
         .hover-gold-glow:hover { box-shadow: 0 0 20px rgba(157, 245, 236, 0.1); }
     </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "outline-variant": "#3e4947",
-                      "surface-container": "#20201f",
-                      "primary-container": "#81d8d0",
-                      "on-tertiary-fixed-variant": "#474747",
-                      "inverse-primary": "#006a64",
-                      "background": "#131313",
-                      "surface-tint": "#7ed5cd",
-                      "secondary-fixed": "#ffe088",
-                      "surface-variant": "#353535",
-                      "on-surface": "#e5e2e1",
-                      "surface-container-low": "#1c1b1b",
-                      "on-secondary-fixed-variant": "#574500",
-                      "on-secondary-fixed": "#241a00",
-                      "on-tertiary-fixed": "#1b1b1b",
-                      "on-secondary-container": "#342800",
-                      "outline": "#889391",
-                      "on-surface-variant": "#bdc9c7",
-                      "tertiary-fixed": "#e2e2e2",
-                      "on-primary-container": "#005f59",
-                      "tertiary": "#e5e5e5",
-                      "surface-container-lowest": "#0e0e0e",
-                      "surface": "#131313",
-                      "surface-container-highest": "#353535",
-                      "surface-bright": "#393939",
-                      "on-error-container": "#ffdad6",
-                      "surface-dim": "#131313",
-                      "secondary": "#e9c349",
-                      "secondary-fixed-dim": "#e9c349",
-                      "primary-fixed-dim": "#7ed5cd",
-                      "primary-fixed": "#9bf2ea",
-                      "on-tertiary": "#303030",
-                      "on-primary-fixed-variant": "#00504b",
-                      "inverse-surface": "#e5e2e1",
-                      "tertiary-fixed-dim": "#c6c6c6",
-                      "error-container": "#93000a",
-                      "primary": "#9df5ec",
-                      "tertiary-container": "#c9c9c9",
-                      "inverse-on-surface": "#313030",
-                      "on-secondary": "#3c2f00",
-                      "surface-container-high": "#2a2a2a",
-                      "secondary-container": "#af8d11",
-                      "on-background": "#e5e2e1",
-                      "error": "#ffb4ab",
-                      "on-primary-fixed": "#00201e",
-                      "on-tertiary-container": "#545454",
-                      "on-primary": "#003734",
-                      "on-error": "#690005"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "spacing": {
-                      "margin-desktop": "80px",
-                      "unit": "8px",
-                      "section-gap": "120px",
-                      "gutter": "24px",
-                      "container-max": "1440px",
-                      "margin-mobile": "24px"
-              },
-              "fontFamily": {
-                      "body-lg": ["Montserrat"],
-                      "label-lg": ["Montserrat"],
-                      "body-md": ["Montserrat"],
-                      "headline-lg": ["Bodoni Moda"],
-                      "label-sm": ["Montserrat"],
-                      "display-lg-mobile": ["Bodoni Moda"],
-                      "headline-sm": ["Bodoni Moda"],
-                      "display-lg": ["Bodoni Moda"],
-                      "headline-md": ["Bodoni Moda"]
-              },
-              "fontSize": {
-                      "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300"}],
-                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600"}],
-                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
-                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                      "display-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "300"}],
-                      "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
-                      "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "300"}],
-                      "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}]
-              }
-            },
-          },
-        }
-    </script>
 
-<link rel="stylesheet" href="../integration.css?v=20260716-cert-logos1">
+<link rel="stylesheet" href="../integration.css?v=20260718-performance">
 </head>
 <body class="text-on-surface">
+<!-- lux:header:start -->
 <header class="lux-header">
-  <a class="lux-brand" href="index.html"><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
-  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">首页</a><a class="" href="journal.html">关于我们</a><a class="" href="caviar.html">系列产品</a><a class="" href="rituals.html">食谱艺术</a><a class="" href="news.html">品牌新闻</a><a class="active" href="certification.html">品质认证</a><a class="" href="gifting.html">礼赠合作</a><a class="" href="contact.html">联系我们</a></nav>
+  <a class="lux-brand" href="index.html"><img loading="eager" fetchpriority="high" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a href="index.html">首页</a><a href="journal.html">关于我们</a><a href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a class="active" href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
   <div class="lux-actions">
     <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="购物袋"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="lux-bag-count" data-bag-count hidden></span></a>
     <button class="lux-icon-action lux-account-link" type="button" data-account-open aria-label="个人登录"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
-    <span class="lux-lang"><a class="active" href="#">ZH</a><span>/</span><a class="" href="../en/index.html">EN</a></span>
+    <span class="lux-lang"><a class="active" href="#">ZH</a><span>/</span><a href="../en/certification.html">EN</a></span>
     <button class="lux-menu" type="button" data-open="关闭" data-closed="菜单" aria-expanded="false">菜单</button>
   </div>
 </header>
+<!-- lux:header:end -->
 
 <!-- Top Navigation -->
 
 <!-- Hero Section -->
 <header class="relative h-[819px] flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 lux-hero-fade-both z-10"></div>
-<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="LuxurEat 品质认证与国际标准" style="background-image: url('../assets/media/brand/cert-market-access.jpg')"></div>
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="LuxurEat 品质认证与国际标准" style="background-image: url('../assets/media/brand/cert-market-access.webp')"></div>
 <div class="relative z-20 text-center px-margin-mobile">
 <p class="font-label-lg text-label-lg text-primary tracking-[0.3em] mb-4">资格与认证</p>
 <h1 class="zh-display-title text-on-surface mb-8">品质承诺与<br/><span class="text-secondary">权威认证</span></h1>
-<p class="lux-cert-hero-note"><strong>中国市场合规说明</strong>：所有产品均已注册 CITA/CIQ 编号，拥有官方中文标签，适用于电商平台、酒店、礼品渠道及高端零售。我们致力于打造中国市场上最具代表性的意大利高端美食品牌，服务五星级酒店、米其林餐厅、高端买手店与进口商。</p>
+<p class="lux-cert-hero-note"><strong>中国市场合规说明</strong>：进入中国市场的产品将根据具体品类完成所需注册、进口文件与中文标签。每款产品的准入状态、认证及适用渠道，应以相应产品文件和标签为准。</p>
 <div class="w-24 h-px bg-primary mx-auto"></div>
 </div>
 
@@ -164,11 +71,13 @@
 </div>
 </div>
 <div class="order-1 md:order-2 aspect-square bg-surface-container-low border border-outline-variant/30 flex items-center justify-center p-12 overflow-hidden group">
-<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="负责任贸易与合规文件认证" style="background-image: url('../assets/media/brand/cert-responsible-trade.png')"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="负责任贸易与合规文件认证" data-lux-bg="../assets/media/brand/cert-responsible-trade.webp"></div>
 </div>
 </section>
 <!-- Cold Chain Logistics -->
 <section class="mb-section-gap lux-muted-block lux-cert-system-block p-12 md:p-24 border-t border-b border-outline-variant/10 transition-all duration-1000 opacity-100">
+<video class="lux-about-program-media" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/cert-quality-system.m4v" type="video/mp4"></video>
+<div class="lux-cert-system-overlay" aria-hidden="true"></div>
 <div class="max-w-3xl mx-auto text-center mb-16">
 <h2 class="font-headline-lg text-headline-lg mb-6">全球品质体系：从产地到市场</h2>
 <p class="font-body-lg text-body-lg text-on-surface-variant">以传统为根、创新为向、可持续性为责，LuxurEat 以相互衔接的国际标准守护原料、生产、供应链与市场准入。</p>
@@ -194,11 +103,7 @@
 <!-- Food Safety Section -->
 <section class="grid grid-cols-1 md:grid-cols-2 gap-section-gap items-center mb-section-gap transition-all duration-1000 opacity-100">
 <div class="aspect-[4/5] bg-surface-container-low border border-outline-variant/30 overflow-hidden relative">
-<div class="absolute inset-0 bg-cover bg-center" data-alt="LuxurEat 品质合作与共同坚持" style="background-image: url('../assets/media/brand/cert-our-commitment.jpg')"></div>
-<div class="absolute bottom-8 left-8 p-6 bg-surface/60 backdrop-blur-md border border-white/10 max-w-xs">
-<p class="font-label-lg text-label-lg text-primary uppercase mb-2">我们的坚持</p>
-<p class="font-body-md text-body-md">以传统为根、创新为向、可持续性为责。</p>
-</div>
+<div class="absolute inset-0 bg-cover bg-center" data-alt="LuxurEat 品质合作与共同坚持" data-lux-bg="../assets/media/brand/cert-our-commitment.webp"></div>
 </div>
 <div>
 <h2 class="font-headline-lg text-headline-lg mb-8">认证体系：传统品质的现代证明</h2>
@@ -231,22 +136,22 @@
 <section class="transition-all duration-1000 opacity-100">
 <div class="text-center mb-16">
 <h2 class="font-headline-md text-headline-md mb-4">认证与品质标识 Glossary</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">完整呈现保障产品安全、合规、可持续性与卓越品质的国际认证及权威标识</p>
+<p class="font-body-md text-body-md text-on-surface-variant">以下标识用于说明不同产品可能涉及的安全、合规、可持续性与饮食标准；每项认证仅适用于带有相应文件或标识的产品。</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
-<div class="lux-cert-card" data-certification="OU Kosher" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/ou-kosher.png" alt="OU Kosher logo"><h5>OU Kosher</h5><p>符合犹太洁食规范的原料、生产与加工要求。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/ou-kosher.png" alt=""><strong>OU Kosher</strong></div></div></div>
-<div class="lux-cert-card" data-certification="Demeter" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/demeter.png" alt="Demeter logo"><h5>Demeter</h5><p>生物动力农业体系，强调土壤、生态与农业循环。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/demeter.png" alt=""><strong>Demeter</strong></div></div></div>
-<div class="lux-cert-card" data-certification="CITES" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/cites.png" alt="CITES logo"><h5>CITES</h5><p>确保濒危物种相关产品合法贸易、可追溯与生态保护。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/cites.png" alt=""><strong>CITES</strong></div></div></div>
-<div class="lux-cert-card" data-certification="Excellent Taste 2025" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/excellent-taste-2025.png" alt="Excellent Taste 2025 logo"><h5>Excellent Taste 2025</h5><p>伦敦品质奖章，肯定产品卓越而稳定的风味表现。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/excellent-taste-2025.png" alt=""><strong>Excellent Taste 2025</strong></div></div></div>
-<div class="lux-cert-card" data-certification="Eccellenze Italiane 2025" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/eccellenze-italiane-2025.png" alt="Eccellenze Italiane 2025 logo"><h5>Eccellenze Italiane 2025</h5><p>彰显意大利制造、工艺传承与美食文化的卓越标识。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/eccellenze-italiane-2025.png" alt=""><strong>Eccellenze Italiane 2025</strong></div></div></div>
-<div class="lux-cert-card" data-certification="FDA" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/fda.png" alt="FDA logo"><h5>FDA</h5><p>符合美国食品药品监督管理体系的食品安全要求。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/fda.png" alt=""><strong>FDA</strong></div></div></div>
-<div class="lux-cert-card" data-certification="HACCP" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/haccp.png" alt="HACCP logo"><h5>HACCP</h5><p>以危害分析与关键控制点管理食品安全生产全过程。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/haccp.png" alt=""><strong>HACCP</strong></div></div></div>
-<div class="lux-cert-card" data-certification="Vegan" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/vegan.png" alt="Vegan logo"><h5>Vegan</h5><p>适用于符合纯素标准、不使用动物来源成分的产品方案。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/vegan.png" alt=""><strong>Vegan</strong></div></div></div>
-<div class="lux-cert-card" data-certification="USDA Organic" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/usda-organic.png" alt="USDA Organic logo"><h5>USDA Organic</h5><p>规范有机原料、生产过程与标识管理的美国有机标准。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/usda-organic.png" alt=""><strong>USDA Organic</strong></div></div></div>
-<div class="lux-cert-card" data-certification="Halal" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/halal.png" alt="Halal logo"><h5>Halal</h5><p>符合清真食品对原料、加工、生产与供应链的规范要求。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/halal.png" alt=""><strong>Halal</strong></div></div></div>
-<div class="lux-cert-card" data-certification="EU Organic" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/eu-organic.png" alt="EU Organic logo"><h5>EU Organic</h5><p>确保符合欧盟有机农业、加工与可追溯规范。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/eu-organic.png" alt=""><strong>EU Organic</strong></div></div></div>
-<div class="lux-cert-card" data-certification="BRCGS" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/brcgs.png" alt="BRCGS logo"><h5>BRCGS</h5><p>覆盖生产、质量、风险控制与供应链管理的全球标准。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/brcgs.png" alt=""><strong>BRCGS</strong></div></div></div>
-<div class="lux-cert-card" data-certification="IFS" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img src="../assets/media/certifications/ifs.png" alt="IFS logo"><h5>IFS</h5><p>面向食品质量、安全与国际供应链的综合标准体系。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img src="../assets/media/certifications/ifs.png" alt=""><strong>IFS</strong></div></div></div>
+<div class="lux-cert-card" data-certification="OU Kosher" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/ou-kosher-2026.png" alt="OU Kosher logo"><h5>OU Kosher</h5><p>符合犹太洁食规范的原料、生产与加工要求。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/ou-kosher-2026.png" alt=""><strong>OU Kosher</strong></div></div></div>
+<div class="lux-cert-card" data-certification="Demeter" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/demeter.png" alt="Demeter logo"><h5>Demeter</h5><p>生物动力农业体系，强调土壤、生态与农业循环。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/demeter.png" alt=""><strong>Demeter</strong></div></div></div>
+<div class="lux-cert-card" data-certification="CITES" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/cites.png" alt="CITES logo"><h5>CITES</h5><p>确保濒危物种相关产品合法贸易、可追溯与生态保护。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/cites.png" alt=""><strong>CITES</strong></div></div></div>
+<div class="lux-cert-card" data-certification="Excellent Taste 2025" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/excellent-taste-2025.avif" alt="Excellent Taste 2025 logo"><h5>Excellent Taste 2025</h5><p>伦敦品质奖章，肯定产品卓越而稳定的风味表现。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/excellent-taste-2025.avif" alt=""><strong>Excellent Taste 2025</strong></div></div></div>
+<div class="lux-cert-card" data-certification="Eccellenze Italiane 2025" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/eccellenze-italiane-2025.png" alt="Eccellenze Italiane 2025 logo"><h5>Eccellenze Italiane 2025</h5><p>彰显意大利制造、工艺传承与美食文化的卓越标识。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/eccellenze-italiane-2025.png" alt=""><strong>Eccellenze Italiane 2025</strong></div></div></div>
+<div class="lux-cert-card" data-certification="FDA" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/fda-2026.png" alt="FDA logo"><h5>FDA</h5><p>符合美国食品药品监督管理体系的食品安全要求。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/fda-2026.png" alt=""><strong>FDA</strong></div></div></div>
+<div class="lux-cert-card" data-certification="HACCP" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/haccp.png" alt="HACCP logo"><h5>HACCP</h5><p>以危害分析与关键控制点管理食品安全生产全过程。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/haccp.png" alt=""><strong>HACCP</strong></div></div></div>
+<div class="lux-cert-card" data-certification="Vegan" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/vegan-2026.png" alt="Vegan logo"><h5>Vegan</h5><p>适用于符合纯素标准、不使用动物来源成分的产品方案。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/vegan-2026.png" alt=""><strong>Vegan</strong></div></div></div>
+<div class="lux-cert-card" data-certification="USDA Organic" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/usda-organic.png" alt="USDA Organic logo"><h5>USDA Organic</h5><p>规范有机原料、生产过程与标识管理的美国有机标准。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/usda-organic.png" alt=""><strong>USDA Organic</strong></div></div></div>
+<div class="lux-cert-card" data-certification="Halal" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/halal-2026.png" alt="Halal logo"><h5>Halal</h5><p>符合清真食品对原料、加工、生产与供应链的规范要求。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/halal-2026.png" alt=""><strong>Halal</strong></div></div></div>
+<div class="lux-cert-card" data-certification="EU Organic" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/eu-organic.png" alt="EU Organic logo"><h5>EU Organic</h5><p>确保符合欧盟有机农业、加工与可追溯规范。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/eu-organic.png" alt=""><strong>EU Organic</strong></div></div></div>
+<div class="lux-cert-card" data-certification="BRCGS" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/brcgs.png" alt="BRCGS logo"><h5>BRCGS</h5><p>覆盖生产、质量、风险控制与供应链管理的全球标准。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/brcgs.png" alt=""><strong>BRCGS</strong></div></div></div>
+<div class="lux-cert-card" data-certification="IFS" tabindex="0"><div class="lux-cert-card-inner"><div class="lux-cert-card-face lux-cert-card-front"><img loading="lazy" decoding="async" src="../assets/media/certifications/ifs.png" alt="IFS logo"><h5>IFS</h5><p>面向食品质量、安全与国际供应链的综合标准体系。</p></div><div class="lux-cert-card-face lux-cert-card-back"><img loading="lazy" decoding="async" src="../assets/media/certifications/ifs.png" alt=""><strong>IFS</strong></div></div></div>
 </div>
 </section>
 </main>
@@ -287,17 +192,17 @@
 
 
 
+<!-- lux:footer:start -->
 <footer class="lux-footer">
   <div class="lux-footer-grid">
-    <div><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>一场关于味觉的奥德赛，通过可持续发展的实践与毫不妥协的质量标准，为您搜寻世间罕有的绝世美味。</p></div>
+    <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat China以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。</p></div>
     <nav><a href="index.html">首页</a><a href="journal.html">关于我们</a><a href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
-    <div class="lux-footer-social"><a href="https://xhslink.com/m/6Jn3PRYzjAy" target="_blank" rel="noopener">小红书</a><button type="button" data-footer-modal="wechat">微信</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener">微博</a></div>
-    <div><a href="mailto:china@luxureat.com">china@luxureat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">隐私政策</button><button type="button" data-footer-modal="terms">销售条款</button><button type="button" data-footer-modal="shipping">配送说明</button></div></div>
+    <div class="lux-footer-social"><a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">小红书</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">微信</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">微博</a></div>
+    <div><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">china@luxureat.com</a><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">roberto@truffleat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">隐私政策</button><button type="button" data-footer-modal="terms">销售条款</button><button type="button" data-footer-modal="shipping">配送说明</button></div></div>
   </div>
-  <div class="lux-footer-bottom">© 2024 LUXUREAT MAISON. 已获 CITES & FDA 认证.</div>
+  <div class="lux-footer-bottom">2026 LUXUREAT CHINA.</div>
 </footer>
-<script src="../assets/data/products.js?v=20260714-data-sync1"></script>
-<script src="../assets/data/brand.js?v=20260715-content1"></script>
-<script src="../assets/js/core.js?v=20260715-content1"></script>
-<script src="../assets/js/products.js?v=20260715-content1"></script>
-<script src="../assets/js/brand.js?v=20260715-content1"></script></body></html>
+<!-- lux:footer:end -->
+<!-- lux:scripts:start -->
+<script defer src="../assets/js/core.js?v=20260718-performance"></script>
+<!-- lux:scripts:end --></body></html>

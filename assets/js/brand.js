@@ -7,12 +7,4 @@
     const value = brand[node.dataset.brandField];
     if (value) node.textContent = value;
   });
-  document.querySelectorAll("a[href^='mailto:china@luxureat.com']").forEach((node) => {
-    node.href = `mailto:${brand.email}`;
-    node.lastChild.textContent = brand.email;
-  });
-  document.querySelectorAll("a[href^='tel:+8615721452475']").forEach((node) => {
-    node.href = `tel:${brand.phone.replace(/\s/g, "")}`;
-    node.lastChild.textContent = brand.phone;
-  });
 })();

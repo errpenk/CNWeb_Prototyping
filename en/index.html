@@ -2,52 +2,9 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>LuxurEat Maison - The Art of Exceptional Taste</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../assets/css/tailwind-home.css?v=20260718-performance">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;6..96,400;6..96,500;6..96,600&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "primary": "#81d8d0", // Tiffany Blue
-                        "on-primary": "#003734",
-                        "secondary": "#e9c349", // Warm Gold
-                        "on-secondary": "#3c2f00",
-                        "background": "#131313", // Deep Black
-                        "on-background": "#e5e2e1", // Off-white/Silver
-                        "surface": "#131313",
-                        "on-surface": "#e5e2e1",
-                        "surface-container": "#20201f",
-                        "surface-container-low": "#1c1b1b",
-                        "surface-container-lowest": "#0e0e0e",
-                        "on-surface-variant": "#bdc9c7",
-                        "outline-variant": "#3e4947"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "container-max": "1440px",
-                        "gutter": "24px",
-                        "section-gap": "120px",
-                        "margin-desktop": "80px",
-                        "unit": "8px",
-                        "margin-mobile": "24px"
-                    },
-                    "fontFamily": {
-                        "display": ["Bodoni Moda"],
-                        "headline": ["Bodoni Moda"],
-                        "body": ["Montserrat"]
-                    }
-                },
-            },
-        }
-    </script>
 <style>
         body {
             background-color: #131313;
@@ -85,178 +42,190 @@
         ::-webkit-scrollbar-thumb { background: #353535; }
     </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260716-home-story1">
+<link rel="stylesheet" href="../integration.css?v=20260718-performance">
 </head>
 <body class="antialiased selection:bg-primary selection:text-on-primary">
+<!-- lux:header:start -->
 <header class="lux-header">
-  <a class="lux-brand" href="index.html"><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
-  <nav class="lux-nav" aria-label="navigation"><a class="active" href="index.html">Home</a><a class="" href="journal.html">About Us</a><a class="" href="products.html">Products</a><a class="" href="rituals.html">Recipe Art</a><a class="" href="news.html">Brand News</a><a class="" href="certification.html">Quality &amp; Certification</a><a class="" href="gifting.html">Gifting</a><a class="" href="contact.html">Contact</a></nav>
+  <a class="lux-brand" href="index.html"><img loading="eager" fetchpriority="high" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="active" href="index.html">Home</a><a href="journal.html">About Us</a><a href="products.html">Products</a><a href="rituals.html">Recipe Art</a><a href="news.html">Brand News</a><a href="certification.html">Certification</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a></nav>
   <div class="lux-actions">
     <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="Shopping bag"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="lux-bag-count" data-bag-count hidden></span></a>
     <button class="lux-icon-action lux-account-link" type="button" data-account-open aria-label="Account sign in"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
-    <span class="lux-lang"><a class="" href="../zh/index.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
+    <span class="lux-lang"><a href="../zh/index.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
     <button class="lux-menu" type="button" data-open="Close" data-closed="Menu" aria-expanded="false">Menu</button>
   </div>
 </header>
+<!-- lux:header:end -->
 
 <!-- Navigation -->
 
 <!-- 1. Hero Section -->
-<header class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+<header class="relative h-[90vh] w-full flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0">
-<img alt="Premium Caviar Close-up" class="w-full h-full object-cover opacity-60" src="../assets/media/brand/lux-044.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+<img loading="lazy" decoding="async" alt="Premium Caviar Close-up" class="w-full h-full object-cover opacity-60 scale-105" src="../assets/media/brand/lux-044.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background"></div>
 </div>
-<div class="relative z-10 text-center max-w-4xl px-margin-mobile fade-in-up">
-<p class="text-[12px] md:text-[14px] uppercase tracking-[0.4em] text-primary mb-8">LuxurEat ｜ Authentic Italian Excellence</p>
-<h1 class="font-display text-5xl md:text-8xl text-on-surface mb-8 leading-[1.1]">
-            Italian Excellence.<br>Global Vision.
-        </h1>
-<p class="text-on-surface-variant text-lg md:text-xl font-light mb-12 max-w-2xl mx-auto tracking-wide">
-            Welcome to LuxurEat, where Italian excellence meets refined taste. Discover authentic flavors and experience true Made in Italy.
+<div class="lux-home-hero-content relative z-10 text-center max-w-5xl px-margin-mobile fade-in-up">
+<img decoding="async" fetchpriority="high" class="lux-home-hero-mark" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"/>
+<span class="inline-block text-[10px] md:text-[12px] tracking-[0.35em] text-primary mb-8 font-semibold">Born in Italy. Made in Italy, admired worldwide</span>
+<h1 class="zh-display-title text-on-surface mb-8">
+            The Art of<br/><span class="text-secondary">Italian Excellence</span>
+</h1>
+<p class="lux-page-hero-subtitle mb-12 max-w-2xl mx-auto">
+            Welcome to LuxurEat, where Italian excellence meets refined taste. Discover authentic flavors and experience genuine Made in Italy quality.<br/>
+            Our products are crafted by a producer trusted by leading restaurants worldwide and made to international fine-dining standards.
         </p>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-<a class="px-10 py-4 border border-secondary text-secondary uppercase text-[11px] tracking-[0.3em] hover:bg-secondary hover:text-background transition-all duration-500" href="products.html#product-en-imperial-beluga">
-                Explore the Collection
+<a class="lux-home-hero-action lux-action-copy w-full sm:w-auto px-12 py-5 border border-white/20 text-on-surface uppercase text-[11px] tracking-[0.3em] transition-all backdrop-blur-sm" href="products.html">
+                Shop Now
             </a>
-</div>
-</div>
-<!-- Scroll Down -->
-<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-40">
-<span class="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-<div class="w-[1px] h-12 bg-on-surface/20 relative overflow-hidden">
-<div class="absolute top-0 left-0 w-full h-full bg-secondary animate-bounce"></div>
+<a class="lux-home-hero-action lux-action-copy w-full sm:w-auto px-12 py-5 border border-white/20 text-on-surface uppercase text-[11px] tracking-[0.3em] transition-all backdrop-blur-sm" href="journal.html#about-us">
+                Meet Us
+            </a>
 </div>
 </div>
 </header>
 <section class="lux-latest-event" data-latest-event></section>
-<!-- 2. Product Categories -->
+<!-- 2. Strategic Categories (Commerce Focused) -->
 <section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
-<!-- Caviar -->
-<div class="group relative overflow-hidden aspect-[4/5] flex flex-col justify-end p-12">
-<div class="absolute inset-0 z-0">
-<img alt="Royal Caviar" class="w-full h-full object-cover img-reveal" src="../assets/media/brand/lux-044.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div class="max-w-xl">
+<h2 class="font-display text-4xl md:text-5xl text-on-surface mb-6">Core Selections</h2>
+<p class="text-on-surface-variant font-light leading-relaxed">We select exceptional ingredients with outstanding culinary and commercial value for executive dining and private collections.</p>
 </div>
-<div class="relative z-10">
-<h3 class="font-headline text-4xl text-on-surface mb-4">Royal Caviar</h3>
-<p class="text-on-surface-variant text-base font-light mb-8 max-w-xs">A symphony of oceanic depth and buttery finish.</p>
-<a class="inline-block text-[11px] uppercase tracking-[0.3em] text-primary border-b border-primary/40 pb-2 hover:border-primary transition-all" href="products.html#product-en-imperial-beluga">Shop Caviar</a>
+<a class="lux-narrative-link group" href="products.html">
+            View Full Collection
+            <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Caviar -->
+<div class="group relative aspect-[3/4] overflow-hidden bg-surface-container">
+<img loading="lazy" decoding="async" alt="Royal Caviar" class="w-full h-full object-cover img-reveal opacity-80" src="../assets/media/brand/lux-044.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
+<div class="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+<span class="text-primary text-[10px] uppercase tracking-[0.3em] mb-2 block">Oceanic Excellence</span>
+<h3 class="font-display text-3xl text-on-surface mb-4">Royal Caviar</h3>
+<p class="text-on-surface-variant text-sm font-light mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">A symphony of oceanic depth and buttery texture.</p>
+<a class="lux-core-shop inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-on-background border border-white/20 bg-white/10 backdrop-blur px-6 py-3 hover:bg-white hover:text-background transition-colors" href="products.html#product-en-imperial-beluga" data-product-open="en-imperial-beluga">Shop Now</a>
 </div>
 </div>
 <!-- Truffles -->
-<div class="group relative overflow-hidden aspect-[4/5] flex flex-col justify-end p-12">
-<div class="absolute inset-0 z-0">
-<img alt="The Alba Gold" class="w-full h-full object-cover img-reveal" src="../assets/media/brand/lux-038.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+<div class="group relative aspect-[3/4] overflow-hidden bg-surface-container">
+<img loading="lazy" decoding="async" alt="The Alba Gold" class="w-full h-full object-cover img-reveal opacity-80" src="../assets/media/brand/lux-038.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
+<div class="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+<span class="text-secondary text-[10px] uppercase tracking-[0.3em] mb-2 block">Earth’s Diamond</span>
+<h3 class="font-display text-3xl text-on-surface mb-4">Alba Gold</h3>
+<p class="text-on-surface-variant text-sm font-light mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">Rare white diamonds from the heart of Piedmont.</p>
+<a class="lux-core-shop inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-on-background border border-white/20 bg-white/10 backdrop-blur px-6 py-3 hover:bg-white hover:text-background transition-colors" href="products.html#product-en-royal-oscetra" data-product-open="en-royal-oscetra">Shop Now</a>
 </div>
-<div class="relative z-10">
-<h3 class="font-headline text-4xl text-on-surface mb-4">The Alba Gold</h3>
-<p class="text-on-surface-variant text-base font-light mb-8 max-w-xs">Rare white diamonds from the heart of Piedmont.</p>
-<a class="inline-block text-[11px] uppercase tracking-[0.3em] text-primary border-b border-primary/40 pb-2 hover:border-primary transition-all" href="products.html">Shop Truffles</a>
 </div>
+<!-- Service Ware -->
+<div class="group relative aspect-[3/4] overflow-hidden bg-surface-container">
+<img loading="lazy" decoding="async" alt="Modern Silver Ice Server" class="w-full h-full object-cover img-reveal opacity-80" src="../assets/media/products/lux-039.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
+<div class="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+<span class="text-primary text-[10px] uppercase tracking-[0.3em] mb-2 block">Service Ware</span>
+<h3 class="font-display text-3xl text-on-surface mb-4">Silver Ice Server</h3>
+<p class="text-on-surface-variant text-sm font-light mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">Stable chilled service keeps every spoonful fresh and perfectly textured after opening.</p>
+<a class="lux-core-shop inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-on-background border border-white/20 bg-white/10 backdrop-blur px-6 py-3 hover:bg-white hover:text-background transition-colors" href="products.html#product-en-ice-server" data-product-open="en-ice-server">Shop Now</a>
 </div>
 </div>
 </section>
 <!-- LuxurEat Group Overview -->
 <section class="lux-home-maison" aria-labelledby="lux-home-maison-title">
+<video class="lux-home-maison-media lux-about-program-media" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-maison-overview.m4v" type="video/mp4"></video>
+<div class="lux-home-maison-overlay" aria-hidden="true"></div>
 <div class="lux-home-maison-inner">
 <header class="lux-home-maison-head">
 <div>
 <span>Who We Are / Maison Overview</span>
-<h2 id="lux-home-maison-title">From Italian expertise<br>to a global gourmet group</h2>
+<h2 id="lux-home-maison-title">From Italian expertise,<br/>to a global gourmet group</h2>
 </div>
 <div class="lux-home-maison-intro">
-<p>LuxurEat is an international group dedicated to gastronomy, specializing in truffles, caviar, and premium foods.</p>
-<p>Born from the experience of TrufflEat, the group has grown into a global company active in the production, distribution, and development of gourmet products for international markets. Family heritage, a passion for food, and entrepreneurial vision shaped LuxurEat.</p>
-<p>Our caviar is selected from certified farms and processed to fine-dining standards trusted by leading restaurants, from Beluga and Royal Kaluga to versatile selections for hospitality, distribution, and international markets.</p>
-<a href="journal.html#about-us">Discover our story <span aria-hidden="true">↗</span></a>
+<p>LuxurEat is an international gourmet group specializing in truffles, caviar, and premium foods.</p>
+<p>Building on TrufflEat’s expertise, the group has grown into a global company combining production, distribution, and product development for international markets. Family heritage, a passion for food, and entrepreneurial vision shaped LuxurEat.</p>
+<p>Our caviar comes from certified farms and is prepared to fine-dining standards trusted by leading restaurants. From Beluga and Royal Kaluga to versatile selections, we serve hospitality, distribution, and international markets.</p>
+<a href="journal.html#about-us">Discover Our Story <span aria-hidden="true">↗</span></a>
 </div>
 </header>
 <blockquote>The luxury of taste—<strong>Made in Italy, admired worldwide.</strong></blockquote>
 <div class="lux-home-maison-grid">
-<a href="journal.html#about-us"><span>01 / Group</span><h3>Our Group</h3><p>TrufflEat, CaviarEat, and LuxurEat USA form an international network of brands and gourmet expertise.</p><b>Meet the group →</b></a>
-<a href="gifting.html"><span>02 / Private Label</span><h3>Private Label &amp; OEM</h3><p>Custom recipes, bespoke packaging, Made in Italy production, global export, and flexible volumes from small to large runs.</p><b>View partnership solutions →</b></a>
-<a href="certification.html"><span>03 / Compliance</span><h3>Certification &amp; Compliance</h3><p>International quality, safety, and compliance standards support dependable distribution to markets worldwide.</p><b>View certifications →</b></a>
+<a href="news.html#recent-events"><span>01 / News</span><h3>Brand News</h3><p>Follow LuxurEat exhibitions, brand collaborations, and global market developments.</p><b>View Brand News →</b></a>
+<a href="gifting.html"><span>02 / Private Label</span><h3>Private Label & OEM</h3><p>From custom recipes and bespoke packaging to Made in Italy production and global export, with flexible volumes for small and large runs.</p><b>View Partnership Solutions →</b></a>
+<a href="certification.html"><span>03 / Compliance</span><h3>Certification & Compliance</h3><p>International quality, safety, and compliance standards support dependable export to markets worldwide.</p><b>View Certifications →</b></a>
 </div>
-<div class="lux-home-maison-reach"><span>Global Reach</span><p>Italy · United States · China · Thailand · Europe · Southeast Asia · Middle East · Asia</p><a href="contact.html">Contact our global team</a></div>
+<div class="lux-home-maison-reach"><span>Global Reach</span><p>Italy · United States · China · Thailand · Europe · Southeast Asia · Middle East · Asia</p><a href="contact.html#global-footprint">Contact Our Global Team</a></div>
 </div>
 </section>
-<!-- 3. Heritage Storytelling -->
-<section class="relative min-h-[80vh] flex items-center overflow-hidden">
-<div class="absolute inset-0 z-0">
-<img alt="Heritage Ritual" class="w-full h-full object-cover opacity-30 grayscale" src="../assets/media/brand/lux-044.jpg">
-<div class="absolute inset-0 bg-background/60"></div>
+<!-- 3. Heritage & Values -->
+<section class="lux-home-editorial lux-home-harvest" id="heritage-editorial">
+<div class="lux-home-editorial-frame lux-reader-card">
+<div class="lux-home-editorial-rule"></div>
+<span class="lux-home-editorial-kicker text-primary text-[11px] uppercase tracking-[0.4em] font-semibold">Brand Foundation / OUR VALUES</span>
+<span class="lux-home-editorial-folio">TRADITION · INNOVATION · SUSTAINABILITY</span>
+<span class="lux-home-harvest-number" aria-hidden="true">VALUES</span>
+<figure class="lux-home-harvest-image lux-photo-stack" aria-label="LuxurEat brand foundation gallery">
+<span class="lux-photo-stack-card"><img loading="lazy" decoding="async" alt="LuxurEat Italian black truffle" src="../assets/media/brand/home-values-truffle.webp"/></span>
+<span class="lux-photo-stack-card"><img loading="lazy" decoding="async" alt="LuxurEat red shrimp powder in Italian cuisine" src="../assets/media/brand/home-values-gambero-rosso.webp"/></span>
+<span class="lux-photo-stack-card"><img loading="lazy" decoding="async" alt="LuxurEat caviar table art" src="../assets/media/brand/home-values-caviar-plating.webp"/></span>
+<span class="lux-photo-stack-card"><img loading="lazy" decoding="async" alt="LuxurEat caviar tasting" src="../assets/media/brand/home-values-caviar-plating.webp"/></span>
+</figure>
+<div class="lux-home-harvest-copy">
+<h2 class="font-display text-5xl md:text-6xl text-on-surface leading-tight">Our Values</h2>
+<p class="text-on-surface-variant text-lg font-light leading-relaxed">From recipes shared at Italian family tables to authentic flavors enjoyed worldwide, LuxurEat brings generations of culinary tradition into modern life through truffles, caviar, and selected premium ingredients. Each product connects classic recipes with contemporary expression, making exceptional ingredients natural in everyday cooking while carrying Italian food culture across borders.</p>
+<div class="lux-home-harvest-facts">
+<div><h4 class="text-secondary font-display text-xl mb-2">Tradition & Innovation</h4><p class="text-xs uppercase tracking-widest opacity-60">Preserving Italian craft with product-specific gluten-free, vegan, vegetarian, and reduced-calorie choices</p></div>
+<div><h4 class="text-secondary font-display text-xl mb-2">Sustainability</h4><p class="text-xs uppercase tracking-widest opacity-60">Respect for the environment, biodiversity, and food diversity</p></div>
 </div>
-<div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full">
-<div class="max-w-2xl">
-<span class="text-secondary text-[11px] uppercase tracking-[0.4em] mb-6 block">Tradition · Innovation · Sustainability</span>
-<h2 class="font-headline text-5xl md:text-6xl text-on-surface mb-8 leading-tight">Our Values</h2>
-<div class="space-y-6 text-on-surface-variant text-lg font-light leading-relaxed">
-<p>Deeply rooted in Italian food culture, we carry forward traditions passed through generations while developing wellness-oriented innovations, including detox, gluten-free, and allergen-free products.</p>
-<p>Through ethical and inclusive products and services, we promote respect for the environment, biodiversity, and food diversity.</p>
-</div>
-<a class="mt-12 text-primary text-[11px] uppercase tracking-[0.3em] flex items-center gap-4 group" href="journal.html#about-us">
-                Explore Our Philosophy
-                <span class="material-symbols-outlined transition-transform group-hover:translate-x-2">arrow_right_alt</span>
-</a>
+<a class="lux-narrative-link group" href="journal.html#reader-en-harvest"><span class="text-[11px] uppercase tracking-[0.3em]">Explore Our Philosophy</span><span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-2">arrow_right_alt</span></a>
 </div>
 </div>
 </section>
 <!-- 4. Bespoke Services -->
-<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-<div class="flex flex-col md:flex-row gap-20 items-center">
-<div class="w-full md:w-1/2 order-2 md:order-1">
-<img alt="Bespoke Gifting" class="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl" src="../assets/media/brand/gifting-plan-gifts.png">
+<section class="lux-home-editorial lux-home-gifting" id="gifting-editorial">
+<div class="lux-home-editorial-frame">
+<div class="lux-home-editorial-rule"></div>
+<span class="lux-home-editorial-kicker text-primary text-[11px] uppercase tracking-[0.4em] font-semibold">GLOBAL PARTNERSHIP / Work With Us</span>
+<span class="lux-home-editorial-folio">MAISON BUSINESS — 01</span>
+<h2 class="lux-home-gifting-title font-display text-5xl text-on-surface leading-tight">Connect with Made in Italy,<br/><span class="text-secondary">Grow Global Markets Together</span></h2>
+<figure class="lux-home-gifting-image"><img loading="lazy" decoding="async" alt="Bespoke Gifting" src="../assets/media/brand/gifting-plan-gifts.webp"/></figure>
+<div class="lux-home-gifting-intro">
+<p class="text-on-surface-variant text-lg font-light leading-relaxed">We are seeking distributors, channel operators, and commercial partners worldwide. From orders and custom projects to franchising and professional consulting, work with LuxurEat to bring authentic Italian flavor to global markets.</p>
+<a class="lux-action-copy inline-block px-12 py-5 border border-primary text-primary uppercase text-[11px] font-bold tracking-[0.3em] hover:bg-primary hover:text-on-primary transition-all duration-500" href="gifting.html">Partnership Details</a>
 </div>
-<div class="w-full md:w-1/2 order-1 md:order-2">
-<span class="text-primary text-[11px] uppercase tracking-[0.4em] mb-6 block">Global Partnership</span>
-<h2 class="font-headline text-5xl text-on-surface mb-8">Grow with LuxurEat</h2>
-<p class="text-on-surface-variant text-lg font-light mb-10 leading-relaxed">
-                We are seeking distributors, importers, and commercial partners worldwide. From orders and custom projects to franchising and consulting, bring authentic Made in Italy flavor to new markets with LuxurEat.
-            </p>
-<div class="flex flex-wrap gap-8 mb-12">
-<div class="flex flex-col gap-2">
-<span class="text-secondary font-medium">Global Network</span>
-<span class="text-[12px] uppercase tracking-wider opacity-60">Offices, partners, distributors</span>
-</div>
-<div class="flex flex-col gap-2">
-<span class="text-secondary font-medium">Flexible Production</span>
-<span class="text-[12px] uppercase tracking-wider opacity-60">Recipes, packaging, volume</span>
-</div>
-<div class="flex flex-col gap-2">
-<span class="text-secondary font-medium">International Standards</span>
-<span class="text-[12px] uppercase tracking-wider opacity-60">Quality, safety, compliance</span>
-</div>
-</div>
-<a class="px-10 py-4 border border-outline-variant text-on-surface uppercase text-[11px] tracking-[0.3em] hover:border-primary hover:text-primary transition-all duration-500 inline-block" href="contact.html">
-                Become a Partner
-            </a>
+<div class="lux-home-gifting-services">
+<div class="lux-home-gifting-service"><span class="material-symbols-outlined text-secondary">language</span><div><span class="text-on-surface font-medium block">Global Network</span><span class="text-[12px] uppercase tracking-wider opacity-60">Coordinated offices, partners, and distributors</span></div></div>
+<div class="lux-home-gifting-service"><span class="material-symbols-outlined text-secondary">design_services</span><div><span class="text-on-surface font-medium block">Flexible Customization</span><span class="text-[12px] uppercase tracking-wider opacity-60">Recipes, packaging, and production volumes tailored to need</span></div></div>
+<div class="lux-home-gifting-service"><span class="material-symbols-outlined text-secondary">verified</span><div><span class="text-on-surface font-medium block">International Standards</span><span class="text-[12px] uppercase tracking-wider opacity-60">Quality, safety, and export compliance</span></div></div>
 </div>
 </div>
 </section>
-<!-- 5. Footer (Based on SCREEN_12 structure) -->
+<!-- 5. Footer (Unified) -->
 
 
 
 
 
+<!-- lux:footer:start -->
 <footer class="lux-footer">
   <div class="lux-footer-grid">
-    <div><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>An odyssey of taste, sourcing the rarest delicacies through sustainable practices and uncompromising quality standards.</p></div>
-    <nav><a href="index.html">Home</a><a href="journal.html">About Us</a><a href="products.html">Products</a><a href="rituals.html">Recipe Art</a><a href="news.html">Brand News</a><a href="certification.html">Quality &amp; Certification</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a></nav>
-    <div class="lux-footer-social"><a href="https://xhslink.com/m/6Jn3PRYzjAy" target="_blank" rel="noopener">Rednote</a><button type="button" data-footer-modal="wechat">WeChat</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener">Douyin</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener">Weibo</a></div>
-    <div><a href="mailto:china@luxureat.com">china@luxureat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">Privacy Policy</button><button type="button" data-footer-modal="terms">Terms of Sale</button><button type="button" data-footer-modal="shipping">Shipping</button></div></div>
+    <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>Beyond importing, we are committed to defining a new standard for premium Italian gastronomy in China.<br>Rooted in authentic flavor and guided by quality and safety, LuxurEat China brings Italian food culture and innovative experiences to China.</p></div>
+    <nav><a href="index.html">Home</a><a href="journal.html">About Us</a><a href="products.html">Products</a><a href="rituals.html">Recipe Art</a><a href="news.html">Brand News</a><a href="certification.html">Certification</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a></nav>
+    <div class="lux-footer-social"><a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">Rednote</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">WeChat</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">Douyin</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">Weibo</a></div>
+    <div><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">china@luxureat.com</a><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">roberto@truffleat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">Privacy Policy</button><button type="button" data-footer-modal="terms">Terms of Sale</button><button type="button" data-footer-modal="shipping">Shipping</button></div></div>
   </div>
-  <div class="lux-footer-bottom">© 2024 LuxurEat Maison. CITES & FDA Certified.</div>
+  <div class="lux-footer-bottom">2026 LUXUREAT CHINA.</div>
 </footer>
-<script src="../assets/data/products.js?v=20260714-data-sync1"></script>
-<script src="../assets/data/events.js?v=20260715-events1"></script>
-<script src="../assets/js/events.js?v=20260716-newslink1"></script>
-<script src="../assets/data/journal.js?v=20260716-recipes1"></script>
-<script src="../assets/js/journal.js?v=20260716-recipes1"></script>
-<script src="../assets/data/brand.js?v=20260716-newslink1"></script>
-<script src="../assets/js/core.js?v=20260716-newslink1"></script>
-<script src="../assets/js/products.js?v=20260716-newslink1"></script>
-<script src="../assets/js/brand.js?v=20260716-newslink1"></script></body></html>
+<!-- lux:footer:end -->
+<!-- lux:scripts:start -->
+<script defer src="../assets/data/products.js?v=20260718-performance"></script>
+<script defer src="../assets/data/events.js?v=20260718-performance"></script>
+<script defer src="../assets/js/events.js?v=20260718-performance"></script>
+<script defer src="../assets/data/journal.js?v=20260718-performance"></script>
+<script defer src="../assets/js/journal.js?v=20260718-performance"></script>
+<script defer src="../assets/js/products.js?v=20260718-performance"></script>
+<script defer src="../assets/js/core.js?v=20260718-performance"></script>
+<!-- lux:scripts:end --></body></html>

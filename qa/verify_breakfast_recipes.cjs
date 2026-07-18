@@ -13,13 +13,16 @@ const assert = (condition, message) => {
   const cards = await page.evaluate(() => ({
     pageText: document.body.innerText,
     ids: [...document.querySelectorAll('[data-reader-open^="zh-recipe-"]')].map((node) => node.dataset.readerOpen),
-    craftImage: document.querySelector('[style*="craftsmanship-truffle-chef.png"]')?.style.backgroundImage || "",
+    craftImage: (() => {
+      const image = document.querySelector('[data-alt*="厨师"]');
+      return image?.style.backgroundImage || image?.dataset.luxBg || "";
+    })(),
     jumpLinks: [...document.querySelectorAll('.lux-recipe-jump-nav a')].map((node) => [node.textContent.replace(/↘/g, "").trim(), node.getAttribute("href")]),
     jumpTargets: ["breakfast", "first-courses", "main-courses", "desserts"].every((id) => Boolean(document.getElementById(id))),
   }));
   assert(cards.pageText.includes("早餐") && !cards.pageText.includes("配餐艺术"), "Chinese breakfast section title is wrong");
   assert(cards.ids.includes("zh-recipe-truffle-eggs") && cards.ids.includes("zh-recipe-truffle-toast"), "Chinese recipe cards are missing");
-  assert(cards.craftImage.includes("craftsmanship-truffle-chef.png"), "craftsmanship image was not replaced");
+  assert(cards.craftImage.includes("craftsmanship-truffle-chef.webp"), "craftsmanship image was not replaced");
   assert(cards.pageText.includes("从早餐到甜点") && cards.pageText.includes("LuxurEat以意大利食谱为脉络"), "Chinese recipe introduction was not updated");
   assert(cards.jumpLinks.map(([, href]) => href).join("|") === "#breakfast|#first-courses|#main-courses|#desserts", `Chinese recipe navigation is wrong: ${cards.jumpLinks}`);
   assert(cards.jumpTargets, "one or more Chinese recipe navigation targets are missing");
@@ -39,7 +42,7 @@ const assert = (condition, message) => {
   assert(egg.title === "松露鸡蛋", `wrong first recipe title: ${egg.title}`);
   assert(egg.facts.includes("10分钟") && egg.facts.includes("简单") && egg.facts.includes("1人份"), "first recipe facts are incomplete");
   assert(egg.ingredients.length === 4 && egg.steps === 4, "first recipe content is incomplete");
-  assert(egg.image.endsWith("/assets/media/journal/recipe-truffle-eggs.png"), "first recipe image is wrong");
+  assert(egg.image.endsWith("/assets/media/journal/recipe-truffle-eggs.webp"), "first recipe image is wrong");
   assert(egg.sectionMarkers.length === 0, `recipe section markers were not removed: ${egg.sectionMarkers}`);
   assert(egg.ingredientBorder === "0px", `ingredient color bar was not removed: ${egg.ingredientBorder}`);
   assert(egg.energyLabel === "能量", `energy label was not corrected: ${egg.energyLabel}`);
@@ -55,7 +58,7 @@ const assert = (condition, message) => {
   }));
   assert(toast.title === "水煮蛋配松露烤面包片", `wrong second recipe title: ${toast.title}`);
   assert(toast.ingredients === 9 && toast.steps === 4, "second recipe content is incomplete");
-  assert(toast.image.endsWith("/assets/media/journal/recipe-truffle-toast.png"), "second recipe image is wrong");
+  assert(toast.image.endsWith("/assets/media/journal/recipe-truffle-toast.webp"), "second recipe image is wrong");
 
   await page.goto(`${BASE_URL}/en/rituals.html`, { waitUntil: "domcontentloaded" });
   const english = await page.evaluate(() => ({
@@ -65,7 +68,7 @@ const assert = (condition, message) => {
   }));
   assert(english.pageText.includes("Breakfast") && !english.pageText.includes("Perfect Pairings"), "English breakfast section is not synchronized");
   assert(english.ids.includes("en-recipe-truffle-eggs") && english.ids.includes("en-recipe-truffle-toast"), "English recipe cards are missing");
-  assert(english.pageText.includes("The LuxurEat Table") && english.jumpLinks.join("|") === "#breakfast|#first-courses|#main-courses|#desserts", "English recipe introduction or navigation is not synchronized");
+  assert(english.pageText.includes("Italian Flavor Recipes") && english.jumpLinks.join("|") === "#breakfast|#first-courses|#main-courses|#desserts", "English recipe introduction or navigation is not synchronized");
 
   await page.goto(`${BASE_URL}/zh/rituals.html`, { waitUntil: "domcontentloaded" });
   const courses = await page.evaluate(() => {
@@ -74,7 +77,10 @@ const assert = (condition, message) => {
     return {
       heading: [...document.querySelectorAll("h2")].map((node) => node.textContent.trim()),
       ids: cards.map((node) => node.dataset.readerOpen),
-      images: cards.map((node) => node.querySelector(".lux-dark-photo-bg")?.style.backgroundImage),
+      images: cards.map((node) => {
+        const image = node.querySelector(".lux-dark-photo-bg");
+        return image?.style.backgroundImage || image?.dataset.luxBg;
+      }),
       opacity: cards.map((node) => getComputedStyle(node.querySelector(".lux-dark-photo-bg")).opacity),
       filters: cards.map((node) => getComputedStyle(node.querySelector(".lux-dark-photo-bg")).filter),
       firstCopyOpacity: getComputedStyle(firstCopy).opacity,
@@ -97,10 +103,10 @@ const assert = (condition, message) => {
   assert(firstHover.overlay.includes("0.42") && firstHover.overlay.includes("0.06"), `first course overlay was not lightened: ${firstHover.overlay}`);
 
   for (const [id, title, image] of [
-    ["zh-recipe-truffle-tagliolini", "白松露或黑松露细面", "recipe-truffle-tagliolini.png"],
-    ["zh-recipe-truffle-ravioli", "松露奶油酱馄饨", "recipe-truffle-ravioli.png"],
-    ["zh-recipe-black-truffle-risotto", "黑松露烩饭", "recipe-black-truffle-risotto.png"],
-    ["zh-recipe-mushroom-soup", "奶油蘑菇浓汤", "recipe-mushroom-soup.png"],
+    ["zh-recipe-truffle-tagliolini", "白松露或黑松露细面", "recipe-truffle-tagliolini.webp"],
+    ["zh-recipe-truffle-ravioli", "松露奶油酱馄饨", "recipe-truffle-ravioli.webp"],
+    ["zh-recipe-black-truffle-risotto", "黑松露烩饭", "recipe-black-truffle-risotto.webp"],
+    ["zh-recipe-mushroom-soup", "奶油蘑菇浓汤", "recipe-mushroom-soup.webp"],
   ]) {
     await page.locator(`[data-reader-open="${id}"]`).first().evaluate((node) => node.click());
     await page.waitForSelector(".lux-reader:not([hidden]) .lux-recipe-reader");
@@ -119,11 +125,11 @@ const assert = (condition, message) => {
   const mainCourses = await page.evaluate(() => ({
     heading: [...document.querySelectorAll("h2")].map((node) => node.textContent.trim()),
     ids: [...document.querySelectorAll(".lux-main-course-card")].map((node) => node.dataset.readerOpen),
-    images: [...document.querySelectorAll(".lux-main-course-card .lux-dark-photo-bg")].map((node) => node.style.backgroundImage),
+    images: [...document.querySelectorAll(".lux-main-course-card .lux-dark-photo-bg")].map((node) => node.style.backgroundImage || node.dataset.luxBg),
   }));
   assert(mainCourses.heading.includes("第二道主食"), "Chinese Main Courses heading is missing");
   assert(mainCourses.ids.join("|") === "zh-recipe-beef-carpaccio-scallop-truffle|zh-recipe-shrimp-tartare-truffle", `Main Courses order is wrong: ${mainCourses.ids}`);
-  assert(mainCourses.images[0].includes("recipe-beef-carpaccio-scallop-truffle.png") && mainCourses.images[1].includes("recipe-shrimp-tartare-truffle.png"), "Main Courses cover images are wrong");
+  assert(mainCourses.images[0].includes("recipe-beef-carpaccio-scallop-truffle.webp") && mainCourses.images[1].includes("recipe-shrimp-tartare-truffle.webp"), "Main Courses cover images are wrong");
 
   for (const [id, title, ingredients, steps] of [
     ["zh-recipe-beef-carpaccio-scallop-truffle", "扇贝松露牛肉薄片", 8, 4],

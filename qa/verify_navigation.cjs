@@ -14,7 +14,7 @@ for (const lang of ["zh", "en"]) {
     const newsLabel = lang === "zh" ? "品牌新闻" : "Brand News";
     const recipeLabel = lang === "zh" ? "食谱艺术" : "Recipe Art";
     const aboutLabel = lang === "zh" ? "关于我们" : "About Us";
-    const certificationLabel = lang === "zh" ? "品质认证" : "Quality &amp; Certification";
+    const certificationLabel = lang === "zh" ? "品质认证" : "Certification";
     assert((header.match(/<a\b/g) || []).length === 8, `${lang}/${file} does not have the aligned eight-page navigation`);
     assert(header.includes(`href="news.html">${newsLabel}</a>`), `${lang}/${file} is missing Brand News navigation`);
     assert(header.includes(`href="rituals.html">${recipeLabel}</a>`), `${lang}/${file} has the wrong Recipe Art label`);
@@ -33,5 +33,5 @@ assert(!fs.existsSync(path.join(root, "en/caviar.html")), "duplicate English cav
 assert(!fs.existsSync(path.join(root, "en/private.html")), "extra English private-selection page still exists");
 const core = fs.readFileSync(path.join(root, "assets/js/core.js"), "utf8");
 assert(core.includes('className = "lux-nav-flyout"'), "flyout navigation is missing");
-assert(core.includes('["certification.html", "Quality & Certification"'), "English and Chinese navigation are not aligned");
+assert(core.includes('["certification.html", "Certification"'), "English and Chinese navigation are not aligned");
 console.log("navigation verification passed");

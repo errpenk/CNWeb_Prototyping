@@ -69,6 +69,7 @@ function walk(dir) {
 assert(fs.existsSync(themeDir), 'theme folder luxureat-static exists');
 for (const file of [
   'style.css',
+  '.htaccess',
   'index.php',
   'functions.php',
   'routes.php',
@@ -80,8 +81,8 @@ for (const file of [
   'assets/js/brand.js',
   'assets/media/brand/luxureat-logo.png',
   'assets/media/brand/wechat-qr.png',
-  'assets/media/journal/harvest-hero.jpg',
-  'assets/media/journal/champagne-hero.jpg',
+  'assets/media/journal/lux-032.jpg',
+  'assets/media/brand/lux-029.jpg',
   'assets/data/products.js',
   'assets/data/events.js',
   'assets/data/journal.js',
@@ -96,9 +97,12 @@ const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
-assert(functionsPhp.includes('luxureat-product-data') && functionsPhp.includes("array('luxureat-product-data')"), 'functions.php loads product data before product behavior');
-assert(functionsPhp.includes('luxureat-events') && functionsPhp.includes('luxureat-journal'), 'functions.php enqueues event and journal domain scripts');
+assert(functionsPhp.includes("'products' => array('src' => 'assets/js/products.js', 'dependencies' => array('product-data'))"), 'functions.php loads product data before product behavior');
+assert(functionsPhp.includes("'events' => array('src' => 'assets/js/events.js'") && functionsPhp.includes("'journal' => array('src' => 'assets/js/journal.js'"), 'functions.php registers event and journal domain scripts');
+assert(functionsPhp.includes("'zh/caviar' => array('product-data', 'products', 'core')"), 'functions.php uses the canonical page asset map');
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
+assert(functionsPhp.includes('luxureat_static_defer_scripts') && functionsPhp.includes("add_filter('script_loader_tag'"), 'functions.php defers theme scripts without changing dependency order');
+assert(functionsPhp.includes('luxureat_static_cache_headers') && functionsPhp.includes('stale-while-revalidate=86400'), 'functions.php enables short anonymous page caching');
 assert(functionsPhp.includes('add_rewrite_rule'), 'functions.php registers rewrite rules');
 assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewrite rules on theme switch');
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
@@ -172,6 +176,7 @@ const runtimeJs = [
   'assets/js/products.js',
   'assets/js/journal.js',
 ].map((file) => read(path.join(themeDir, file))).join('\n');
+const brandJs = read(path.join(themeDir, 'assets/js/brand.js'));
 assert(runtimeJs.includes('initLuxCaviarControls'), 'runtime scripts initializes caviar filter, view, and sort controls');
 assert(runtimeJs.includes('data-caviar-item data-species') && runtimeJs.includes('data-price="${Number(product.amount) || 0}"'), 'runtime scripts renders sortable product cards from product data');
 assert(runtimeJs.includes('data-caviar-filter'), 'runtime scripts listens to caviar filter buttons');
@@ -188,7 +193,7 @@ assert(runtimeJs.includes('data-product-quantity'), 'runtime scripts supports pr
 assert(runtimeJs.includes('data-product-gallery'), 'runtime scripts supports product-detail gallery thumbnails');
 assert(runtimeJs.includes('data-product-main-image'), 'runtime scripts switches the product-detail main image');
 assert(runtimeJs.includes('lux-product-recent'), 'runtime scripts renders product-detail recommendations');
-assert(runtimeJs.includes('data-product-open="${escapeHtml(key)}"'), 'product-detail recommendations can open other product details');
+assert(runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'product-detail recommendations can open other product details');
 assert(runtimeJs.includes('data-product-back'), 'product-detail recommendations expose an in-modal back button');
 assert(!runtimeJs.includes('!triggers.length && !hash.startsWith("#product-")'), 'product detail listener handles dynamically rendered bag buttons');
 assert(runtimeJs.includes('data-product-cart-state'), 'product details show existing cart quantity');
@@ -275,16 +280,33 @@ assert(enGifting.includes('data-info-popover'), 'English gifting page marks scen
 assert(!zhGifting.includes('立即获取企业画册') && !zhGifting.includes('咨询专属顾问'), 'Chinese gifting hero removes the requested CTA controls');
 assert(!enGifting.includes('Explore Collections'), 'English gifting hero removes the matching CTA control');
 assert(zhGifting.includes('>参考方案</strong>') && !zhGifting.includes('<span>专业合作</span>') && !zhGifting.includes('开启企业礼赠方案'), 'Chinese gifting partner card uses the requested reference-plan wording');
-assert(enGifting.includes('<strong>Reference Plan</strong>') && !enGifting.includes('<span>Professional Partnership</span>') && !enGifting.includes('Start a Corporate Program'), 'English gifting partner card mirrors the reference-plan wording');
+assert(enGifting.includes('>Reference Plan</strong>') && !enGifting.includes('<span>Professional Partnership</span>') && !enGifting.includes('Start a Corporate Program'), 'English gifting partner card mirrors the reference-plan wording');
+assert(zhGifting.includes('data-private-copy') && enGifting.includes('data-private-copy'), 'bilingual private-label copy exposes the bounded pointer interaction');
+assert(!brandJs.includes('pointermove') && integrationCss.includes('#private-label [data-private-copy]') && integrationCss.includes('position: sticky'), 'private-label copy follows page scrolling with native bounded sticky positioning');
+assert(zhGifting.includes('lux-inquiry-divider') && enGifting.includes('lux-inquiry-divider'), 'bilingual inquiry sections use the gold divider');
+assert(!zhGifting.includes('>批发采购</strong>') && !zhGifting.includes('>进出口合作</strong>'), 'Chinese inquiry removes the two boxed cooperation options');
 
 const zhBag = read(path.join(themeDir, 'pages/zh/bag.php'));
 const enBag = read(path.join(themeDir, 'pages/en/bag.php'));
 assert(zhBag.includes('浏览全部') && zhBag.includes("luxureat_static_url('zh/caviar'"), 'Chinese bag browse-all link goes to caviar');
 assert(enBag.includes('Browse All') && enBag.includes("luxureat_static_url('en/products'"), 'English bag browse-all link goes to products');
-assert(runtimeJs.includes('renderRecommendations') && runtimeJs.includes('data-product-open="${escapeHtml(key)}"'), 'bag recommendations render product-detail actions from product data');
+assert(runtimeJs.includes('renderRecommendations') && runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'bag recommendations render product-detail actions from product data');
 
 const zhJournal = read(path.join(themeDir, 'pages/zh/journal.php'));
 const enJournal = read(path.join(themeDir, 'pages/en/journal.php'));
+assert(zhJournal.includes('我们的使命与目标') && enJournal.includes('Our Mission &amp; Objectives'), 'bilingual about pages include the independent mission and objectives section');
+assert(zhJournal.includes('面向年轻消费者') && zhJournal.includes('关爱银发消费者') && enJournal.includes('For Younger Consumers') && enJournal.includes('For Senior Consumers'), 'bilingual about pages include dedicated younger and senior consumer content');
+assert(zhJournal.includes('本地运营主体') && enJournal.includes('local operating company'), 'bilingual about pages clarify LuxurEat China local operating status');
+assert(zhJournal.includes('每款产品的具体特点应以相应产品说明为准') && enJournal.includes('must be verified in the relevant product information'), 'bilingual about pages qualify product and dietary characteristics');
+assert(zhJournal.includes('about-china-operations.m4v') && zhJournal.includes('about-consumer-needs.m4v') && enJournal.includes('about-china-operations.m4v') && enJournal.includes('about-consumer-needs.m4v'), 'bilingual about pages use the compressed background videos');
+const identityVideo = path.join(themeDir, 'assets/media/brand/about-china-operations.m4v');
+const audienceVideo = path.join(themeDir, 'assets/media/brand/about-consumer-needs.m4v');
+assert(fs.existsSync(identityVideo) && fs.statSync(identityVideo).size < 1.5 * 1024 * 1024, 'China identity background video stays below 1.5 MB');
+assert(fs.existsSync(audienceVideo) && fs.statSync(audienceVideo).size < 1.5 * 1024 * 1024, 'consumer background video stays below 1.5 MB');
+assert(integrationCss.includes('about-mission-rome.webp') && integrationCss.includes('"Alimama ShuHei"'), 'about program backgrounds and requested display font are present');
+assert(integrationCss.includes('[data-certification="OU Kosher"] .lux-cert-card-front img'), 'OU Kosher logo receives a visible dark-card treatment');
+assert(runtimeJs.includes('.lux-about-program-media') && runtimeJs.includes('videoObserver'), 'background videos play only near the viewport');
+assert(enJournal.includes('Our Story') && enJournal.includes('Brand Story') && enJournal.includes('From a recipe at an Italian family table'), 'English journal hero mirrors the Chinese brand-story content');
 assert(zhJournal.includes('data-reader-open="zh-harvest"'), 'Chinese journal opens the harvest reader');
 assert(enJournal.includes('data-reader-open="en-harvest"'), 'English journal opens the harvest reader');
 assert(zhJournal.includes('data-reader-archive'), 'Chinese journal archive opens inside the shared reader');
@@ -302,7 +324,7 @@ assert(zhRituals.includes('食材购买') && zhRituals.includes('系列产品') 
 assert(enRituals.includes('Buy Now') && enRituals.includes('Products') && !enRituals.includes('>Shop Now<'), 'English rituals shopping CTA mirrors the requested wording');
 assert((zhRituals.match(/lux-dark-photo-block/g) || []).length >= 3, 'Chinese rituals ceremony cards use dark photo backgrounds');
 
-assert(runtimeJs.includes('data-product-open="${escapeHtml(key)}"') && productDataJs.includes('"zh-imperial-beluga"'), 'Chinese caviar product card opens product details from product data');
+assert(runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"') && productDataJs.includes('"zh-imperial-beluga"'), 'Chinese caviar product card opens product details from product data');
 assert(zhCaviar.includes("luxureat_static_url('zh/rituals'"), 'Chinese caviar ritual CTA links to rituals');
 assert(zhCaviar.includes('lux-dark-photo-block'), 'Chinese caviar page uses dark photo backgrounds');
 assert(zhCaviar.includes('系列产品') && !zhCaviar.includes('鱼子酱系列'), 'Chinese product listing uses the requested series label');
@@ -310,10 +332,16 @@ assert(zhCaviar.includes('lux-products-main'), 'Chinese product listing hero sta
 const enProducts = read(path.join(themeDir, 'pages/en/products.php'));
 assert(enProducts.includes('Premium Products') && enProducts.includes('data-lux-caviar-controls'), 'English products page translates the Chinese product listing');
 assert(enProducts.includes('lux-products-main'), 'English product listing hero starts flush below the fixed nav');
-assert(runtimeJs.includes('data-product-open="${escapeHtml(key)}"') && productDataJs.includes('"en-royal-oscetra"'), 'English products page renders Oscetra product details from product data');
+assert(runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"') && productDataJs.includes('"en-royal-oscetra"'), 'English products page renders Oscetra product details from product data');
 assert(enProducts.includes("luxureat_static_url('en/rituals'"), 'English products ritual CTA links to rituals');
+const zhCertification = read(path.join(themeDir, 'pages/zh/certification.php'));
 const enCertification = read(path.join(themeDir, 'pages/en/certification.php'));
 assert(enCertification.includes('Quality &amp; Certification') && enCertification.includes('Responsible Trade'), 'English certification page mirrors the Chinese certification page');
+assert(enCertification.includes('ou-kosher-2026.png') && enCertification.includes('halal-2026.png') && enCertification.includes('vegan-2026.png') && enCertification.includes('excellent-taste-2025.avif') && enCertification.includes('fda-2026.png'), 'English certification page uses the refreshed certification assets');
+assert(zhCertification.includes('cert-quality-system.m4v') && enCertification.includes('cert-quality-system.m4v'), 'bilingual certification system sections use the compressed background film');
+const certificationVideo = path.join(themeDir, 'assets/media/brand/cert-quality-system.m4v');
+assert(fs.existsSync(certificationVideo) && fs.statSync(certificationVideo).size < 1.5 * 1024 * 1024, 'certification background film stays below 1.5 MB');
+assert(integrationCss.includes('.lux-cert-system-overlay') && integrationCss.includes('rgba(92, 92, 90, .66)'), 'certification background film uses the requested neutral gray overlay');
 
 const zhContact = read(path.join(themeDir, 'pages/zh/contact.php'));
 assert(zhContact.includes('lux-dark-photo-block'), 'Chinese contact hero uses a dark photo background');
@@ -321,17 +349,41 @@ assert(zhContact.includes('Italy • United States • Thailand • China'), 'Ch
 assert(zhContact.includes('上海市闵行区') && zhContact.includes('联明路389号A栋 505室') && zhContact.includes('邮编: 201101'), 'Chinese contact HQ address is updated');
 assert(zhContact.includes('lux-footprint-heading') && !zhContact.includes('<details class="lux-footprint-card'), 'Chinese contact footprint cards are expanded by default');
 assert(zhContact.includes('local_dining') && zhContact.includes('temple_buddhist') && zhContact.includes('account_balance'), 'Chinese contact footprint uses country-specific icons');
-assert(zhContact.includes('info@truffleat.com') && zhContact.includes('tel:+393515111273') && hasExactHref(zhContact, 'https://www.truffleat.com'), 'Chinese contact Italy card has clickable contacts');
-assert(zhContact.includes('info@luxureat.com') && zhContact.includes('tel:+14256266318'), 'Chinese contact United States card has clickable contacts');
-assert(zhContact.includes('info@truffle.co.th') && hasExactHref(zhContact, 'https://wa.me/66811331337'), 'Chinese contact Thailand card has clickable contacts');
-assert(zhContact.includes('china@luxureat.com') && zhContact.includes('tel:+8615721452475') && zhContact.includes('+86 15721452475'), 'Chinese contact China card has clickable contacts');
+assert(zhContact.includes('info@truffleat.com') && zhContact.includes('tel:+393515111273') && hasExactHref(zhContact, 'https://www.truffleat.com'), 'Chinese contact Italy card restores its regional contacts');
+assert(zhContact.includes('info@luxureat.com') && zhContact.includes('tel:+14256266318'), 'Chinese contact United States card restores its regional contacts');
+assert(zhContact.includes('info@truffle.co.th') && zhContact.includes('tel:+6626799441') && hasExactHref(zhContact, 'https://wa.me/66811331337'), 'Chinese contact Thailand card restores its regional contacts');
+assert(zhContact.includes('china@luxureat.com') && zhContact.includes('roberto@truffleat.com') && zhContact.includes('tel:+8615721452475'), 'Chinese contact China card remains unchanged');
+assert((zhContact.match(/lux-footprint-role/g) || []).length === 4, 'Chinese global footprint explains each regional function');
 const enContact = read(path.join(themeDir, 'pages/en/contact.php'));
 assert(enContact.includes('Global Presence') && enContact.includes('Italy') && enContact.includes('Thailand') && enContact.includes('China'), 'English contact footprint lists the requested countries');
 assert(enContact.includes('Truffleat Srl') && enContact.includes('Luxureat LLC') && enContact.includes('Truffleat Co., Ltd') && enContact.includes('LuxurEat China Ltd'), 'English contact footprint uses the requested entities');
 assert(enContact.includes('lux-footprint-heading') && !enContact.includes('<details class="lux-footprint-card'), 'English contact footprint cards are expanded by default');
+assert(enContact.includes('info@truffleat.com') && enContact.includes('info@luxureat.com') && enContact.includes('info@truffle.co.th'), 'English contact page restores the regional contacts');
+assert((enContact.match(/lux-footprint-role/g) || []).length === 4, 'English global footprint explains each regional function');
+assert(zhContact.includes('lux-footprint-video-strip') && enContact.includes('lux-footprint-video-strip'), 'bilingual contact pages place the footprint film in its own container below the four cards');
+assert(zhContact.indexOf('lux-footprint-video-strip') > zhContact.lastIndexOf('lux-footprint-card') && enContact.indexOf('lux-footprint-video-strip') > enContact.lastIndexOf('lux-footprint-card'), 'the footprint film follows rather than replaces the location cards');
+const footprintVideo = path.join(themeDir, 'assets/media/brand/contact-global-footprint.m4v');
+assert(fs.existsSync(footprintVideo) && fs.statSync(footprintVideo).size < 1.5 * 1024 * 1024, 'global footprint background film stays below 1.5 MB');
+assert(integrationCss.includes('.lux-footprint-video-fade') && integrationCss.includes('rgba(7, 7, 7, .30)') && integrationCss.includes('#070707 100%'), 'footprint film stays visible and blends into the footer color');
+assert(integrationCss.includes('#global-footprint') && integrationCss.includes('padding-bottom: 0 !important') && integrationCss.includes('brightness(.96)'), 'footprint film meets the footer without a gap and remains slightly brighter');
+assert(zhContact.includes('让我们共同开拓中国高端食品市场') && enContact.includes('Let Us Grow China’s Premium Food Market Together'), 'bilingual full-width footprint film carries the centered market-development message');
+assert(zhContact.includes('contact-market-logo.png') && enContact.includes('contact-market-logo.png') && integrationCss.includes('.lux-footprint-video-logo'), 'bilingual footprint films show the supplied LuxurEat logo above the centered message');
+assert(integrationCss.includes('#mission-objectives .lux-about-program-overlay') && integrationCss.includes('rgba(8, 12, 12, .48)') && integrationCss.includes('border-top: 0'), 'mission section keeps the seam closed with a lighter translucent overlay');
+assert(zhContact.includes('placeholder="请输入您的电子邮箱"') && enContact.includes('placeholder="Enter your email address"'), 'bilingual contact forms use localized email prompts');
+assert(zhContact.includes('lux-contact-network-thumb') && enContact.includes('lux-contact-network-thumb'), 'bilingual contact pages use the global-network business image');
+assert((zhContact.match(/lux-contact-service-thumb/g) || []).length === 3 && (enContact.match(/lux-contact-service-thumb/g) || []).length === 3, 'all three bilingual contact thumbnails expose the shared interaction');
+assert(zhGifting.includes('luxureat-contact-qr.webp') && enGifting.includes('luxureat-contact-qr.webp'), 'bilingual gifting pages show the supplied contact QR code');
+assert(zhGifting.includes('china@luxureat.com') && zhGifting.includes('roberto@truffleat.com') && enGifting.includes('china@luxureat.com') && enGifting.includes('roberto@truffleat.com'), 'bilingual gifting contact block exposes both China and Roberto emails');
+assert(zhGifting.includes('诚邀中国经销与') && enGifting.includes('Invitation to Chinese Distribution'), 'bilingual gifting pages lead with distribution and channel partners in China');
+assert(zhGifting.includes('直接进口产品') && enGifting.includes('imports products directly into China'), 'bilingual gifting pages clarify China direct-import operations');
+assert(!zhGifting.includes('拥有食品进口资质') && !enGifting.includes('food-import qualifications'), 'China partnership no longer requires partners to act as the importer');
 
 const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));
+assert(zhHome.includes('lux-home-maison-media') && enHome.includes('lux-home-maison-media') && zhHome.includes('home-maison-overview.m4v') && enHome.includes('home-maison-overview.m4v'), 'bilingual home overview sections use the isolated background film');
+const maisonVideo = path.join(themeDir, 'assets/media/brand/home-maison-overview.m4v');
+assert(fs.existsSync(maisonVideo) && fs.statSync(maisonVideo).size < 1.5 * 1024 * 1024, 'home overview background film stays below 1.5 MB');
+assert(integrationCss.includes('.lux-home-maison-overlay') && integrationCss.includes('rgba(4, 7, 7, .84)') && integrationCss.includes('.lux-home-maison-inner'), 'home overview film has a black contrast overlay limited to its own section');
 const latestEventJs = read(path.join(themeDir, 'assets/js/events.js'));
 const eventDataJs = read(path.join(themeDir, 'assets/data/events.js'));
 assert(zhHome.includes('data-latest-event'), 'Chinese home has the latest event mount point');
@@ -340,14 +392,17 @@ assert(eventDataJs.includes('marca-china-2026') && fs.existsSync(path.join(theme
 assert(zhHome.includes('data-product-open="zh-imperial-beluga"'), 'Chinese home shop CTA opens product detail');
 assert(enHome.includes("luxureat_static_url('en/products', '#product-en-imperial-beluga')"), 'English home shop CTA opens product detail through products');
 assert(enHome.includes("luxureat_static_url('en/products'"), 'English navigation exposes the products page');
+assert(enHome.includes('>Certification</a>') && !enHome.includes('>Quality &amp; Certification</a>'), 'English navigation uses the concise Certification label');
 assert(zhGifting.indexOf("luxureat_static_url('zh/certification'") < zhGifting.indexOf("luxureat_static_url('zh/gifting'"), 'Chinese nav puts certification before gifting');
 assert(zhGifting.includes('lux-partner-card') && zhGifting.includes("luxureat_static_url('zh/contact'"), 'Chinese gifting inquiry card links to contact');
 assert(zhHome.includes('小红书') && zhHome.includes('data-footer-modal="wechat"') && zhHome.includes('微博'), 'Chinese footer exposes localized social actions');
 assert(enHome.includes('Rednote') && enHome.includes('WeChat') && enHome.includes('Weibo'), 'English footer exposes social actions');
-assert(hasExactHref(zhHome, 'https://xhslink.com/m/6Jn3PRYzjAy') && hasExactHref(zhHome, 'https://v.douyin.com/oEPE48mPS48/'), 'Chinese footer uses the updated Rednote and Douyin links');
-assert(hasExactHref(enHome, 'https://xhslink.com/m/6Jn3PRYzjAy') && hasExactHref(enHome, 'https://v.douyin.com/oEPE48mPS48/'), 'English footer uses the updated Rednote and Douyin links');
-assert(zhHome.includes('mailto:china@luxureat.com') && zhHome.includes('tel:+8615721452475'), 'Chinese footer contact actions are clickable');
-assert(enHome.includes('mailto:china@luxureat.com') && enHome.includes('tel:+8615721452475'), 'English footer contact actions are clickable');
+assert(['rednote.svg', 'wechat.svg', 'douyin.svg', 'weibo.svg'].every((icon) => zhHome.includes(`media/social/${icon}`) && enHome.includes(`media/social/${icon}`)), 'bilingual footers use all four supplied social SVG icons');
+assert(zhHome.includes('2026 LUXUREAT CHINA.') && enHome.includes('2026 LUXUREAT CHINA.'), 'bilingual footers use the updated 2026 copyright line');
+assert(hasExactHref(zhHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(zhHome, 'https://v.douyin.com/oEPE48mPS48/'), 'Chinese footer uses the updated Rednote and Douyin links');
+assert(hasExactHref(enHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(enHome, 'https://v.douyin.com/oEPE48mPS48/'), 'English footer uses the updated Rednote and Douyin links');
+assert(zhHome.includes('mailto:china@luxureat.com?cc=roberto@truffleat.com') && zhHome.includes('roberto@truffleat.com') && zhHome.includes('tel:+8615721452475'), 'Chinese footer exposes both emails with China as recipient and Roberto in copy');
+assert(enHome.includes('mailto:china@luxureat.com?cc=roberto@truffleat.com') && enHome.includes('roberto@truffleat.com') && enHome.includes('tel:+8615721452475'), 'English footer exposes both emails with China as recipient and Roberto in copy');
 
 assert(fs.existsSync(zipFile), 'theme zip exists');
 if (fs.existsSync(zipFile)) {
@@ -356,6 +411,7 @@ if (fs.existsSync(zipFile)) {
       .split('\n')
       .filter(Boolean);
     assert(entries.includes('luxureat-static/style.css'), 'zip contains luxureat-static/style.css');
+    assert(entries.includes('luxureat-static/.htaccess'), 'zip contains static asset cache rules');
     assert(entries.includes('luxureat-static/index.php'), 'zip contains luxureat-static/index.php');
     assert(entries.includes('luxureat-static/functions.php'), 'zip contains luxureat-static/functions.php');
     assert(entries.includes('luxureat-static/assets/media/brand/luxureat-logo.png'), 'zip contains logo asset');

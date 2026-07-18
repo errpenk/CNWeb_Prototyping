@@ -20,7 +20,7 @@
   section.innerHTML = `
     <div class="lux-latest-event-inner">
       <figure class="lux-event-frame">
-        <img alt="${escapeHtml(copy.posterAlt)}" src="${escapeHtml(event.poster)}">
+        <img loading="lazy" decoding="async" alt="${escapeHtml(copy.posterAlt)}" src="${escapeHtml(event.poster)}">
       </figure>
       <div class="lux-event-copy">
         <h2>${escapeHtml(copy.title)}</h2>

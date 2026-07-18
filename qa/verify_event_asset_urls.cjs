@@ -19,7 +19,7 @@ const event = context.window.LUXUREAT_EVENT_DATA.events[0];
 
 assert.equal(
   event.poster,
-  "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/marca-china-2026-home.jpeg",
+  "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/marca-china-2026-home.webp",
 );
 assert.equal(
   event.image,

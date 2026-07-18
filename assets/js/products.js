@@ -1,3 +1,7 @@
+const luxEscapeProductHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+}[char]));
+
 function renderLuxProductCatalog() {
   const grid = document.querySelector("[data-caviar-grid]");
   const data = window.LUXUREAT_PRODUCT_DATA;
@@ -8,9 +12,6 @@ function renderLuxProductCatalog() {
     ? { add: "加入购物袋", detail: "查看详情", badge: "限量珍藏" }
     : { add: "Add to Cart", detail: "View Details", badge: "Limited Reserve" };
   const formatMoney = (product) => `${product.currency || ""}${Math.round(Number(product.amount) || 0)}`;
-  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-  }[char]));
   const speciesFor = (key) => {
     if (key.includes("beluga")) return "beluga";
     if (key.includes("oscetra")) return "oscetra";
@@ -21,20 +22,20 @@ function renderLuxProductCatalog() {
   if (!entries.length) return;
 
   grid.innerHTML = entries.map(([key, product], index) => `
-    <article class="group cursor-pointer flex flex-col gap-6" data-caviar-item data-species="${speciesFor(key)}" data-price="${Number(product.amount) || 0}" data-recommendation="${index + 1}" data-title="${escapeHtml(product.title)}">
+    <article class="group cursor-pointer flex flex-col gap-6" data-caviar-item data-species="${speciesFor(key)}" data-price="${Number(product.amount) || 0}" data-recommendation="${index + 1}" data-title="${luxEscapeProductHtml(product.title)}">
       <div class="relative w-full aspect-[4/3] overflow-hidden bg-surface-container-low">
-        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0" style="background-image: url('${escapeHtml(product.image)}');"></div>
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0" style="background-image: url('${luxEscapeProductHtml(product.image)}');"></div>
         ${index === 0 ? `<div class="absolute top-4 left-4 border border-secondary/50 px-3 py-1 bg-surface-container-lowest/80 backdrop-blur-md"><span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">${labels.badge}</span></div>` : ""}
       </div>
       <div class="flex flex-col gap-2 border-t border-secondary/20 pt-4">
         <div class="flex justify-between items-start">
-          <h2 class="font-headline-md text-headline-sm md:text-headline-md text-on-surface">${escapeHtml(product.title)}</h2>
-          <span class="font-body-lg text-body-lg text-secondary">${escapeHtml(formatMoney(product))} / ${escapeHtml(product.unit)}</span>
+          <h2 class="font-headline-md text-headline-sm md:text-headline-md text-on-surface">${luxEscapeProductHtml(product.title)}</h2>
+          <span class="font-body-lg text-body-lg text-secondary">${luxEscapeProductHtml(formatMoney(product))} / ${luxEscapeProductHtml(product.unit)}</span>
         </div>
-        <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">${escapeHtml(product.desc)}</p>
+        <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">${luxEscapeProductHtml(product.desc)}</p>
         <div class="mt-4 flex items-center gap-4">
-          <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto" data-bag-add data-bag-id="${escapeHtml(product.id)}" data-bag-title="${escapeHtml(product.title)}" data-bag-subtitle="${escapeHtml(product.subtitle)}" data-bag-price="${escapeHtml(product.amount)}" data-bag-currency="${escapeHtml(product.currency)}" data-bag-image="${escapeHtml(product.image)}" type="button">${labels.add}</button>
-          <button class="border border-outline-variant text-on-surface hover:border-primary hover:text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm transition-all duration-300 w-full md:w-auto" data-product-open="${escapeHtml(key)}" type="button">${labels.detail}</button>
+          <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}" type="button">${labels.add}</button>
+          <button class="border border-outline-variant text-on-surface hover:border-primary hover:text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm transition-all duration-300 w-full md:w-auto" data-product-open="${luxEscapeProductHtml(key)}" type="button">${labels.detail}</button>
         </div>
       </div>
     </article>`).join("");
@@ -228,9 +229,6 @@ function initLuxProductDetails() {
   const hash = location.hash || "";
   if (!Object.keys(products).length) return;
 
-  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-  }[char]));
   const formatMoney = (currency, amount) => `${currency}${Math.round(Number(amount) || 0)}`;
   const copy = () => document.documentElement.lang?.startsWith("zh")
     ? { back: "返回", close: "关闭", add: "加入购物袋", detail: "查看详情", qty: "数量", remove: "移除", recent: "最近浏览过", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
@@ -324,54 +322,54 @@ function initLuxProductDetails() {
       <article>
         <section class="lux-product-hero">
           <div class="lux-product-gallery">
-            <div class="lux-product-thumbs" aria-label="${escapeHtml(product.title)} gallery">
-              ${galleryImages.map((src, index) => `<button type="button" class="lux-product-thumb${index === 0 ? " is-active" : ""}" data-product-gallery="${index}" aria-label="${escapeHtml(product.title)} ${index + 1}"><img src="${escapeHtml(src)}" alt="${escapeHtml(product.title)} ${index + 1}"></button>`).join("")}
+            <div class="lux-product-thumbs" aria-label="${luxEscapeProductHtml(product.title)} gallery">
+              ${galleryImages.map((src, index) => `<button type="button" class="lux-product-thumb${index === 0 ? " is-active" : ""}" data-product-gallery="${index}" aria-label="${luxEscapeProductHtml(product.title)} ${index + 1}"><img loading="lazy" decoding="async" src="${luxEscapeProductHtml(src)}" alt="${luxEscapeProductHtml(product.title)} ${index + 1}"></button>`).join("")}
             </div>
-            <div class="lux-product-image"><img data-product-main-image src="${escapeHtml(galleryImages[0] || product.image)}" alt="${escapeHtml(product.title)}"></div>
+            <div class="lux-product-image"><img loading="lazy" decoding="async" data-product-main-image src="${luxEscapeProductHtml(galleryImages[0] || product.image)}" alt="${luxEscapeProductHtml(product.title)}"></div>
           </div>
           <div class="lux-product-summary">
-            <span>${escapeHtml(product.eyebrow)}</span>
-            <h2 id="lux-product-title">${escapeHtml(product.title)}</h2>
-            <p>${escapeHtml(product.desc)}</p>
-            <strong class="lux-product-price">${escapeHtml(formatMoney(product.currency, product.amount))} <small>/ ${escapeHtml(product.unit)}</small><em data-product-total hidden></em></strong>
+            <span>${luxEscapeProductHtml(product.eyebrow)}</span>
+            <h2 id="lux-product-title">${luxEscapeProductHtml(product.title)}</h2>
+            <p>${luxEscapeProductHtml(product.desc)}</p>
+            <strong class="lux-product-price">${luxEscapeProductHtml(formatMoney(product.currency, product.amount))} <small>/ ${luxEscapeProductHtml(product.unit)}</small><em data-product-total hidden></em></strong>
             <div class="lux-product-purchase">
-              <div class="lux-product-qty" aria-label="${escapeHtml(labels.qty)}">
-                <button type="button" data-product-quantity="-1" aria-label="${escapeHtml(labels.qty)} -">−</button>
+              <div class="lux-product-qty" aria-label="${luxEscapeProductHtml(labels.qty)}">
+                <button type="button" data-product-quantity="-1" aria-label="${luxEscapeProductHtml(labels.qty)} -">−</button>
                 <output data-product-quantity-value>1</output>
-                <button type="button" data-product-quantity="1" aria-label="${escapeHtml(labels.qty)} +">+</button>
+                <button type="button" data-product-quantity="1" aria-label="${luxEscapeProductHtml(labels.qty)} +">+</button>
               </div>
-              <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${escapeHtml(product.id)}" data-bag-title="${escapeHtml(product.title)}" data-bag-subtitle="${escapeHtml(product.subtitle)}" data-bag-price="${escapeHtml(product.amount)}" data-bag-currency="${escapeHtml(product.currency)}" data-bag-image="${escapeHtml(product.image)}">${labels.add}</button>
+              <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}">${labels.add}</button>
             </div>
             <div class="lux-product-cart-state" data-product-cart-state hidden>
               <span data-product-cart-text></span>
-              <button type="button" data-bag-remove="${escapeHtml(product.id)}">${escapeHtml(labels.remove)}</button>
+              <button type="button" data-bag-remove="${luxEscapeProductHtml(product.id)}">${luxEscapeProductHtml(labels.remove)}</button>
             </div>
           </div>
         </section>
         <section class="lux-product-specs">
-          ${product.specs.map((value, index) => `<div><span>${escapeHtml(labels.specs[index])}</span><strong>${escapeHtml(value)}</strong></div>`).join("")}
+          ${product.specs.map((value, index) => `<div><span>${luxEscapeProductHtml(labels.specs[index])}</span><strong>${luxEscapeProductHtml(value)}</strong></div>`).join("")}
         </section>
         <section class="lux-product-story">
           <h3>${labels.story}</h3>
-          <p>${escapeHtml(product.desc)} ${escapeHtml(labels.note)}</p>
+          <p>${luxEscapeProductHtml(product.desc)} ${luxEscapeProductHtml(labels.note)}</p>
         </section>
         ${recommendations.length ? `<section class="lux-product-recent">
           <div class="lux-product-recent-inner">
-          <h3>${escapeHtml(labels.recent)}</h3>
+          <h3>${luxEscapeProductHtml(labels.recent)}</h3>
           <div class="lux-product-recent-grid">
             ${recommendations.map(([key, item]) => `<article class="lux-product-recent-card">
-              <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">
-              <strong>${escapeHtml(item.title)}</strong>
-              <small>${escapeHtml(formatMoney(item.currency, item.amount))} / ${escapeHtml(item.unit)}</small>
+              <img loading="lazy" decoding="async" src="${luxEscapeProductHtml(item.image)}" alt="${luxEscapeProductHtml(item.title)}">
+              <strong>${luxEscapeProductHtml(item.title)}</strong>
+              <small>${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}</small>
               <div class="lux-product-recent-actions">
-                <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${escapeHtml(item.id)}" data-bag-title="${escapeHtml(item.title)}" data-bag-subtitle="${escapeHtml(item.subtitle)}" data-bag-price="${escapeHtml(item.amount)}" data-bag-currency="${escapeHtml(item.currency)}" data-bag-image="${escapeHtml(item.image)}">${escapeHtml(labels.add)}</button>
-                <button type="button" data-product-open="${escapeHtml(key)}">${escapeHtml(labels.detail)}</button>
+                <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(item.id)}" data-bag-title="${luxEscapeProductHtml(item.title)}" data-bag-subtitle="${luxEscapeProductHtml(item.subtitle)}" data-bag-price="${luxEscapeProductHtml(item.amount)}" data-bag-currency="${luxEscapeProductHtml(item.currency)}" data-bag-image="${luxEscapeProductHtml(item.image)}">${luxEscapeProductHtml(labels.add)}</button>
+                <button type="button" data-product-open="${luxEscapeProductHtml(key)}">${luxEscapeProductHtml(labels.detail)}</button>
               </div>
             </article>`).join("")}
           </div>
           <div class="lux-product-recent-nav">
-            <button type="button" data-product-recent-scroll="-1" aria-label="${escapeHtml(labels.back)}" disabled aria-disabled="true"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
-            <button type="button" data-product-recent-scroll="1" aria-label="${escapeHtml(labels.detail)}"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+            <button type="button" data-product-recent-scroll="-1" aria-label="${luxEscapeProductHtml(labels.back)}" disabled aria-disabled="true"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+            <button type="button" data-product-recent-scroll="1" aria-label="${luxEscapeProductHtml(labels.detail)}"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
           </div>
           </div>
         </section>` : ""}
@@ -539,14 +537,6 @@ function initLuxProductDetails() {
 
   window.LuxureatBag = api;
 
-  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-  }[char]));
-
   const money = (currency, amount) => `${currency}${Math.round(Number(amount) || 0)}`;
 
   const productImage = (button) => {
@@ -582,16 +572,16 @@ function initLuxProductDetails() {
     const minDisabled = quantity <= 1 ? " disabled aria-disabled=\"true\"" : "";
     const maxDisabled = quantity >= maxQuantity ? " disabled aria-disabled=\"true\"" : "";
     return `
-    <div class="lux-bag-item flex flex-col md:flex-row gap-6 p-6 border border-outline-variant/30 bg-surface-container-lowest group" data-bag-item="${escapeHtml(item.id)}">
+    <div class="lux-bag-item flex flex-col md:flex-row gap-6 p-6 border border-outline-variant/30 bg-surface-container-lowest group" data-bag-item="${luxEscapeProductHtml(item.id)}">
       <div class="lux-bag-image w-full md:w-48 h-48 overflow-hidden bg-surface-container">
-        ${item.image ? `<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">` : ""}
-        ${detailId ? `<button class="lux-bag-detail" type="button" data-product-open="${escapeHtml(detailId)}">${lang === "zh" ? "查看详情" : "View Details"}</button>` : ""}
+        ${item.image ? `<img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${luxEscapeProductHtml(item.image)}" alt="${luxEscapeProductHtml(item.title)}">` : ""}
+        ${detailId ? `<button class="lux-bag-detail" type="button" data-product-open="${luxEscapeProductHtml(detailId)}">${lang === "zh" ? "查看详情" : "View Details"}</button>` : ""}
       </div>
       <div class="flex-1 flex flex-col justify-between">
         <div class="flex justify-between gap-6 items-start">
           <div>
-            <h3 class="font-headline-sm text-headline-sm mb-1">${escapeHtml(item.title)}</h3>
-            <p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-4">${escapeHtml(item.subtitle)}</p>
+            <h3 class="font-headline-sm text-headline-sm mb-1">${luxEscapeProductHtml(item.title)}</h3>
+            <p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-4">${luxEscapeProductHtml(item.subtitle)}</p>
           </div>
           <span class="lux-bag-price font-headline-sm text-headline-sm text-primary whitespace-nowrap">${money(item.currency, item.price)}${lineTotal}</span>
         </div>
@@ -599,12 +589,12 @@ function initLuxProductDetails() {
           <div class="flex items-center gap-4">
             <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">${lang === "zh" ? "数量" : "Qty"}</span>
             <div class="flex items-center border border-outline-variant/30">
-              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="-1" data-bag-id="${escapeHtml(item.id)}" type="button"${minDisabled}><span class="material-symbols-outlined text-sm">remove</span></button>
+              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="-1" data-bag-id="${luxEscapeProductHtml(item.id)}" type="button"${minDisabled}><span class="material-symbols-outlined text-sm">remove</span></button>
               <span class="w-12 text-center font-label-lg">${quantity}</span>
-              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="1" data-bag-id="${escapeHtml(item.id)}" type="button"${maxDisabled}><span class="material-symbols-outlined text-sm">add</span></button>
+              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="1" data-bag-id="${luxEscapeProductHtml(item.id)}" type="button"${maxDisabled}><span class="material-symbols-outlined text-sm">add</span></button>
             </div>
           </div>
-          <button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-2 font-label-sm uppercase tracking-widest" data-bag-remove="${escapeHtml(item.id)}" type="button">
+          <button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-2 font-label-sm uppercase tracking-widest" data-bag-remove="${luxEscapeProductHtml(item.id)}" type="button">
             <span class="material-symbols-outlined text-lg">delete</span>
             <span>${lang === "zh" ? "移除" : "Remove"}</span>
           </button>
@@ -643,14 +633,14 @@ function initLuxProductDetails() {
     grid.innerHTML = entries.map(([key, product]) => `
       <div class="group cursor-pointer" data-bag-card>
         <div class="aspect-square bg-surface-container overflow-hidden mb-6 ghost-border relative">
-          <img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.title)}">
+          <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="${luxEscapeProductHtml(product.image)}" alt="${luxEscapeProductHtml(product.title)}">
           <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center gap-3">
-            <button type="button" class="px-6 py-3 border border-white text-white font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm" data-bag-add data-bag-id="${escapeHtml(product.id)}" data-bag-title="${escapeHtml(product.title)}" data-bag-subtitle="${escapeHtml(product.subtitle)}" data-bag-price="${escapeHtml(product.amount)}" data-bag-currency="${escapeHtml(product.currency)}" data-bag-image="${escapeHtml(product.image)}">${copy.add}</button>
-            <button type="button" class="px-6 py-3 border border-primary text-primary font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm" data-product-open="${escapeHtml(key)}">${copy.detail}</button>
+            <button type="button" class="px-6 py-3 border border-white text-white font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}">${copy.add}</button>
+            <button type="button" class="px-6 py-3 border border-primary text-primary font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm" data-product-open="${luxEscapeProductHtml(key)}">${copy.detail}</button>
           </div>
         </div>
-        <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">${escapeHtml(product.title)}</h4>
-        <p class="font-label-sm text-label-sm text-on-surface-variant mb-2">${escapeHtml(product.subtitle)}</p>
+        <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">${luxEscapeProductHtml(product.title)}</h4>
+        <p class="font-label-sm text-label-sm text-on-surface-variant mb-2">${luxEscapeProductHtml(product.subtitle)}</p>
         <span class="font-body-md text-primary">${money(product.currency, Number(product.amount) || 0)}</span>
       </div>`).join("");
   };

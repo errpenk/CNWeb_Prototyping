@@ -1,0 +1,23 @@
+/*.html
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+
+/zh/*
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+
+/en/*
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+
+/assets/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/data/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/media/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800

@@ -9,9 +9,11 @@ on:
       - 'en/**'
       - 'assets/**'
       - 'integration.css'
-      - 'main.js'
+      - 'site.config.mjs'
       - 'scripts/**'
       - 'tools/**'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/publish-theme-repo.yml'
   workflow_dispatch:
 
@@ -32,6 +34,21 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install image optimizer
+        run: npm ci
+
+      - name: Optimize uploaded images
+        run: npm run images:optimize
+
+      - name: Check generated page structure
+        run: npm run site:check
 
       - name: Build WordPress theme
         run: |

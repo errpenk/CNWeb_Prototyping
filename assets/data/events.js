@@ -8,7 +8,7 @@
         id: "marca-china-2026",
         status: "latest",
         image: asset("media/events/marca-china-2026.png"),
-        poster: asset("media/events/marca-china-2026-home.jpeg"),
+        poster: asset("media/events/marca-china-2026-home.webp"),
         calendar: asset("marca-china-2026.ics"),
         mapQuery: "广州市海珠区琶洲街道新港东路1000号保利世界贸易中心",
         zh: {

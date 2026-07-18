@@ -1,5 +1,58 @@
 const luxAssetBase = new URL(".", document.currentScript?.src || location.href);
 const luxAsset = (path) => new URL(path, luxAssetBase).href;
+const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+}[char]));
+
+const luxLazyBackgrounds = document.querySelectorAll("[data-lux-bg]");
+const loadLuxBackground = (element) => {
+  element.style.backgroundImage = `url("${element.dataset.luxBg}")`;
+  delete element.dataset.luxBg;
+};
+
+if ("IntersectionObserver" in window) {
+  const backgroundObserver = new IntersectionObserver((entries, observer) => {
+    entries.filter(({ isIntersecting }) => isIntersecting).forEach(({ target }) => {
+      loadLuxBackground(target);
+      observer.unobserve(target);
+    });
+  }, { rootMargin: "400px" });
+  luxLazyBackgrounds.forEach((element) => backgroundObserver.observe(element));
+} else {
+  luxLazyBackgrounds.forEach(loadLuxBackground);
+}
+
+const luxBackgroundVideos = document.querySelectorAll(".lux-about-program-media");
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if ("IntersectionObserver" in window) {
+    const videoObserver = new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
+      if (isIntersecting) target.play().catch(() => {});
+      else target.pause();
+    }), { rootMargin: "120px", threshold: .05 });
+    luxBackgroundVideos.forEach((video) => videoObserver.observe(video));
+  } else {
+    luxBackgroundVideos.forEach((video) => video.play().catch(() => {}));
+  }
+}
+
+const updateLuxBagCount = () => {
+  let count = 0;
+  try {
+    const items = JSON.parse(localStorage.getItem("luxureatBag") || "[]");
+    if (Array.isArray(items)) count = items.reduce((sum, item) => sum + Math.max(1, Number(item.quantity) || 1), 0);
+  } catch (_) {
+    // Ignore unavailable or malformed local storage.
+  }
+  document.querySelectorAll("[data-bag-count]").forEach((badge) => {
+    badge.textContent = count ? String(count) : "";
+    badge.hidden = count === 0;
+  });
+};
+updateLuxBagCount();
+document.addEventListener("lux-bag-change", updateLuxBagCount);
+window.addEventListener("storage", (event) => {
+  if (event.key === "luxureatBag") updateLuxBagCount();
+});
 
 const luxNav = document.querySelector(".lux-nav");
 const luxMenu = document.querySelector(".lux-menu");
@@ -16,14 +69,14 @@ const luxNavigation = {
     ["contact.html", "联系我们", ["联系我们", "品牌咨询", "产品与品鉴咨询", "商务与供应合作", "全球足迹"]],
   ],
   en: [
-    ["index.html", "Home", ["Maison Overview", "Our Values", "Global Partnership"]],
-    ["journal.html", "About Us", ["Epicurean Rituals", "The Way of True Flavor"]],
+    ["index.html", "Home", ["Core Selections", "Maison Overview", "Our Values", "Global Partnership"]],
+    ["journal.html", "About Us", ["Brand Story", "The Way of True Flavor"]],
     ["products.html", "Products", ["Premium Products"]],
-    ["rituals.html", "Recipe Art", ["Rituals & Culture", "The LuxurEat Table", "Breakfast", "First Courses", "Main Courses", "Desserts", "Commitment to Integrity", "Buy Now"]],
+    ["rituals.html", "Recipe Art", ["Recipe Art", "Italian Flavor Recipes", "Breakfast", "First Courses", "Main Courses", "Desserts", "Buy Now"]],
     ["news.html", "Brand News", ["Brand News"]],
-    ["certification.html", "Quality & Certification", ["Quality Promise", "Responsible Trade", "Global Quality System", "Certification System", "Certification Glossary"]],
-    ["gifting.html", "Gifting", ["The Ritual of Giving", "Curated Presentations", "Private Label"]],
-    ["contact.html", "Contact", ["Contact the Concierge", "Global Presence"]],
+    ["certification.html", "Certification", ["Quality Promise", "Responsible Trade", "Global Quality System", "Certification System", "Certification Glossary"]],
+    ["gifting.html", "Gifting", ["Business Collaboration", "International Market Solutions", "Business Partnership Solutions", "Distribution Partners", "Start a Professional Partnership"]],
+    ["contact.html", "Contact", ["Contact Us", "Brand Consultation", "Product & Tasting Consultation", "Business & Supply Partnerships", "Global Presence"]],
   ],
 };
 
@@ -236,9 +289,6 @@ function initLuxInfoPopovers() {
 
   let activeButton = null;
   let closeTimer = 0;
-  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-  }[char]));
 
   const clearCloseTimer = () => {
     clearTimeout(closeTimer);
@@ -273,7 +323,7 @@ function initLuxInfoPopovers() {
     if (activeButton) activeButton.setAttribute("aria-expanded", "false");
     activeButton = button;
     button.setAttribute("aria-expanded", "true");
-    popover.innerHTML = `<strong>${escapeHtml(button.dataset.infoTitle || "")}</strong><p>${escapeHtml(button.dataset.infoText || "")}</p>`;
+    popover.innerHTML = `<strong>${luxEscapeCoreHtml(button.dataset.infoTitle || "")}</strong><p>${luxEscapeCoreHtml(button.dataset.infoText || "")}</p>`;
     place(button);
     popover.hidden = false;
   };
@@ -326,9 +376,6 @@ function initLuxFooterActions() {
   const isZh = document.documentElement.lang?.startsWith("zh");
   const scriptSrc = document.querySelector("script[src*='assets/js/core.js']")?.src || location.href;
   const asset = (file) => new URL(`../media/brand/${file}`, scriptSrc).href;
-  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-  }[char]));
   const copy = isZh
     ? {
       close: "关闭",
@@ -361,8 +408,8 @@ function initLuxFooterActions() {
   const open = (key) => {
     const item = copy[key];
     if (!item) return;
-    const qr = key === "wechat" ? `<img class="lux-footer-qr" src="${asset("wechat-qr.png")}" alt="WeChat QR">` : "";
-    body.innerHTML = `<h2>${escapeHtml(item[0])}</h2><p>${escapeHtml(item[1])}</p>${qr}`;
+    const qr = key === "wechat" ? `<img loading="lazy" decoding="async" class="lux-footer-qr" src="${asset("wechat-qr.png")}" alt="WeChat QR">` : "";
+    body.innerHTML = `<h2>${luxEscapeCoreHtml(item[0])}</h2><p>${luxEscapeCoreHtml(item[1])}</p>${qr}`;
     closeButton.textContent = copy.close;
     modal.hidden = false;
     document.body.classList.add("lux-reader-open");
@@ -440,7 +487,7 @@ function initLuxFooterActions() {
           <form>
             <label class="lux-account-field">
               <span>${text.email}</span>
-              <div class="lux-account-input">${icons.mail}<input type="email" placeholder="concierge@luxureat.com" autocomplete="email"></div>
+              <div class="lux-account-input">${icons.mail}<input type="email" placeholder="china@luxureat.com" autocomplete="email"></div>
             </label>
             <label class="lux-account-field">
               <span>${text.password}</span>
@@ -521,8 +568,6 @@ function initLuxFooterActions() {
   const icons = {
     mail: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>',
     phone: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.91.33 1.8.62 2.65a2 2 0 0 1-.45 2.11L8 9.71a16 16 0 0 0 6.29 6.29l1.23-1.23a2 2 0 0 1 2.11-.45c.85.29 1.74.5 2.65.62A2 2 0 0 1 22 16.92z"></path></svg>',
-    message: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
-    external: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>',
     shield: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>',
     file: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>',
     truck: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg>',
@@ -539,8 +584,6 @@ function initLuxFooterActions() {
     document.querySelectorAll(".lux-footer a[href^='tel:']").forEach((node) => prependIcon(node, icons.phone));
     document.querySelectorAll(".lux-footprint-card a[href^='mailto:']").forEach((node) => prependIcon(node, icons.mail));
     document.querySelectorAll(".lux-footprint-card a[href^='tel:']").forEach((node) => prependIcon(node, icons.phone));
-    document.querySelectorAll(".lux-footer-social a").forEach((node) => prependIcon(node, icons.external));
-    document.querySelectorAll(".lux-footer [data-footer-modal='wechat']").forEach((node) => prependIcon(node, icons.message));
     document.querySelectorAll(".lux-footer [data-footer-modal='privacy']").forEach((node) => prependIcon(node, icons.shield));
     document.querySelectorAll(".lux-footer [data-footer-modal='terms']").forEach((node) => prependIcon(node, icons.file));
     document.querySelectorAll(".lux-footer [data-footer-modal='shipping']").forEach((node) => prependIcon(node, icons.truck));

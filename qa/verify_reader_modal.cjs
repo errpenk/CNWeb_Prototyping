@@ -19,9 +19,9 @@ function isAqua([r, g, b]) {
 
   await page.goto(`file://${path.resolve(__dirname, "../zh/journal.html")}`, { waitUntil: "domcontentloaded" });
   const replacements = [
-    ["zh-truffle", "世界鱼子酱版图：主要生产国与产业发展", "caviar-world-map.png", 9, "更加多元化的全球产业格局", "5 分钟阅读"],
-    ["zh-service", "意大利鱼子酱市场：欧洲领先的生产中心与全球出口力量", "italian-caviar-market.png", 13, "鱼子酱产业发展的重要优势", "6 分钟阅读"],
-    ["zh-malossol", "鱼子酱礼仪：如何优雅地品尝鱼子酱", "caviar-etiquette-service.png", 4, "不会因为食用过多而影响体验", "2 分钟阅读"],
+    ["zh-truffle", "世界鱼子酱版图：主要生产国与产业发展", "caviar-world-map.webp", 9, "更加多元化的全球产业格局", "5 分钟阅读"],
+    ["zh-service", "意大利鱼子酱市场：欧洲领先的生产中心与全球出口力量", "italian-caviar-market.webp", 13, "鱼子酱产业发展的重要优势", "6 分钟阅读"],
+    ["zh-malossol", "鱼子酱礼仪：如何优雅地品尝鱼子酱", "caviar-etiquette-service.webp", 4, "不会因为食用过多而影响体验", "2 分钟阅读"],
   ];
   for (const [id, title, imageName, sectionCount, closing, readTime] of replacements) {
     const card = page.locator(`[data-reader-open="${id}"]`).first().locator("xpath=ancestor::*[contains(concat(' ', normalize-space(@class), ' '), ' lux-reader-card ')][1]");

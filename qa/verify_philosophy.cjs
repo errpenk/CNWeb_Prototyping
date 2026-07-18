@@ -22,7 +22,7 @@ function assert(condition, message) {
       text: copy.querySelector("p").textContent.replace(/\s+/g, " ").trim(),
     };
   });
-  assert(featured.image.includes("luxureat-philosophy.png"), `featured image is wrong: ${featured.image}`);
+  assert(featured.image.includes("luxureat-philosophy.webp"), `featured image is wrong: ${featured.image}`);
   assert(featured.imagePosition === "50% 58%", `featured card crop changed unexpectedly: ${featured.imagePosition}`);
   assert(featured.eyebrow === "品牌传承", `featured eyebrow is wrong: ${featured.eyebrow}`);
   assert(featured.title === "本味之道", `featured title is wrong: ${featured.title}`);
@@ -51,7 +51,7 @@ function assert(condition, message) {
     };
   });
   assert(detail.title === "LuxurEat的理念与哲学", `detail title is wrong: ${detail.title}`);
-  assert(detail.image.includes("luxureat-philosophy.png"), `detail image is wrong: ${detail.image}`);
+  assert(detail.image.includes("luxureat-philosophy.webp"), `detail image is wrong: ${detail.image}`);
   assert(detail.coverPosition === "50% 0%", `philosophy cover is not top-aligned: ${detail.coverPosition}`);
   assert(detail.toc.join("|") === "我们的理念|我们的哲学", `detail toc is wrong: ${detail.toc}`);
   assert(detail.headings.join("|") === "我们的理念|我们的哲学", `detail headings are wrong: ${detail.headings}`);
@@ -72,7 +72,7 @@ function assert(condition, message) {
   }));
   assert(home.title === "我们的价值观", `homepage values title is wrong: ${home.title}`);
   assert(home.text.includes("意大利美食文化") && home.text.includes("生物多样性"), "homepage values copy is incomplete");
-  assert(home.image.includes("/assets/media/brand/home-values-truffle.jpg"), `homepage harvest image changed: ${home.image}`);
+  assert(home.image.includes("/assets/media/brand/home-values-truffle.webp"), `homepage harvest image changed: ${home.image}`);
   assert(home.cta.includes("探索品牌理念") && home.href === "journal.html#about-us", `homepage values link is wrong: ${home.cta} / ${home.href}`);
 
   await page.goto(fileUrl("../en/journal.html"), { waitUntil: "domcontentloaded" });
@@ -81,7 +81,7 @@ function assert(condition, message) {
     eyebrow: root.querySelector(".lg\\:col-span-5 span").textContent.trim(),
     title: root.querySelector(".lg\\:col-span-5 h2").textContent.trim(),
   }));
-  assert(englishFeatured.image.includes("luxureat-philosophy.png"), "English featured image is wrong");
+  assert(englishFeatured.image.includes("luxureat-philosophy.webp"), "English featured image is wrong");
   assert(englishFeatured.eyebrow === "Brand Heritage", `English eyebrow is wrong: ${englishFeatured.eyebrow}`);
   assert(englishFeatured.title === "The Way of True Flavor", `English title is wrong: ${englishFeatured.title}`);
   await page.locator('[data-reader-open="en-harvest"]').first().evaluate((node) => node.click());

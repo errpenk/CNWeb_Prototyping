@@ -32,8 +32,8 @@ function assert(condition, message) {
       assert(result.overflow <= 2, `zh editorial modules overflow by ${result.overflow}px at ${viewport.width}px`);
       assert(result.sections === 2, "zh home should have two editorial modules");
       assert(result.maisonSections === 1 && result.maisonCards === 3, "zh group overview is incomplete");
-      assert(result.maisonText.includes("认证农场") && result.maisonText.includes("Royal Kaluga") && result.maisonText.includes("LuxurEat USA"), "zh source brand narrative is incomplete");
-      assert(["journal.html#about-us", "gifting.html", "certification.html", "contact.html"].every((href) => result.maisonLinks.includes(href)), `zh group links are incomplete: ${result.maisonLinks}`);
+      assert(result.maisonText.includes("认证农场") && result.maisonText.includes("Royal Kaluga") && result.maisonText.includes("TrufflEat"), "zh source brand narrative is incomplete");
+      assert(["news.html#recent-events", "gifting.html", "certification.html", "contact.html#global-footprint"].every((href) => result.maisonLinks.includes(href)), `zh group links are incomplete: ${result.maisonLinks}`);
       assert(result.facts === 2, "zh harvest should keep two facts");
       assert(result.services === 3, "zh gifting should keep three services");
       assert(result.harvestDisplay === "grid", "zh harvest editorial grid is missing");
@@ -48,9 +48,10 @@ function assert(condition, message) {
   const englishPage = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   await englishPage.goto(`${BASE_URL}/en/index.html`, { waitUntil: "domcontentloaded" });
   assert(await englishPage.getByRole("heading", { name: "Our Values", exact: true }).count() === 1, "en values module is missing");
-  assert(await englishPage.getByText("Global Partnership", { exact: true }).count() === 1, "en partnership module is missing");
+  assert(await englishPage.getByText("GLOBAL PARTNERSHIP / Work With Us", { exact: true }).count() === 1, "en partnership module is missing");
   assert(await englishPage.locator(".lux-home-maison-grid > a").count() === 3, "en group overview is incomplete");
-  assert(await englishPage.locator(".lux-home-editorial").count() === 0, "en home should keep its restored legacy layout");
+  assert(await englishPage.locator(".lux-home-editorial").count() === 2, "en home editorial modules should mirror Chinese");
+  assert(await englishPage.locator('[data-product-open="en-imperial-beluga"], [data-product-open="en-royal-oscetra"], [data-product-open="en-ice-server"]').count() === 3, "en core selections should mirror Chinese");
   await englishPage.close();
 
   await browser.close();

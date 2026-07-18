@@ -2,106 +2,12 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Contact the Concierge - LuxurEat Maison</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260718-performance">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "tertiary-fixed": "#e2e2e2",
-                        "on-primary-fixed-variant": "#00504b",
-                        "surface-tint": "#7ed5cd",
-                        "on-primary-fixed": "#00201e",
-                        "error": "#ffb4ab",
-                        "on-tertiary-fixed-variant": "#474747",
-                        "on-primary": "#003734",
-                        "on-error": "#690005",
-                        "inverse-on-surface": "#313030",
-                        "on-secondary-fixed-variant": "#574500",
-                        "surface-dim": "#131313",
-                        "on-primary-container": "#005f59",
-                        "surface-container": "#20201f",
-                        "secondary-fixed-dim": "#e9c349",
-                        "on-background": "#e5e2e1",
-                        "primary-container": "#81d8d0",
-                        "outline": "#889391",
-                        "error-container": "#93000a",
-                        "inverse-primary": "#006a64",
-                        "background": "#131313",
-                        "surface-container-high": "#2a2a2a",
-                        "surface": "#131313",
-                        "secondary": "#e9c349",
-                        "secondary-fixed": "#ffe088",
-                        "secondary-container": "#af8d11",
-                        "on-surface": "#e5e2e1",
-                        "inverse-surface": "#e5e2e1",
-                        "tertiary": "#e5e5e5",
-                        "primary-fixed": "#9bf2ea",
-                        "outline-variant": "#3e4947",
-                        "on-secondary-container": "#342800",
-                        "surface-bright": "#393939",
-                        "on-secondary-fixed": "#241a00",
-                        "on-error-container": "#ffdad6",
-                        "surface-container-lowest": "#0e0e0e",
-                        "on-surface-variant": "#bdc9c7",
-                        "surface-container-low": "#1c1b1b",
-                        "primary-fixed-dim": "#7ed5cd",
-                        "tertiary-container": "#c9c9c9",
-                        "on-tertiary": "#303030",
-                        "on-tertiary-container": "#545454",
-                        "surface-container-highest": "#353535",
-                        "on-secondary": "#3c2f00",
-                        "surface-variant": "#353535",
-                        "primary": "#9df5ec",
-                        "tertiary-fixed-dim": "#c6c6c6",
-                        "on-tertiary-fixed": "#1b1b1b"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "container-max": "1440px",
-                        "unit": "8px",
-                        "margin-mobile": "24px",
-                        "gutter": "24px",
-                        "margin-desktop": "80px",
-                        "section-gap": "120px"
-                    },
-                    "fontFamily": {
-                        "headline-lg": ["Bodoni Moda"],
-                        "display-lg": ["Bodoni Moda"],
-                        "body-lg": ["Montserrat"],
-                        "headline-sm": ["Bodoni Moda"],
-                        "headline-md": ["Bodoni Moda"],
-                        "body-md": ["Montserrat"],
-                        "label-sm": ["Montserrat"],
-                        "label-lg": ["Montserrat"],
-                        "display-lg-mobile": ["Bodoni Moda"]
-                    },
-                    "fontSize": {
-                        "headline-lg": ["48px", { "lineHeight": "56px", "fontWeight": "400" }],
-                        "display-lg": ["72px", { "lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "300" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300" }],
-                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
-                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
-                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600" }],
-                        "display-lg-mobile": ["40px", { "lineHeight": "48px", "fontWeight": "300" }]
-                    }
-                }
-            }
-        }
-    </script>
+
 <style>
         body { background-color: #000000; color: #e5e2e1; }
         .glass-panel {
@@ -152,100 +58,163 @@
         }
     </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260714-data-sync1">
+<link rel="stylesheet" href="../integration.css?v=20260718-performance">
 </head>
 <body class="antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- lux:header:start -->
 <header class="lux-header">
-  <a class="lux-brand" href="index.html"><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
-  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">Home</a><a class="" href="journal.html">About Us</a><a class="" href="products.html">Products</a><a class="" href="rituals.html">Recipe Art</a><a class="" href="news.html">Brand News</a><a class="" href="certification.html">Quality &amp; Certification</a><a class="" href="gifting.html">Gifting</a><a class="active" href="contact.html">Contact</a></nav>
+  <a class="lux-brand" href="index.html"><img loading="eager" fetchpriority="high" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a href="index.html">Home</a><a href="journal.html">About Us</a><a href="products.html">Products</a><a href="rituals.html">Recipe Art</a><a href="news.html">Brand News</a><a href="certification.html">Certification</a><a href="gifting.html">Gifting</a><a class="active" href="contact.html">Contact</a></nav>
   <div class="lux-actions">
     <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="Shopping bag"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="lux-bag-count" data-bag-count hidden></span></a>
     <button class="lux-icon-action lux-account-link" type="button" data-account-open aria-label="Account sign in"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
-    <span class="lux-lang"><a class="" href="../zh/contact.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
+    <span class="lux-lang"><a href="../zh/contact.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
     <button class="lux-menu" type="button" data-open="Close" data-closed="Menu" aria-expanded="false">Menu</button>
   </div>
 </header>
+<!-- lux:header:end -->
 
 <!-- TopNavBar -->
 
 <!-- Main Content Canvas -->
-<main class="flex-grow pt-[120px]">
+<main>
 <!-- Hero Section -->
-<section class="relative w-full min-h-[60vh] flex items-center justify-center px-margin-mobile md:px-margin-desktop overflow-hidden">
-<!-- Background Imagery -->
-<div class="absolute inset-0 z-0">
-<div class="bg-cover bg-center w-full h-full opacity-40" data-alt="Business consultants collaborating with digital tools" style="background-image: url('../assets/media/brand/contact-hero-consulting.png')"></div>
-<!-- Gradient Overlay for legibility -->
-<div class="absolute inset-0 lux-hero-fade-both"></div>
-</div>
-<div class="relative z-10 text-center max-w-3xl mx-auto flex flex-col items-center gap-6 mt-12">
-<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">Contact the Concierge</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                    For bespoke inquiries, private allocations, or curating exceptional corporate experiences. Our dedicated team is at your disposal to ensure absolute perfection in every detail.
+<section class="lux-dark-photo-block lux-photo-fade-bottom lux-bright-photo relative h-[60vh] flex items-center justify-center overflow-hidden">
+<div class="lux-dark-photo-bg" style="background-image: url('../assets/media/brand/contact-hero-consulting.webp')"></div>
+
+<div class="relative z-10 text-center space-y-4">
+<h1 class="zh-display-title text-secondary">Contact Us</h1>
+<p class="lux-page-hero-subtitle max-w-2xl mx-auto px-margin-mobile">
+                    Explore exceptional caviar with guidance from our tasting specialists.
                 </p>
 </div>
 </section>
-<!-- Form & Details Section -->
-<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto relative z-20 -mt-24">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
-<!-- Contact Form -->
-<div class="lg:col-span-8 lg:col-start-3 glass-panel p-8 md:p-16 rounded-sm relative">
-<!-- Subtle decorative corner accents -->
-<div class="absolute top-0 left-0 w-8 h-8 border-t border-l border-secondary/30 pointer-events-none"></div>
-<div class="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-secondary/30 pointer-events-none"></div>
-<form class="flex flex-col gap-10">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-<div class="relative">
-<input class="input-minimal w-full font-body-md text-body-md" id="firstName" placeholder=" " required="" type="text">
-<label class="input-label font-body-md text-body-md" for="firstName">First Name</label>
+<!-- Main Content Grid -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left: Contact Form & HQ -->
+<div class="lg:col-span-7 space-y-16">
+<div>
+<h2 class="font-headline-lg text-primary mb-8">Brand Consultation</h2>
+<form class="lux-contact-form space-y-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="relative border-b border-outline-variant py-2">
+<label class="block font-label-sm uppercase text-on-surface/40 mb-2">Name</label>
+<input class="w-full bg-transparent border-none p-0 text-on-surface focus:ring-0 placeholder-on-surface/20" placeholder="Enter your name" type="text">
 </div>
-<div class="relative">
-<input class="input-minimal w-full font-body-md text-body-md" id="lastName" placeholder=" " required="" type="text">
-<label class="input-label font-body-md text-body-md" for="lastName">Last Name</label>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-<div class="relative">
-<input class="input-minimal w-full font-body-md text-body-md" id="email" placeholder=" " required="" type="email">
-<label class="input-label font-body-md text-body-md" for="email">Email Address</label>
-</div>
-<div class="relative">
-<input class="input-minimal w-full font-body-md text-body-md" id="company" placeholder=" " type="text">
-<label class="input-label font-body-md text-body-md" for="company">Company (Optional)</label>
+<div class="relative border-b border-outline-variant py-2">
+<label class="block font-label-sm uppercase text-on-surface/40 mb-2">Phone</label>
+<input class="w-full bg-transparent border-none p-0 text-on-surface focus:ring-0 placeholder-on-surface/20" placeholder="Enter your phone number" type="tel">
 </div>
 </div>
-<div class="relative">
-<select class="input-minimal w-full font-body-md text-body-md appearance-none bg-transparent cursor-pointer rounded-none focus:ring-0" id="inquiryType">
-<option class="bg-surface text-on-surface-variant" disabled="" hidden="" selected="" value="">Select Nature of Inquiry</option>
-<option class="bg-surface text-on-surface" value="private">Private Selection Allocation</option>
-<option class="bg-surface text-on-surface" value="corporate">Corporate Gifting</option>
-<option class="bg-surface text-on-surface" value="trade">Trade &amp; Hospitality</option>
-<option class="bg-surface text-on-surface" value="events">Bespoke Events</option>
-</select>
-<!-- Custom dropdown arrow -->
-<div class="absolute right-0 top-3 pointer-events-none text-on-surface-variant">
-<span class="material-symbols-outlined">expand_more</span>
+<div class="relative border-b border-outline-variant py-2">
+<label class="block font-label-sm uppercase text-on-surface/40 mb-2">Email</label>
+<input class="w-full bg-transparent border-none p-0 text-on-surface focus:ring-0 placeholder-on-surface/20" placeholder="Enter your email address" type="email">
 </div>
+<div class="relative border-b border-outline-variant py-2">
+<label class="block font-label-sm uppercase text-on-surface/40 mb-2">Message</label>
+<textarea class="w-full bg-transparent border-none p-0 text-on-surface focus:ring-0 placeholder-on-surface/20 resize-none" placeholder="Please describe your requirements..." rows="4"></textarea>
 </div>
-<div class="relative">
-<textarea class="input-minimal w-full font-body-md text-body-md resize-none pt-4" id="message" placeholder=" " required="" rows="4"></textarea>
-<label class="input-label font-body-md text-body-md" for="message">Your Message</label>
-</div>
-<div class="flex justify-end pt-4">
-<button class="btn-outline font-body-md text-label-lg tracking-widest uppercase px-12 py-4" type="submit">
-                                Submit Inquiry
+<button class="w-full md:w-auto px-12 py-4 bg-primary text-on-primary font-label-lg uppercase tracking-widest transition-all duration-300 hover:bg-primary-fixed hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/20 active:translate-y-0 active:scale-95" type="submit">
+                                Send Message
                             </button>
-</div>
 </form>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-8">
+<div class="space-y-4">
+<h3 class="font-headline-sm text-secondary uppercase tracking-wider">China Headquarters</h3>
+<p class="font-body-md text-on-surface/70 leading-relaxed">
+                                Minhang District, Shanghai<br>
+                                Room 505, Building A, 389 Lianming Road<br>
+                                Postcode: 201101
+                            </p>
+</div>
+<div class="space-y-4">
+<h3 class="font-headline-sm text-secondary uppercase tracking-wider">Customer Service</h3>
+<div class="space-y-3 font-body-md text-on-surface/70">
+<a class="flex items-center gap-3 text-on-surface hover:text-primary transition-colors" href="tel:+8615721452475">
+<svg class="lux-lucide shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"></path></svg>
++86 15721452475
+</a>
+<a class="flex items-center gap-3 text-on-surface hover:text-primary transition-colors" href="mailto:china@luxureat.com?cc=roberto@truffleat.com">
+<svg class="lux-lucide shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+china@luxureat.com
+</a>
+<a class="flex items-center gap-3 text-on-surface hover:text-primary transition-colors" href="mailto:china@luxureat.com?cc=roberto@truffleat.com">
+<svg class="lux-lucide shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+roberto@truffleat.com
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Service Cards -->
+<div class="lg:col-span-5 space-y-gutter">
+<!-- Product Consultation Card -->
+<div class="glass-panel p-10 space-y-6 group">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-md text-primary">Product & Tasting Consultation</h2>
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="restaurant_menu">restaurant_menu</span>
+</div>
+<p class="text-on-surface/60 font-body-md leading-relaxed">
+                            From caviar and truffle selection to storage, opening, serving, and recipe pairings, we offer clear recommendations based on your occasion and guest count so you can experience Italian flavor at its best.
+                        </p>
+<ul class="space-y-3 font-label-sm text-on-surface/40 uppercase tracking-widest">
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 bg-primary rounded-full"></span>
+                                Product and format selection
+                            </li>
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 bg-primary rounded-full"></span>
+                                Storage and serving guidance
+                            </li>
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 bg-primary rounded-full"></span>
+                                Recipe and table pairings
+                            </li>
+</ul>
+</div>
+<!-- B2B Card -->
+<div class="glass-panel p-10 space-y-6 bg-surface-container-low/50 border-secondary/10">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-md text-secondary">Business & Supply Partnerships</h2>
+<span class="material-symbols-outlined text-secondary text-4xl" data-icon="corporate_fare">corporate_fare</span>
+</div>
+<p class="text-on-surface/60 font-body-md leading-relaxed">
+                            For national and regional distributors, retailers, hospitality groups, and corporate clients, we provide private label, OEM, wholesale purchasing, local distribution in China, stable supply, and corporate gifting solutions.
+                        </p>
+<ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-label-sm text-on-surface/40 uppercase tracking-widest">
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span>Private Label & OEM</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span>Wholesale & Import/Export</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span>Hospitality Supply</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span>Corporate Gifting</li>
+</ul>
+<div class="flex gap-4">
+<div class="lux-contact-service-thumb h-24 w-1/3 overflow-hidden rounded" tabindex="0">
+<div class="w-full h-full bg-cover bg-center" data-alt="Close up of a luxury hotel lobby with minimalist dark marble floors and warm ambient lighting, representing a premium B2B partnership setting." style="background-image: url('../assets/media/brand/lux-031.jpg')"></div>
+</div>
+<div class="lux-contact-service-thumb h-24 w-1/3 overflow-hidden rounded" tabindex="0">
+<div class="w-full h-full bg-cover bg-center" data-alt="A sophisticated corporate gift box featuring a gold logo on a matte black texture, surrounded by high-end packaging materials." style="background-image: url('../assets/media/brand/lux-015.jpg')"></div>
+</div>
+<div class="lux-contact-service-thumb lux-contact-network-thumb h-24 w-1/3 overflow-hidden rounded border border-on-surface/10" role="img" aria-label="International business network" tabindex="0"></div>
+</div>
+</div>
 </div>
 </div>
 </section>
-<!-- Global Presence -->
-<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-t border-white/5">
-<h2 class="font-headline-md text-headline-md text-center text-on-surface mb-16 tracking-wide">Global Presence</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+<!-- Social Feed / Global Locations -->
+<section class="bg-surface-container-lowest/50 py-section-gap border-t border-outline-variant/10 overflow-hidden scroll-mt-24" id="global-footprint">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center space-y-16">
+<div class="space-y-4">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface tracking-tighter">Global Presence</h2>
+<p class="font-body-md text-on-surface/40 uppercase tracking-widest">Italy • United States • Thailand • China</p>
+</div>
+<div class="lux-footprint-stage relative min-h-[520px] w-full flex items-center justify-center py-12">
+<div class="absolute inset-0 bg-cover bg-center" data-footprint-bg data-alt="LuxurEat international business and global presence" style="background-image: url('../assets/media/brand/global-footprint-map.webp')"></div>
+<div class="relative z-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 w-full">
 <article class="lux-footprint-card glass-panel p-6 text-left">
 <div class="lux-footprint-heading"><span class="material-symbols-outlined text-primary lux-footprint-icon">local_dining</span><strong>Italy</strong><small>Truffleat Srl</small></div>
+<p class="lux-footprint-role">Italian product development, production coordination, ingredient selection, and global export support.</p>
 <p>Via Tuscania 9, 01028 Orte (VT)</p>
 <p>Legal Office: Via Tiberina km 9.2, 00060 Riano (RM)</p>
 <a href="mailto:info@truffleat.com">info@truffleat.com</a>
@@ -254,6 +223,7 @@
 </article>
 <article class="lux-footprint-card glass-panel p-6 text-left">
 <div class="lux-footprint-heading"><span class="material-symbols-outlined text-primary lux-footprint-icon">location_city</span><strong>United States</strong><small>Seattle · Luxureat LLC</small></div>
+<p class="lux-footprint-role">Business liaison, partner support, and market development for North America.</p>
 <p>605 Center Rd Apt A203<br>Everett, WA 98204, USA</p>
 <a href="mailto:info@luxureat.com">info@luxureat.com</a>
 <a href="tel:+14256266318">+1 425 626 6318</a>
@@ -261,6 +231,7 @@
 </article>
 <article class="lux-footprint-card glass-panel p-6 text-left">
 <div class="lux-footprint-heading"><span class="material-symbols-outlined text-primary lux-footprint-icon">temple_buddhist</span><strong>Thailand</strong><small>Bangkok · Truffleat Co., Ltd</small></div>
+<p class="lux-footprint-role">Southeast Asia market liaison, regional partnerships, and hospitality-channel experience.</p>
 <p>11 Narathiwat Ratchanakarin Soi 8, Thung Wat Don, Sathon, Bangkok 10120, Thailand</p>
 <a href="mailto:info@truffle.co.th">info@truffle.co.th</a>
 <a href="tel:+6626799441">+66 2 679 9441</a>
@@ -268,22 +239,28 @@
 </article>
 <article class="lux-footprint-card glass-panel p-6 text-left">
 <div class="lux-footprint-heading"><span class="material-symbols-outlined text-primary lux-footprint-icon">account_balance</span><strong>China</strong><small>Shanghai · LuxurEat China Ltd</small></div>
+<p class="lux-footprint-role">Shanghai-based local operations for imports, distribution development, customer service, and market communication in China.</p>
 <p>Sala 505, Building A, 389, Lianming Road, Minhang District, Shanghai</p>
 <p>Yuan Pengfei</p>
-<a href="mailto:china@luxureat.com">china@luxureat.com</a>
+<a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">china@luxureat.com</a>
+<a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">roberto@truffleat.com</a>
 <a href="tel:+8615721452475">+86 15721452475</a>
 </article>
+</div>
+</div>
+</div>
+<div class="lux-footprint-video-strip" aria-label="LuxurEat global partnership film">
+<video class="lux-about-program-media" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/contact-global-footprint.m4v" type="video/mp4"></video>
+<div class="lux-footprint-video-fade" aria-hidden="true"></div>
+<div class="lux-footprint-video-copy">
+<img class="lux-footprint-video-logo" loading="lazy" decoding="async" src="../assets/media/brand/contact-market-logo.png" alt="LuxurEat">
+<p class="lux-footprint-video-title">Let Us Grow China’s Premium Food Market Together</p>
+</div>
 </div>
 </section>
 </main>
 <!-- Footer -->
 
-<script>
-        // Smooth scroll interaction for footer
-        document.querySelector('footer .font-display-lg').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    </script>
 
 
 
@@ -297,17 +274,19 @@
 
 
 
+<!-- lux:footer:start -->
 <footer class="lux-footer">
   <div class="lux-footer-grid">
-    <div><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>An odyssey of taste, sourcing the rarest delicacies through sustainable practices and uncompromising quality standards.</p></div>
-    <nav><a href="index.html">Home</a><a href="journal.html">About Us</a><a href="products.html">Products</a><a href="rituals.html">Recipe Art</a><a href="news.html">Brand News</a><a class="" href="certification.html">Quality &amp; Certification</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a></nav>
-    <div class="lux-footer-social"><a href="https://xhslink.com/m/6Jn3PRYzjAy" target="_blank" rel="noopener">Rednote</a><button type="button" data-footer-modal="wechat">WeChat</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener">Douyin</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener">Weibo</a></div>
-    <div><a href="mailto:china@luxureat.com">china@luxureat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">Privacy Policy</button><button type="button" data-footer-modal="terms">Terms of Sale</button><button type="button" data-footer-modal="shipping">Shipping</button></div></div>
+    <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>Beyond importing, we are committed to defining a new standard for premium Italian gastronomy in China.<br>Rooted in authentic flavor and guided by quality and safety, LuxurEat China brings Italian food culture and innovative experiences to China.</p></div>
+    <nav><a href="index.html">Home</a><a href="journal.html">About Us</a><a href="products.html">Products</a><a href="rituals.html">Recipe Art</a><a href="news.html">Brand News</a><a href="certification.html">Certification</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a></nav>
+    <div class="lux-footer-social"><a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">Rednote</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">WeChat</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">Douyin</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">Weibo</a></div>
+    <div><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">china@luxureat.com</a><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">roberto@truffleat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">Privacy Policy</button><button type="button" data-footer-modal="terms">Terms of Sale</button><button type="button" data-footer-modal="shipping">Shipping</button></div></div>
   </div>
-  <div class="lux-footer-bottom">© 2024 LuxurEat Maison. CITES & FDA Certified.</div>
+  <div class="lux-footer-bottom">2026 LUXUREAT CHINA.</div>
 </footer>
-<script src="../assets/data/products.js?v=20260714-data-sync1"></script>
-<script src="../assets/data/brand.js?v=20260715-content1"></script>
-<script src="../assets/js/core.js?v=20260715-content1"></script>
-<script src="../assets/js/products.js?v=20260715-content1"></script>
-<script src="../assets/js/brand.js?v=20260715-content1"></script></body></html>
+<!-- lux:footer:end -->
+<!-- lux:scripts:start -->
+<script defer src="../assets/data/brand.js?v=20260718-performance"></script>
+<script defer src="../assets/js/brand.js?v=20260718-performance"></script>
+<script defer src="../assets/js/core.js?v=20260718-performance"></script>
+<!-- lux:scripts:end --></body></html>
