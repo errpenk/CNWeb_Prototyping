@@ -1,4 +1,4 @@
-export const assetVersion = "20260720-gallery-fix";
+export const assetVersion = "20260720-brand-suffix";
 
 export const contact = {
   email: "china@luxureat.com",
@@ -62,13 +62,13 @@ export const scripts = {
 
 export const footer = {
   zh: {
-    description: "不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat China以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。",
-    copyright: "2026 LUXUREAT CHINA.",
+    description: "不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat China（露意膳）以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。",
+    copyright: "2026 LUXUREAT CHINA（露意膳）.",
     legal: [["privacy", "隐私政策"], ["terms", "销售条款"], ["shipping", "配送说明"]],
   },
   en: {
-    description: "Beyond importing, we are committed to defining a new standard for premium Italian gastronomy in China.<br>Rooted in authentic flavor and guided by quality and safety, LuxurEat China brings Italian food culture and innovative experiences to China.",
-    copyright: "2026 LUXUREAT CHINA.",
+    description: "Beyond importing, we are committed to defining a new standard for premium Italian gastronomy in China.<br>Rooted in authentic flavor and guided by quality and safety, LuxurEat China（露意膳） brings Italian food culture and innovative experiences to China.",
+    copyright: "2026 LUXUREAT CHINA（露意膳）.",
     legal: [["privacy", "Privacy Policy"], ["terms", "Terms of Sale"], ["shipping", "Shipping"]],
   },
 };

@@ -423,14 +423,14 @@ function initLuxFooterActions() {
       privacy: ["隐私政策", "我们仅收集咨询、订单与售后服务所需的信息，并用于客户沟通、冷链履约、合规记录与服务改进。未经许可，我们不会出售您的个人信息。"],
       terms: ["销售条款", "所有商品以确认订单与付款记录为准。鱼子酱等冷链商品因食品安全原因，发出后非质量问题不支持退换；如运输异常，请在签收后 24 小时内联系我们。"],
       shipping: ["配送说明", "我们采用 0-4°C 冷链包装与预约配送。发货前会确认收货时间，偏远地区或特殊活动订单将由顾问单独确认时效。"],
-      wechat: ["微信", "请扫描二维码联系 LuxurEat 中国顾问。", "您也可以通过微信ID：LuxurEatChina 与我们联系。"],
+      wechat: ["微信", "请扫描二维码联系 LuxurEat（露意膳） 中国顾问。", "您也可以通过微信ID：LuxurEatChina 与我们联系。"],
     }
     : {
       close: "Close",
       privacy: ["Privacy Policy", "We collect only the information needed for inquiries, orders, after-sales support, cold-chain fulfillment, compliance records, and service improvement. We do not sell personal information."],
       terms: ["Terms of Sale", "Orders are confirmed by written order details and payment records. For food-safety reasons, shipped cold-chain goods are not returnable unless quality or transport issues are reported within 24 hours of delivery."],
       shipping: ["Shipping", "We ship with 0-4°C cold-chain packaging and scheduled delivery. Timing is confirmed before dispatch; remote areas and special-event orders are coordinated by a concierge."],
-      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat China concierge.", "You can also reach us via WeChat ID: LuxurEatChina."],
+      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat China（露意膳） concierge.", "You can also reach us via WeChat ID: LuxurEatChina."],
     };
 
   const modal = document.createElement("div");
@@ -493,8 +493,8 @@ function initLuxFooterActions() {
     close: "关闭",
     signIn: "登录账号",
     create: "创建账号",
-    subtitleSignIn: "欢迎回到您的 LuxurEat 账户。",
-    subtitleCreate: "创建您的 LuxurEat 账户。",
+    subtitleSignIn: "欢迎回到您的 LuxurEat（露意膳） 账户。",
+    subtitleCreate: "创建您的 LuxurEat（露意膳） 账户。",
     email: "电子邮箱",
     password: "密码",
     remember: "记住我",
@@ -505,8 +505,8 @@ function initLuxFooterActions() {
     close: "Close",
     signIn: "Sign In",
     create: "Create Account",
-    subtitleSignIn: "Welcome back to your LuxurEat account.",
-    subtitleCreate: "Create your LuxurEat account.",
+    subtitleSignIn: "Welcome back to your LuxurEat（露意膳） account.",
+    subtitleCreate: "Create your LuxurEat（露意膳） account.",
     email: "Email Address",
     password: "Password",
     remember: "Remember Me",
