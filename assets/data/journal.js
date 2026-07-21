@@ -409,7 +409,6 @@
         [
           { src: images.aboutCaviar, alt: "LuxurEat（露意膳） white sturgeon caviar" },
           { src: images.aboutShrimp, alt: "LuxurEat（露意膳） shrimp tartare products" },
-          { src: images.aboutBurger, alt: "LuxurEat（露意膳） Mediterranean fish burger" },
         ],
       ],
       quote: "Bringing authentic Italian flavor, exceptional ingredients, and innovative products to the world.",
