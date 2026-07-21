@@ -356,7 +356,7 @@ assert(zhContact.includes('china@luxureat.com') && zhContact.includes('roberto@t
 assert((zhContact.match(/lux-footprint-role/g) || []).length === 4, 'Chinese global footprint explains each regional function');
 const enContact = read(path.join(themeDir, 'pages/en/contact.php'));
 assert(enContact.includes('Global Presence') && enContact.includes('Italy') && enContact.includes('Thailand') && enContact.includes('China'), 'English contact footprint lists the requested countries');
-assert(enContact.includes('Truffleat Srl') && enContact.includes('Luxureat（露意膳） LLC') && enContact.includes('Truffleat Co., Ltd') && enContact.includes('LuxurEat China（露意膳） Ltd'), 'English contact footprint uses the requested entities');
+assert(enContact.includes('Truffleat Srl') && enContact.includes('Luxureat LLC') && enContact.includes('Truffleat Co., Ltd') && enContact.includes('LuxurEat China（露意膳） Ltd'), 'English contact footprint uses the requested entities');
 assert(enContact.includes('lux-footprint-heading') && !enContact.includes('<details class="lux-footprint-card'), 'English contact footprint cards are expanded by default');
 assert(enContact.includes('info@truffleat.com') && enContact.includes('info@luxureat.com') && enContact.includes('info@truffle.co.th'), 'English contact page restores the regional contacts');
 assert((enContact.match(/lux-footprint-role/g) || []).length === 4, 'English global footprint explains each regional function');
