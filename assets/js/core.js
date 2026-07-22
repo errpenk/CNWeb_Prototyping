@@ -266,7 +266,7 @@ if (luxNav && luxMenu) {
     button.type = "button";
     button.className = "lux-back-to-top";
     button.setAttribute("aria-label", lang());
-    button.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">arrow_upward</span>';
+    button.innerHTML = '<svg class="lux-back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"></path></svg>';
     document.body.appendChild(button);
 
     const update = () => button.classList.toggle("visible", window.scrollY > 360);
@@ -504,6 +504,7 @@ function initLuxFooterActions() {
     resetSent: "如果该邮箱已注册，密码重置链接已发送，请检查收件箱和垃圾邮件。",
     unavailable: "账号服务暂未连接，请稍后再试。",
     working: "请稍候…",
+    loginRequired: "请先登录账号，然后继续结算。",
     signOut: "退出登录",
   } : {
     close: "Close",
@@ -522,6 +523,7 @@ function initLuxFooterActions() {
     resetSent: "If the email is registered, a reset link has been sent. Please check your inbox and spam folder.",
     unavailable: "Account service is not connected yet. Please try again later.",
     working: "Please wait…",
+    loginRequired: "Please sign in before continuing to checkout.",
     signOut: "Sign Out",
   };
 
@@ -680,6 +682,13 @@ function initLuxFooterActions() {
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && modal()?.classList.contains("is-open")) setOpen(false);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if (new URLSearchParams(location.search).get("account") !== "required") return;
+    const node = ensureModal();
+    setOpen(true);
+    node.querySelector("[data-account-feedback]").textContent = copy().loginRequired;
   });
 })();
 

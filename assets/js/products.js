@@ -679,6 +679,11 @@ function initLuxProductDetails() {
       setMessage(message("购物袋为空。", "Your shopping bag is empty."));
       return;
     }
+    if (!window.LuxureatAccount?.loggedIn) {
+      setMessage(message("请先登录账号，然后继续结算。", "Please sign in before continuing to checkout."));
+      document.querySelector("[data-account-open]")?.click();
+      return;
+    }
 
     button.disabled = true;
     setMessage(message("正在连接安全结算…", "Connecting to secure checkout…"));

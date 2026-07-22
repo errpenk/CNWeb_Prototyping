@@ -122,6 +122,8 @@ assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
 assert(functionsPhp.includes('woocommerce_store_api_cart_item_images') && functionsPhp.includes('lux-005.jpg'), 'checkout cart items receive branded product images');
 assert(functionsPhp.includes("$integration_registry->unregister('mailpoet')"), 'checkout removes the duplicate MailPoet opt-in block at registration');
+assert(functionsPhp.includes('luxureat_static_require_account_for_checkout') && functionsPhp.includes("!is_user_logged_in()"), 'checkout requires a signed-in customer on both direct and AJAX entry points');
+assert(functionsPhp.includes('woocommerce_package_rates') && functionsPhp.includes("set_label('免费配送')"), 'Chinese checkout localizes the free-shipping rate');
 assert(functionsPhp.includes("$mode === 'forgot'") && functionsPhp.includes('retrieve_password($user->user_login)'), 'functions.php sends native WordPress password reset emails');
 assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'functions.php passes the remember-me choice to WordPress authentication');
 
@@ -139,6 +141,7 @@ assert(functionsPhp.includes('woocommerce_account_menu_items') && functionsPhp.i
 assert(functionsPhp.includes('luxureat_static_account_language') && pagePhp.includes("add_query_arg('lang', 'zh'") && pagePhp.includes("add_query_arg('lang', 'en'"), 'account page defaults to Chinese and provides a bilingual switch');
 assert(functionsPhp.includes('woocommerce_get_endpoint_url') && functionsPhp.includes("add_query_arg('lang', luxureat_static_account_language()"), 'account endpoint links preserve the selected language');
 assert(pagePhp.includes('luxureat-logo.png'), 'account page uses the LuxurEat logo');
+assert(pagePhp.includes('LuxurEat <i aria-hidden="true">｜</i> <small>露意膳</small>'), 'account and checkout brand names use one size with a separator');
 assert(pagePhp.includes('lux-account-dashboard-page'), 'account dashboard receives a dedicated body class');
 
 const routesPhp = read(path.join(themeDir, 'routes.php'));
@@ -230,6 +233,8 @@ assert(runtimeJs.includes('lux-reader-cover') && runtimeJs.includes('lux-reader-
 assert(runtimeJs.includes('lux-reader-layout') && runtimeJs.includes('lux-reader-quote'), 'runtime scripts renders long-form reader articles');
 assert(runtimeJs.includes('scrollRestoration'), 'runtime scripts restores saved scroll positions manually');
 assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-top floating action button');
+assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow_upward<'), 'back-to-top control uses an inline SVG instead of a font ligature');
+assert(runtimeJs.includes('Please sign in before continuing to checkout.') && runtimeJs.includes('window.LuxureatAccount?.loggedIn'), 'bag checkout prompts guests to sign in before syncing the cart');
 assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
 assert(runtimeJs.includes('const pageHref =') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('`/en/${slug}/`'), 'runtime navigation keeps static links relative and WordPress links root-based');
 assert(runtimeJs.includes('aria-pressed'), 'runtime scripts updates pressed states for caviar toolbar buttons');
@@ -398,6 +403,9 @@ assert(zhContact.includes('placeholder="请输入您的电子邮箱"') && enCont
 assert(zhContact.includes('lux-contact-network-thumb') && enContact.includes('lux-contact-network-thumb'), 'bilingual contact pages use the global-network business image');
 assert((zhContact.match(/lux-contact-service-thumb/g) || []).length === 3 && (enContact.match(/lux-contact-service-thumb/g) || []).length === 3, 'all three bilingual contact thumbnails expose the shared interaction');
 assert(zhGifting.includes('luxureat-contact-qr.webp') && enGifting.includes('luxureat-contact-qr.webp'), 'bilingual gifting pages show the supplied contact QR code');
+assert(zhGifting.includes('luxureat-domestic-contact-qr.webp') && enGifting.includes('luxureat-domestic-contact-qr.webp'), 'bilingual gifting pages show separate domestic and overseas contact QR codes');
+assert(zhGifting.includes('海外联系') && zhGifting.includes('国内联系') && enGifting.includes('Overseas Contact') && enGifting.includes('Domestic Contact'), 'bilingual gifting QR codes have clear contact-region labels');
+assert(!enGifting.includes('View Large Image') && (enGifting.match(/View Full Size/g) || []).length === 8, 'English partnership cases use the requested full-size hover label');
 assert(zhGifting.includes('china@luxureat.com') && zhGifting.includes('roberto@truffleat.com') && enGifting.includes('china@luxureat.com') && enGifting.includes('roberto@truffleat.com'), 'bilingual gifting contact block exposes both China and Roberto emails');
 assert(zhGifting.includes('诚邀中国经销与') && enGifting.includes('Invitation to Chinese Distribution'), 'bilingual gifting pages lead with distribution and channel partners in China');
 assert(zhGifting.includes('直接进口产品') && enGifting.includes('imports products directly into China'), 'bilingual gifting pages clarify China direct-import operations');
@@ -441,6 +449,7 @@ if (fs.existsSync(zipFile)) {
     assert(entries.includes('luxureat-static/functions.php'), 'zip contains luxureat-static/functions.php');
     assert(entries.includes('luxureat-static/assets/media/brand/luxureat-logo.png'), 'zip contains logo asset');
     assert(entries.includes('luxureat-static/assets/media/brand/wechat-qr.webp'), 'zip contains WeChat QR asset');
+    assert(entries.includes('luxureat-static/assets/media/brand/luxureat-domestic-contact-qr.webp'), 'zip contains the domestic contact QR asset');
     assert(entries.includes('luxureat-static/assets/data/products.js'), 'zip contains product data asset');
     assert(entries.some((entry) => entry.startsWith('luxureat-static/assets/media/brand/')), 'zip contains local image assets');
     assert(!entries.some((entry) => entry.startsWith('__MACOSX/')), 'zip has no __MACOSX metadata');
