@@ -576,12 +576,21 @@ function luxureat_static_cart_item_images($images, $cart_item) {
 }
 add_filter('woocommerce_store_api_cart_item_images', 'luxureat_static_cart_item_images', 10, 2);
 
-function luxureat_static_remove_checkout_marketing_optin() {
-    if (function_exists('is_checkout') && is_checkout()) {
-        wp_dequeue_script('mailpoet-marketing-optin-block-frontend');
+function luxureat_static_remove_checkout_marketing_optin($integration_registry) {
+    if (
+        is_object($integration_registry)
+        && method_exists($integration_registry, 'is_registered')
+        && method_exists($integration_registry, 'unregister')
+        && $integration_registry->is_registered('mailpoet')
+    ) {
+        $integration_registry->unregister('mailpoet');
     }
 }
-add_action('wp_enqueue_scripts', 'luxureat_static_remove_checkout_marketing_optin', 100);
+add_action(
+    'woocommerce_blocks_checkout_block_registration',
+    'luxureat_static_remove_checkout_marketing_optin',
+    100
+);
 
 function luxureat_static_account_language() {
     $language = isset($_GET['lang']) ? sanitize_key(wp_unslash($_GET['lang'])) : 'zh';

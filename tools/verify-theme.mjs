@@ -121,7 +121,7 @@ assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php d
 assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.includes('wc_create_new_customer'), 'functions.php exposes WooCommerce-backed account registration');
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
 assert(functionsPhp.includes('woocommerce_store_api_cart_item_images') && functionsPhp.includes('lux-005.jpg'), 'checkout cart items receive branded product images');
-assert(functionsPhp.includes("wp_dequeue_script('mailpoet-marketing-optin-block-frontend')"), 'checkout removes the duplicate MailPoet opt-in block');
+assert(functionsPhp.includes("$integration_registry->unregister('mailpoet')"), 'checkout removes the duplicate MailPoet opt-in block at registration');
 assert(functionsPhp.includes("$mode === 'forgot'") && functionsPhp.includes('retrieve_password($user->user_login)'), 'functions.php sends native WordPress password reset emails');
 assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'functions.php passes the remember-me choice to WordPress authentication');
 
