@@ -493,11 +493,15 @@ function initLuxFooterActions() {
     create: "创建账号",
     subtitleSignIn: "欢迎回到您的 LuxurEat（露意膳） 账户。",
     subtitleCreate: "创建您的 LuxurEat（露意膳） 账户。",
+    resetTitle: "重置密码",
+    subtitleReset: "输入注册邮箱，我们会发送安全的密码重置链接。",
     email: "电子邮箱",
     password: "密码",
     remember: "记住我",
     forgot: "忘记密码？",
     newsletter: "我愿意接收 LuxurEat 的活动提醒和产品上新邮件（可选）",
+    sendReset: "发送重置链接",
+    resetSent: "如果该邮箱已注册，密码重置链接已发送，请检查收件箱和垃圾邮件。",
     unavailable: "账号服务暂未连接，请稍后再试。",
     working: "请稍候…",
     signOut: "退出登录",
@@ -507,11 +511,15 @@ function initLuxFooterActions() {
     create: "Create Account",
     subtitleSignIn: "Welcome back to your LuxurEat（露意膳） account.",
     subtitleCreate: "Create your LuxurEat（露意膳） account.",
+    resetTitle: "Reset Password",
+    subtitleReset: "Enter your account email and we will send a secure reset link.",
     email: "Email Address",
     password: "Password",
     remember: "Remember Me",
     forgot: "Forgot Password?",
     newsletter: "Email me about LuxurEat events and new products (optional)",
+    sendReset: "Send Reset Link",
+    resetSent: "If the email is registered, a reset link has been sent. Please check your inbox and spam folder.",
     unavailable: "Account service is not connected yet. Please try again later.",
     working: "Please wait…",
     signOut: "Sign Out",
@@ -534,11 +542,11 @@ function initLuxFooterActions() {
               <span>${text.email}</span>
               <div class="lux-account-input">${icons.mail}<input name="email" type="email" placeholder="china@luxureat.com" autocomplete="email" required></div>
             </label>
-            <label class="lux-account-field">
+            <label class="lux-account-field" data-account-password>
               <span>${text.password}</span>
               <div class="lux-account-input">${icons.lock}<input name="password" type="password" placeholder="••••••••" autocomplete="current-password" minlength="8" required></div>
             </label>
-            <div class="lux-account-row">
+            <div class="lux-account-row" data-account-login-options>
               <label><input name="remember" type="checkbox" value="1"><span>${text.remember}</span></label>
               <a href="${luxEscapeCoreHtml(window.LuxureatAccount?.lostPasswordUrl || "#")}" data-account-forgot>${text.forgot}</a>
             </div>
@@ -567,16 +575,23 @@ function initLuxFooterActions() {
     return node;
   };
 
-  const setCreating = (node, creating) => {
+  const setMode = (node, mode) => {
     const text = copy();
-    node.dataset.accountMode = creating ? "register" : "login";
-    node.querySelector("[data-account-title]").textContent = creating ? text.create : text.signIn;
-    node.querySelector("[data-account-subtitle]").textContent = creating ? text.subtitleCreate : text.subtitleSignIn;
-    node.querySelector("[data-account-icon]").innerHTML = creating ? icons.userPlus : icons.logIn;
-    node.querySelector("[data-account-toggle]").innerHTML = creating ? `${icons.logIn}<span>${text.signIn}</span>` : `${icons.userPlus}<span>${text.create}</span>`;
-    node.querySelector("[data-account-submit]").innerHTML = creating ? `${icons.userPlus}<span>${text.create}</span>` : `${icons.logIn}<span>${text.signIn}</span>`;
+    const creating = mode === "register";
+    const resetting = mode === "forgot";
+    const password = node.querySelector("input[name='password']");
+    node.dataset.accountMode = mode;
+    node.querySelector("[data-account-title]").textContent = resetting ? text.resetTitle : creating ? text.create : text.signIn;
+    node.querySelector("[data-account-subtitle]").textContent = resetting ? text.subtitleReset : creating ? text.subtitleCreate : text.subtitleSignIn;
+    node.querySelector("[data-account-icon]").innerHTML = resetting ? icons.mail : creating ? icons.userPlus : icons.logIn;
+    node.querySelector("[data-account-toggle]").innerHTML = mode === "login" ? `${icons.userPlus}<span>${text.create}</span>` : `${icons.logIn}<span>${text.signIn}</span>`;
+    node.querySelector("[data-account-submit]").innerHTML = resetting ? `${icons.mail}<span>${text.sendReset}</span>` : creating ? `${icons.userPlus}<span>${text.create}</span>` : `${icons.logIn}<span>${text.signIn}</span>`;
+    node.querySelector("[data-account-password]").hidden = resetting;
+    node.querySelector("[data-account-login-options]").hidden = mode !== "login";
     node.querySelector("[data-account-newsletter]").hidden = !creating;
-    node.querySelector("input[name='password']").autocomplete = creating ? "new-password" : "current-password";
+    password.disabled = resetting;
+    password.required = !resetting;
+    password.autocomplete = creating ? "new-password" : "current-password";
     node.querySelector("[data-account-feedback]").textContent = "";
   };
 
@@ -607,6 +622,11 @@ function initLuxFooterActions() {
       });
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.data?.message || text.unavailable);
+      if (node.dataset.accountMode === "forgot") {
+        feedback.textContent = result.data?.message || text.resetSent;
+        button.disabled = false;
+        return;
+      }
       location.reload();
     } catch (error) {
       feedback.textContent = error.message || text.unavailable;
@@ -620,6 +640,7 @@ function initLuxFooterActions() {
     node.setAttribute("aria-hidden", String(!open));
     document.body.style.overflow = open ? "hidden" : "";
     if (open) {
+      if (!window.LuxureatAccount?.loggedIn) setMode(node, "login");
       lastFocus = document.activeElement;
       requestAnimationFrame(() => node.querySelector("input")?.focus());
     } else {
@@ -638,7 +659,12 @@ function initLuxFooterActions() {
     }
     if (event.target.closest("[data-account-toggle]")) {
       const node = ensureModal();
-      setCreating(node, node.dataset.accountMode !== "register");
+      setMode(node, node.dataset.accountMode === "login" ? "register" : "login");
+      return;
+    }
+    if (event.target.closest("[data-account-forgot]")) {
+      event.preventDefault();
+      setMode(ensureModal(), "forgot");
       return;
     }
     if (event.target.closest("[data-account-logout]")) {

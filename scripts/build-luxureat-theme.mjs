@@ -431,7 +431,22 @@ function luxureat_static_account_ajax() {
     $mode = isset($_POST['mode']) ? sanitize_key(wp_unslash($_POST['mode'])) : 'login';
     $email = isset($_POST['email']) ? sanitize_email(wp_unslash($_POST['email'])) : '';
     $password = isset($_POST['password']) ? (string) wp_unslash($_POST['password']) : '';
-    if (!is_email($email) || strlen($password) < 8) {
+    if (!is_email($email)) {
+        wp_send_json_error(array('message' => $message('请输入有效邮箱。', 'Enter a valid email address.')), 400);
+    }
+
+    if ($mode === 'forgot') {
+        $user = get_user_by('email', $email);
+        if ($user) {
+            $sent = retrieve_password($user->user_login);
+            if (is_wp_error($sent)) {
+                wp_send_json_error(array('message' => $message('暂时无法发送重置邮件，请稍后再试。', 'The reset email could not be sent. Please try again later.')), 500);
+            }
+        }
+        wp_send_json_success(array('message' => $message('如果该邮箱已注册，密码重置链接已发送，请检查收件箱和垃圾邮件。', 'If the email is registered, a reset link has been sent. Please check your inbox and spam folder.')));
+    }
+
+    if (strlen($password) < 8) {
         wp_send_json_error(array('message' => $message('请输入有效邮箱和至少 8 位密码。', 'Enter a valid email and a password of at least 8 characters.')), 400);
     }
 

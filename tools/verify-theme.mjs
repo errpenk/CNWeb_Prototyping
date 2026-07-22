@@ -119,6 +119,8 @@ assert(functionsPhp.includes("'en/private' => 'en/gifting'"), 'legacy English pr
 assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
 assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.includes('wc_create_new_customer'), 'functions.php exposes WooCommerce-backed account registration');
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
+assert(functionsPhp.includes("$mode === 'forgot'") && functionsPhp.includes('retrieve_password($user->user_login)'), 'functions.php sends native WordPress password reset emails');
+assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'functions.php passes the remember-me choice to WordPress authentication');
 
 const indexPhp = read(path.join(themeDir, 'index.php'));
 assert(indexPhp.includes('wp_safe_redirect'), 'index.php redirects root and alias routes');
@@ -205,6 +207,7 @@ assert(runtimeJs.includes('lux-bag-line-total'), 'bag items show multi-quantity 
 assert(runtimeJs.includes('${item.quantity}件总价') && runtimeJs.includes('lux-bag-detail'), 'bag items show quantity-specific totals and image detail actions');
 assert(runtimeJs.includes('data-bag-quantity'), 'runtime scripts carries selected product quantities into the bag');
 assert(runtimeJs.includes('data-account-form') && runtimeJs.includes('data-account-newsletter'), 'account modal provides registration and optional newsletter consent');
+assert(runtimeJs.includes('data-account-forgot') && runtimeJs.includes('data-account-login-options') && runtimeJs.includes('text.resetSent'), 'account modal provides an inline password reset flow');
 assert(runtimeJs.includes('luxureat_account') && runtimeJs.includes('LuxureatAccount'), 'account modal submits to the localized WordPress account endpoint');
 assert(!runtimeJs.includes('lux-account-social') && !runtimeJs.includes('Or Sign In With') && !runtimeJs.includes('或使用以下方式登录'), 'account modal removes Google and WeChat sign-in controls');
 assert(runtimeJs.includes('/wp-json/wc/store/v1/products') && runtimeJs.includes('/wp-json/wc/store/v1/cart'), 'bag checkout synchronizes local items with the WooCommerce Store API');
