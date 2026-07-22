@@ -481,6 +481,51 @@ function luxureat_static_account_ajax() {
 add_action('wp_ajax_nopriv_luxureat_account', 'luxureat_static_account_ajax');
 add_action('wp_ajax_luxureat_account', 'luxureat_static_account_ajax');
 
+function luxureat_static_account_language() {
+    $language = isset($_GET['lang']) ? sanitize_key(wp_unslash($_GET['lang'])) : 'zh';
+    return $language === 'en' ? 'en' : 'zh';
+}
+
+function luxureat_static_account_menu($items) {
+    if (!is_user_logged_in() || current_user_can('manage_options')) {
+        return $items;
+    }
+
+    $is_zh = luxureat_static_account_language() === 'zh';
+    $labels = array(
+        'orders' => $is_zh ? '订单' : 'Orders',
+        'edit-address' => $is_zh ? '地址' : 'Addresses',
+        'edit-account' => $is_zh ? '账户资料' : 'Account details',
+        'customer-logout' => $is_zh ? '退出登录' : 'Log out',
+    );
+
+    return array_intersect_key($labels, $items);
+}
+add_filter('woocommerce_account_menu_items', 'luxureat_static_account_menu', 999);
+
+function luxureat_static_account_endpoint_url($url) {
+    return add_query_arg('lang', luxureat_static_account_language(), $url);
+}
+add_filter('woocommerce_get_endpoint_url', 'luxureat_static_account_endpoint_url');
+
+function luxureat_static_account_dashboard() {
+    $user = wp_get_current_user();
+    $is_zh = luxureat_static_account_language() === 'zh';
+    ?>
+    <section class="lux-account-dashboard">
+        <p class="lux-account-eyebrow"><?php echo esc_html($is_zh ? '欢迎回来' : 'Welcome back'); ?></p>
+        <h2><?php echo esc_html($user->display_name ?: $user->user_login); ?></h2>
+        <p><?php echo esc_html($is_zh ? '在这里查看订单、管理收货与账单地址，或更新账户资料。' : 'View your orders, manage shipping and billing addresses, or update your account details.'); ?></p>
+    </section>
+    <?php
+}
+
+function luxureat_static_replace_account_dashboard() {
+    remove_action('woocommerce_account_dashboard', 'woocommerce_account_dashboard');
+    add_action('woocommerce_account_dashboard', 'luxureat_static_account_dashboard');
+}
+add_action('wp_loaded', 'luxureat_static_replace_account_dashboard');
+
 function luxureat_static_defer_scripts($tag, $handle) {
     if (strpos($handle, 'luxureat-') !== 0 || strpos($tag, ' defer') !== false) {
         return $tag;
@@ -602,6 +647,13 @@ if (!defined('ABSPATH')) {
 }
 
 status_header(200);
+$is_account_page = function_exists('is_account_page') && is_account_page();
+$account_language = $is_account_page && function_exists('luxureat_static_account_language') ? luxureat_static_account_language() : 'zh';
+$is_zh_account = $account_language === 'zh';
+if ($is_account_page && function_exists('switch_to_locale')) {
+    switch_to_locale($is_zh_account ? 'zh_CN' : 'en_US');
+}
+$account_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : get_permalink();
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -612,14 +664,26 @@ status_header(200);
 <body <?php body_class('lux-wp-page-shell'); ?>>
 <?php wp_body_open(); ?>
 <header class="lux-wp-page-header">
-    <a class="lux-wp-page-brand" href="<?php echo esc_url(home_url('/')); ?>">LuxurEat <span>露意膳</span></a>
-    <a class="lux-wp-page-home" href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Return to home', 'luxureat-static'); ?></a>
+    <a class="lux-wp-page-brand" href="<?php echo esc_url(home_url('/')); ?>">
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/media/brand/luxureat-logo.png'); ?>" alt="LuxurEat">
+        <span>LuxurEat <small>露意膳</small></span>
+    </a>
+    <nav class="lux-wp-page-actions" aria-label="<?php echo esc_attr($is_zh_account ? '账户页导航' : 'Account page navigation'); ?>">
+        <?php if ($is_account_page) : ?>
+            <span class="lux-language-switch" aria-label="<?php echo esc_attr($is_zh_account ? '语言' : 'Language'); ?>">
+                <a href="<?php echo esc_url(add_query_arg('lang', 'zh', $account_url)); ?>"<?php echo $is_zh_account ? ' aria-current="page"' : ''; ?>>中文</a>
+                <i aria-hidden="true">/</i>
+                <a href="<?php echo esc_url(add_query_arg('lang', 'en', $account_url)); ?>"<?php echo !$is_zh_account ? ' aria-current="page"' : ''; ?>>EN</a>
+            </span>
+        <?php endif; ?>
+        <a class="lux-wp-page-home" href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($is_zh_account ? '返回首页' : 'Return to home'); ?></a>
+    </nav>
 </header>
 <main class="lux-wp-page-main">
 <?php while (have_posts()) : the_post(); ?>
     <header class="lux-wp-page-title">
-        <p>Maison Account</p>
-        <h1><?php the_title(); ?></h1>
+        <p><?php echo esc_html($is_zh_account ? '会员中心' : 'Maison Account'); ?></p>
+        <h1><?php echo esc_html($is_account_page ? ($is_zh_account ? '我的账户' : 'My account') : get_the_title()); ?></h1>
     </header>
     <div class="lux-wp-page-content"><?php the_content(); ?></div>
 <?php endwhile; ?>

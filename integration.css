@@ -5007,13 +5007,54 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   letter-spacing: .12em;
 }
 .lux-wp-page-brand {
-  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
   font-weight: 600;
 }
-.lux-wp-page-brand span,
+.lux-wp-page-brand img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  filter: invert(1);
+}
+.lux-wp-page-brand > span {
+  color: #fff;
+  font-size: 16px;
+}
+.lux-wp-page-brand small,
 .lux-wp-page-home {
   color: #9df5ec;
   font-size: 11px;
+}
+.lux-wp-page-brand small {
+  margin-left: 6px;
+  font-weight: 600;
+}
+.lux-wp-page-actions,
+.lux-language-switch {
+  display: flex;
+  align-items: center;
+}
+.lux-wp-page-actions {
+  gap: clamp(18px, 3vw, 38px);
+}
+.lux-language-switch {
+  gap: 8px;
+  font: 600 11px/1 Montserrat, Arial, sans-serif;
+  letter-spacing: .12em;
+}
+.lux-language-switch a {
+  color: rgba(255,255,255,.62);
+  text-decoration: none;
+}
+.lux-language-switch a[aria-current="page"] {
+  color: #9df5ec;
+}
+.lux-language-switch i {
+  color: rgba(255,255,255,.24);
+  font-style: normal;
 }
 .lux-wp-page-main {
   width: min(1120px, calc(100% - 48px));
@@ -5039,6 +5080,74 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   border: 1px solid rgba(31,36,36,.14);
   background: #fff;
 }
+.woocommerce-account.logged-in .lux-wp-page-content {
+  padding: 0;
+  overflow: hidden;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation {
+  width: 28%;
+  padding: clamp(28px, 4vw, 48px);
+  box-sizing: border-box;
+  background: #111514;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation li + li {
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.woocommerce-account .woocommerce-MyAccount-navigation a {
+  position: relative;
+  display: block;
+  padding: 17px 20px 17px 0;
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+  font: 600 12px/1.4 Montserrat, Arial, sans-serif;
+  letter-spacing: .08em;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation a::after {
+  content: '\2192';
+  position: absolute;
+  right: 0;
+  color: #9df5ec;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation .is-active a,
+.woocommerce-account .woocommerce-MyAccount-navigation a:hover,
+.woocommerce-account .woocommerce-MyAccount-navigation a:focus-visible {
+  color: #fff;
+}
+.woocommerce-account .woocommerce-MyAccount-content {
+  width: 72%;
+  min-height: 360px;
+  padding: clamp(32px, 5vw, 64px);
+  box-sizing: border-box;
+}
+.woocommerce-account .woocommerce-MyAccount-content a {
+  color: #006a64;
+  text-underline-offset: 3px;
+}
+.lux-account-dashboard {
+  max-width: 620px;
+}
+.lux-account-eyebrow {
+  margin: 0 0 12px;
+  color: #00766f;
+  font: 600 11px/1.2 Montserrat, Arial, sans-serif;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.lux-account-dashboard h2 {
+  margin: 0 0 24px;
+  color: #1f2424;
+  font: 400 clamp(34px, 5vw, 58px)/1.05 Georgia, serif;
+}
+.lux-account-dashboard > p:last-child {
+  margin: 0;
+  color: #5e6664;
+  font: 400 16px/1.8 Montserrat, Arial, sans-serif;
+}
 .lux-wp-page-content .woocommerce form .form-row input.input-text {
   min-height: 48px;
   padding: 10px 14px;
@@ -5062,6 +5171,26 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   }
   .lux-wp-page-content {
     padding: 20px;
+  }
+  .lux-wp-page-brand img {
+    width: 42px;
+    height: 42px;
+  }
+  .lux-wp-page-brand > span,
+  .lux-wp-page-home {
+    display: none;
+  }
+  .woocommerce-account .woocommerce-MyAccount-navigation,
+  .woocommerce-account .woocommerce-MyAccount-content {
+    float: none;
+    width: 100%;
+  }
+  .woocommerce-account .woocommerce-MyAccount-navigation {
+    padding: 18px 22px;
+  }
+  .woocommerce-account .woocommerce-MyAccount-content {
+    min-height: 0;
+    padding: 30px 22px 38px;
   }
 }
 .lux-cert-card-back strong {

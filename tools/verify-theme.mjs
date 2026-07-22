@@ -133,6 +133,10 @@ assert(indexPhp.includes('$path = $target_path;'), 'index.php can render alias r
 
 const pagePhp = read(path.join(themeDir, 'page.php'));
 assert(pagePhp.includes('the_content()') && pagePhp.includes("body_class('lux-wp-page-shell')"), 'page.php renders native WordPress and WooCommerce page content');
+assert(functionsPhp.includes('woocommerce_account_menu_items') && functionsPhp.includes("'orders' =>") && functionsPhp.includes("'edit-address' =>") && functionsPhp.includes("'edit-account' =>") && functionsPhp.includes("'customer-logout' =>"), 'customer account navigation is limited to the requested WooCommerce sections');
+assert(functionsPhp.includes('luxureat_static_account_language') && pagePhp.includes("add_query_arg('lang', 'zh'") && pagePhp.includes("add_query_arg('lang', 'en'"), 'account page defaults to Chinese and provides a bilingual switch');
+assert(functionsPhp.includes('woocommerce_get_endpoint_url') && functionsPhp.includes("add_query_arg('lang', luxureat_static_account_language()"), 'account endpoint links preserve the selected language');
+assert(pagePhp.includes('luxureat-logo.png'), 'account page uses the LuxurEat logo');
 
 const routesPhp = read(path.join(themeDir, 'routes.php'));
 for (const route of expectedRoutes) {
@@ -237,6 +241,7 @@ assert(articleDataJs.includes('window.LUXUREAT_ARTICLE_DATA') && articleDataJs.i
 assert(!walk(themeDir).some((file) => /\.(php|css|js)$/i.test(file) && /googleusercontent|transparenttextures/.test(read(file))), 'theme uses local image assets instead of external prototype image URLs');
 
 const integrationCss = read(path.join(themeDir, 'integration.css'));
+assert(integrationCss.includes('.lux-wp-page-brand img') && integrationCss.includes('.woocommerce-MyAccount-navigation'), 'account page applies branded logo and WooCommerce account styling');
 assert(integrationCss.includes('html[lang^="zh"]') && integrationCss.includes('AlimamaShuHeiTi-Bold.woff2'), 'Chinese headline typography uses the bundled Alimama font');
 assert(integrationCss.includes('[data-caviar-grid].is-list'), 'integration.css defines the caviar list view layout');
 assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css hides filtered caviar product cards reliably');
