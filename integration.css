@@ -5131,6 +5131,9 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
 .lux-account-dashboard {
   max-width: 620px;
 }
+.lux-account-dashboard-page .woocommerce-MyAccount-content > p {
+  display: none;
+}
 .lux-account-eyebrow {
   margin: 0 0 12px;
   color: #00766f;

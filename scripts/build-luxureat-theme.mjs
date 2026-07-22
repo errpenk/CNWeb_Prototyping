@@ -653,6 +653,8 @@ $is_zh_account = $account_language === 'zh';
 if ($is_account_page && function_exists('switch_to_locale')) {
     switch_to_locale($is_zh_account ? 'zh_CN' : 'en_US');
 }
+$account_endpoint = $is_account_page && function_exists('WC') && WC()->query ? WC()->query->get_current_endpoint() : '';
+$is_account_dashboard = $is_account_page && is_user_logged_in() && !$account_endpoint;
 $account_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : get_permalink();
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
@@ -661,7 +663,7 @@ $account_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink(
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php wp_head(); ?>
 </head>
-<body <?php body_class('lux-wp-page-shell'); ?>>
+<body <?php body_class($is_account_dashboard ? 'lux-wp-page-shell lux-account-dashboard-page' : 'lux-wp-page-shell'); ?>>
 <?php wp_body_open(); ?>
 <header class="lux-wp-page-header">
     <a class="lux-wp-page-brand" href="<?php echo esc_url(home_url('/')); ?>">
