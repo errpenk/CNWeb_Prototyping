@@ -367,7 +367,7 @@ assert(zhContact.includes('china@luxureat.com') && zhContact.includes('roberto@t
 assert((zhContact.match(/lux-footprint-role/g) || []).length === 4, 'Chinese global footprint explains each regional function');
 const enContact = read(path.join(themeDir, 'pages/en/contact.php'));
 assert(enContact.includes('Global Presence') && enContact.includes('Italy') && enContact.includes('Thailand') && enContact.includes('China'), 'English contact footprint lists the requested countries');
-assert(enContact.includes('Truffleat Srl') && enContact.includes('Luxureat（露意膳） LLC') && enContact.includes('Truffleat Co., Ltd') && enContact.includes('LuxurEat China（露意膳） Ltd'), 'English contact footprint uses the requested entities');
+assert(enContact.includes('Truffleat Srl') && enContact.includes('Luxureat LLC') && enContact.includes('Truffleat Co., Ltd') && enContact.includes('LuxurEat China（露意膳） Ltd'), 'English contact footprint uses the requested entities');
 assert(enContact.includes('lux-footprint-heading') && !enContact.includes('<details class="lux-footprint-card'), 'English contact footprint cards are expanded by default');
 assert(enContact.includes('info@truffleat.com') && enContact.includes('info@luxureat.com') && enContact.includes('info@truffle.co.th'), 'English contact page restores the regional contacts');
 assert((enContact.match(/lux-footprint-role/g) || []).length === 4, 'English global footprint explains each regional function');
@@ -409,7 +409,7 @@ assert(zhGifting.includes('lux-partner-card') && zhGifting.includes("luxureat_st
 assert(zhHome.includes('小红书') && zhHome.includes('data-footer-modal="wechat"') && zhHome.includes('微博'), 'Chinese footer exposes localized social actions');
 assert(enHome.includes('Rednote') && enHome.includes('WeChat') && enHome.includes('Weibo'), 'English footer exposes social actions');
 assert(['rednote.svg', 'wechat.svg', 'douyin.svg', 'weibo.svg'].every((icon) => zhHome.includes(`media/social/${icon}`) && enHome.includes(`media/social/${icon}`)), 'bilingual footers use all four supplied social SVG icons');
-assert(zhHome.includes('2026 LUXUREAT CHINA（露意膳）.') && enHome.includes('2026 LUXUREAT CHINA（露意膳）.'), 'bilingual footers use the updated 2026 copyright line');
+assert(zhHome.includes('2026 LUXUREAT CHINA（露意膳）｜ 91310000MAERED2X1W') && enHome.includes('2026 LUXUREAT CHINA（露意膳）｜ 91310000MAERED2X1W'), 'bilingual footers use the updated 2026 copyright line');
 assert(hasExactHref(zhHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(zhHome, 'https://v.douyin.com/oEPE48mPS48/'), 'Chinese footer uses the updated Rednote and Douyin links');
 assert(hasExactHref(enHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(enHome, 'https://v.douyin.com/oEPE48mPS48/'), 'English footer uses the updated Rednote and Douyin links');
 assert(zhHome.includes('mailto:china@luxureat.com?cc=roberto@truffleat.com') && zhHome.includes('roberto@truffleat.com') && zhHome.includes('tel:+8615721452475'), 'Chinese footer exposes both emails with China as recipient and Roberto in copy');
