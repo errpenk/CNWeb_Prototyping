@@ -406,6 +406,21 @@ assert(zhGifting.includes('luxureat-contact-qr.webp') && enGifting.includes('lux
 assert(zhGifting.includes('luxureat-domestic-contact-qr.webp') && enGifting.includes('luxureat-domestic-contact-qr.webp'), 'bilingual gifting pages show separate domestic and overseas contact QR codes');
 assert(zhGifting.includes('海外联系') && zhGifting.includes('国内联系') && enGifting.includes('Overseas Contact') && enGifting.includes('Domestic Contact'), 'bilingual gifting QR codes have clear contact-region labels');
 assert(!enGifting.includes('View Large Image') && (enGifting.match(/View Full Size/g) || []).length === 8, 'English partnership cases use the requested full-size hover label');
+assert((zhGifting.match(/查看详情/g) || []).length === 8 && !zhGifting.includes('查看原文'), 'Chinese partnership cases use the requested details label');
+assert((enGifting.match(/View Details/g) || []).length === 8 && !enGifting.includes('Read Source'), 'English partnership cases use the matching details label');
+for (const href of [
+  'https://truffleat.com/franchising-di-hotel-e-ristoranti/',
+  'https://truffleat.com/franchising-di-ristoranti-sulla-nave-da-crociera/',
+  'https://truffleat.com/franchising-di-bar-e-ristoranti/',
+  'https://truffleat.com/franchising-di-ristoranti-in-aeroporto/',
+  'https://truffleat.com/franchising-di-ristoranti-alla-stazione-ferroviaria/',
+  'https://truffleat.com/franchising-di-ristoranti-al-casino/',
+]) {
+  assert(zhGifting.includes(href) && enGifting.includes(href), `bilingual partnership cases link to ${href}`);
+}
+assert(zhGifting.includes('特色经营') && enGifting.includes('Specialty Operations') && zhGifting.includes('specialty-operation.webp') && enGifting.includes('specialty-operation.webp'), 'bilingual partnership cases use the requested specialty-operation title and image');
+assert(integrationCss.includes('grid-template-rows: auto 1fr auto') && integrationCss.includes('min-height: 182px'), 'China partnership columns align their headings, dividers, QR codes, and contact details');
+assert(integrationCss.includes('.lux-home-gifting-image img:nth-child(3)') && integrationCss.includes('z-index: 6'), 'the requested homepage partnership photo stays above the collage');
 assert(zhGifting.includes('china@luxureat.com') && zhGifting.includes('roberto@truffleat.com') && enGifting.includes('china@luxureat.com') && enGifting.includes('roberto@truffleat.com'), 'bilingual gifting contact block exposes both China and Roberto emails');
 assert(zhGifting.includes('诚邀中国经销与') && enGifting.includes('Invitation to Chinese Distribution'), 'bilingual gifting pages lead with distribution and channel partners in China');
 assert(zhGifting.includes('直接进口产品') && enGifting.includes('imports products directly into China'), 'bilingual gifting pages clarify China direct-import operations');

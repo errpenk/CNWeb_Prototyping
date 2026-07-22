@@ -2699,7 +2699,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
 }
 .lux-home-gifting-image img:nth-child(3) {
   --lux-card-angle: 2.2deg;
-  z-index: 2;
+  z-index: 6;
   width: 46%;
   right: 0;
   bottom: 0;
@@ -4929,6 +4929,8 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   gap: 0;
 }
 .lux-importer-invite-grid article {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   padding: clamp(28px, 4vw, 52px);
   border: 0;
   background: transparent;
@@ -4951,6 +4953,9 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   padding-left: 1.25em;
   list-style: disc;
 }
+.lux-importer-body {
+  min-height: 0;
+}
 .lux-importer-contact-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 136px;
@@ -4967,8 +4972,8 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   align-content: space-between;
 }
 .lux-importer-invite-grid article > .lux-importer-contact {
-  min-height: 0;
-  align-content: start;
+  min-height: 182px;
+  align-content: space-between;
   gap: 10px;
   margin-top: 28px;
   padding-top: 22px;
@@ -5033,6 +5038,13 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
     gap: 16px;
   }
   .lux-importer-invite-grid { grid-template-columns: 1fr; }
+  .lux-importer-invite-grid article {
+    display: block;
+  }
+  .lux-importer-invite-grid article > .lux-importer-contact {
+    min-height: 0;
+    align-content: start;
+  }
   .lux-importer-invite-grid article + article {
     border-top: 1px solid rgba(23, 23, 21, .3);
     border-left: 0;
