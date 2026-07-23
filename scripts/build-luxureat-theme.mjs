@@ -821,32 +821,32 @@ function luxureat_static_remove_xmlrpc_auth_methods($methods) {
 }
 add_filter('xmlrpc_methods', 'luxureat_static_remove_xmlrpc_auth_methods', 999);
 
-function luxureat_static_cookie_with_samesite($name, $value, $expire, $paths, $secure) {
-    if (headers_sent()) {
+function luxureat_static_cookie_samesite_headers() {
+    $cookies = array_values(array_filter(headers_list(), function ($header) {
+        return stripos($header, 'Set-Cookie:') === 0;
+    }));
+    if (!$cookies) {
         return;
     }
-    foreach (array_unique(array_filter($paths)) as $path) {
-        setcookie($name, $value, array(
-            'expires' => (int) $expire,
-            'path' => $path,
-            'domain' => COOKIE_DOMAIN ?: '',
-            'secure' => (bool) $secure,
-            'httponly' => true,
-            'samesite' => 'Lax',
-        ));
+
+    header_remove('Set-Cookie');
+    foreach ($cookies as $cookie) {
+        if (
+            stripos($cookie, 'Set-Cookie: wordpress_') === 0 &&
+            stripos($cookie, 'samesite=') === false
+        ) {
+            $cookie .= '; SameSite=Lax';
+        }
+        header($cookie, false);
     }
 }
 
-function luxureat_static_auth_cookie_samesite($cookie, $expire, $expiration, $user_id, $scheme) {
-    $name = $scheme === 'secure_auth' ? SECURE_AUTH_COOKIE : AUTH_COOKIE;
-    luxureat_static_cookie_with_samesite($name, $cookie, $expire, array(PLUGINS_COOKIE_PATH, ADMIN_COOKIE_PATH, COOKIEPATH, SITECOOKIEPATH), is_ssl());
+function luxureat_static_register_cookie_header_callback() {
+    if (function_exists('header_register_callback')) {
+        header_register_callback('luxureat_static_cookie_samesite_headers');
+    }
 }
-add_action('set_auth_cookie', 'luxureat_static_auth_cookie_samesite', 999, 5);
-
-function luxureat_static_logged_in_cookie_samesite($cookie, $expire) {
-    luxureat_static_cookie_with_samesite(LOGGED_IN_COOKIE, $cookie, $expire, array(COOKIEPATH, SITECOOKIEPATH), is_ssl());
-}
-add_action('set_logged_in_cookie', 'luxureat_static_logged_in_cookie_samesite', 999, 2);
+add_action('init', 'luxureat_static_register_cookie_header_callback', 0);
 
 function luxureat_static_register_routes() {
     foreach (array_keys(luxureat_static_routes()) as $route) {

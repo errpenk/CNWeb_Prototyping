@@ -134,7 +134,7 @@ assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'funct
 assert(functionsPhp.includes('luxureat_static_verify_bot_challenge') && functionsPhp.includes("'botChallenge' => luxureat_static_bot_challenge()"), 'account requests require a signed proof-of-work bot challenge');
 assert(functionsPhp.includes('luxureat_static_strong_password') && functionsPhp.includes('strlen($password) < 12'), 'customer registration enforces a strong 12-character password');
 assert(functionsPhp.includes("add_filter('xmlrpc_enabled', '__return_false')") && functionsPhp.includes('luxureat_static_disable_xmlrpc_request') && functionsPhp.includes("'system.multicall'"), 'XML-RPC authentication and multicall requests are disabled');
-assert(functionsPhp.includes("'samesite' => 'Lax'") && functionsPhp.includes("add_action('set_logged_in_cookie'"), 'authentication cookies are reissued with SameSite=Lax');
+assert(functionsPhp.includes("cookie .= '; SameSite=Lax'") && functionsPhp.includes('header_register_callback'), 'authentication cookie headers receive SameSite=Lax immediately before sending');
 assert(functionsPhp.includes("'Content-Security-Policy'") && functionsPhp.includes("'X-Content-Type-Options'") && functionsPhp.includes("'Permissions-Policy'"), 'front-end responses include hardened security headers');
 
 const indexPhp = read(path.join(themeDir, 'index.php'));
