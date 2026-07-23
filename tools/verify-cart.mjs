@@ -57,10 +57,31 @@ const context = {
 };
 
 vm.createContext(context);
+context.window.LuxureatWooCatalog = {
+  products: {
+    'imperial-beluga-30g': {
+      name: 'Woo Beluga',
+      price: 999,
+      currency: '¥',
+      image: 'https://example.com/woo-beluga.jpg',
+      gallery: [],
+      stockStatus: 'outofstock',
+      stockQuantity: 0,
+      available: false,
+      maxQuantity: 0,
+    },
+  },
+};
+vm.runInContext(fs.readFileSync('assets/data/products.js', 'utf8'), context);
 vm.runInContext(fs.readFileSync('assets/js/products.js', 'utf8'), context);
 
 const bag = context.window.LuxureatBag;
 assert.equal(typeof bag?.add, 'function');
+const syncedProduct = context.window.LUXUREAT_PRODUCT_DATA.products['en-imperial-beluga'];
+assert.equal(syncedProduct.amount, 999);
+assert.equal(syncedProduct.currency, '¥');
+assert.equal(syncedProduct.image, 'https://example.com/woo-beluga.jpg');
+assert.equal(syncedProduct.available, false);
 
 bag.add({ id: 'beluga-30g', title: 'Imperial Beluga', price: 350, currency: '$' });
 bag.add({ id: 'beluga-30g', title: 'Imperial Beluga', price: 350, currency: '$' });

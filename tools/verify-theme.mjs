@@ -121,9 +121,12 @@ assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php d
 assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.includes('wc_create_new_customer'), 'functions.php exposes WooCommerce-backed account registration');
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
 assert(functionsPhp.includes('woocommerce_store_api_cart_item_images') && functionsPhp.includes('lux-005.jpg'), 'checkout cart items receive branded product images');
+assert(functionsPhp.includes('function luxureat_static_woo_catalog()') && functionsPhp.includes("'LuxureatWooCatalog'") && functionsPhp.includes("'stockQuantity'"), 'product pages receive live WooCommerce price, image, and stock data');
+assert(functionsPhp.includes("if ($product->get_image_id())") && functionsPhp.includes('return $images;'), 'checkout keeps WooCommerce product images when they exist');
 assert(functionsPhp.includes("$integration_registry->unregister('mailpoet')"), 'checkout removes the duplicate MailPoet opt-in block at registration');
 assert(functionsPhp.includes('luxureat_static_require_account_for_checkout') && functionsPhp.includes("!is_user_logged_in()"), 'checkout requires a signed-in customer on both direct and AJAX entry points');
 assert(functionsPhp.includes('woocommerce_package_rates') && functionsPhp.includes("set_label('免费配送')"), 'Chinese checkout localizes the free-shipping rate');
+assert(functionsPhp.includes('luxureat_static_restrict_test_payment') && functionsPhp.includes("unset($gateways['cheque'])") && functionsPhp.includes("current_user_can('manage_woocommerce')"), 'the temporary no-charge test payment is restricted to shop administrators');
 assert(functionsPhp.includes("$mode === 'forgot'") && functionsPhp.includes('retrieve_password($user->user_login)'), 'functions.php sends native WordPress password reset emails');
 assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'functions.php passes the remember-me choice to WordPress authentication');
 
@@ -421,6 +424,7 @@ for (const href of [
 assert(zhGifting.includes('特色经营') && enGifting.includes('Specialty Operations') && zhGifting.includes('specialty-operation.webp') && enGifting.includes('specialty-operation.webp'), 'bilingual partnership cases use the requested specialty-operation title and image');
 assert(integrationCss.includes('grid-template-rows: auto 1fr auto') && integrationCss.includes('min-height: 182px'), 'China partnership columns align their headings, dividers, QR codes, and contact details');
 assert(integrationCss.includes('.lux-home-gifting-image img:nth-child(3)') && integrationCss.includes('z-index: 6'), 'the requested homepage partnership photo stays above the collage');
+assert(integrationCss.includes('rotateY(0deg) translateZ(1px)') && integrationCss.includes('-webkit-transform: rotateY(180deg) translateZ(1px)'), 'certification card faces remain isolated during English and Chinese flips');
 assert(zhGifting.includes('china@luxureat.com') && zhGifting.includes('roberto@truffleat.com') && enGifting.includes('china@luxureat.com') && enGifting.includes('roberto@truffleat.com'), 'bilingual gifting contact block exposes both China and Roberto emails');
 assert(zhGifting.includes('诚邀中国经销与') && enGifting.includes('Invitation to Chinese Distribution'), 'bilingual gifting pages lead with distribution and channel partners in China');
 assert(zhGifting.includes('直接进口产品') && enGifting.includes('imports products directly into China'), 'bilingual gifting pages clarify China direct-import operations');

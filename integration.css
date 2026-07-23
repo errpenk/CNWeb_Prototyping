@@ -998,6 +998,12 @@ header:has(.lux-hero-fade-both) {
 .lux-product-price em[hidden] {
   display: none !important;
 }
+.lux-product-summary > .lux-product-stock {
+  color: #087f78;
+  font: 700 11px/1.4 Montserrat, "PingFang SC", sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
 .lux-product-purchase {
   display: flex;
   flex-wrap: wrap;
@@ -4453,6 +4459,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   height: 100%;
   min-height: 270px;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
   transition: transform .68s cubic-bezier(.2, .7, .2, 1);
 }
 .lux-cert-card:hover .lux-cert-card-inner,
@@ -4472,6 +4479,8 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   border: 1px solid rgba(139, 238, 229, .2);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  transform: rotateY(0deg) translateZ(1px);
+  -webkit-transform: rotateY(0deg) translateZ(1px);
 }
 .lux-cert-card-front {
   background: #101111;
@@ -4511,7 +4520,8 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 .lux-cert-card-back {
   justify-content: center;
   gap: 22px;
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(1px);
+  -webkit-transform: rotateY(180deg) translateZ(1px);
   border-color: #8beee5;
   background: #f4f2ee;
 }

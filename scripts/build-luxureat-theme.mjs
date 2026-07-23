@@ -330,6 +330,46 @@ function luxureat_static_current_path() {
     return luxureat_static_normalize_path($request_path);
 }
 
+function luxureat_static_woo_catalog() {
+    if (!function_exists('wc_get_product_id_by_sku')) {
+        return array();
+    }
+
+    $catalog = array();
+    foreach (array('imperial-beluga-30g', 'royal-oscetra-30g', 'mother-of-pearl-spoons', 'champagne', 'ice-server') as $sku) {
+        $product_id = wc_get_product_id_by_sku($sku);
+        $product = $product_id ? wc_get_product($product_id) : false;
+        if (!$product) {
+            continue;
+        }
+
+        $image_id = $product->get_image_id();
+        $gallery = array_values(array_filter(array_map(function ($attachment_id) {
+            return wp_get_attachment_image_url($attachment_id, 'full');
+        }, $product->get_gallery_image_ids())));
+        $stock_quantity = $product->managing_stock() ? $product->get_stock_quantity() : null;
+        $max_quantity = $product->is_sold_individually()
+            ? 1
+            : ($stock_quantity !== null && !$product->backorders_allowed() ? max(0, (int) $stock_quantity) : 99);
+
+        $catalog[$sku] = array(
+            'id' => $product->get_id(),
+            'sku' => $sku,
+            'name' => $product->get_name(),
+            'description' => wp_strip_all_tags($product->get_short_description() ?: $product->get_description()),
+            'price' => (float) $product->get_price(),
+            'currency' => get_woocommerce_currency_symbol(),
+            'image' => $image_id ? wp_get_attachment_image_url($image_id, 'full') : '',
+            'gallery' => $gallery,
+            'stockStatus' => $product->get_stock_status(),
+            'stockQuantity' => $stock_quantity,
+            'available' => $product->is_purchasable() && $product->is_in_stock(),
+            'maxQuantity' => $max_quantity,
+        );
+    }
+    return $catalog;
+}
+
 function luxureat_static_assets() {
     $theme_dir = get_template_directory();
     $theme_uri = get_template_directory_uri();
@@ -384,6 +424,9 @@ ${byPath}
             wp_localize_script('luxureat-products', 'LuxureatCheckout', array(
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('luxureat_checkout'),
+            ));
+            wp_localize_script('luxureat-products', 'LuxureatWooCatalog', array(
+                'products' => luxureat_static_woo_catalog(),
             ));
         }
     }
@@ -572,9 +615,20 @@ function luxureat_static_translate_shipping_rates($rates) {
 }
 add_filter('woocommerce_package_rates', 'luxureat_static_translate_shipping_rates', 100);
 
+function luxureat_static_restrict_test_payment($gateways) {
+    if (!current_user_can('manage_woocommerce')) {
+        unset($gateways['cheque']);
+    }
+    return $gateways;
+}
+add_filter('woocommerce_available_payment_gateways', 'luxureat_static_restrict_test_payment', 100);
+
 function luxureat_static_cart_item_images($images, $cart_item) {
     $product = isset($cart_item['data']) ? $cart_item['data'] : false;
     if (!$product instanceof WC_Product) {
+        return $images;
+    }
+    if ($product->get_image_id()) {
         return $images;
     }
     $files = array(
