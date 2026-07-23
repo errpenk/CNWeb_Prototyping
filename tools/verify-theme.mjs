@@ -133,7 +133,7 @@ assert(functionsPhp.includes("$mode === 'forgot'") && functionsPhp.includes('ret
 assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'functions.php passes the remember-me choice to WordPress authentication');
 assert(functionsPhp.includes('luxureat_static_verify_bot_challenge') && functionsPhp.includes("'botChallenge' => luxureat_static_bot_challenge()"), 'account requests require a signed proof-of-work bot challenge');
 assert(functionsPhp.includes('luxureat_static_strong_password') && functionsPhp.includes('strlen($password) < 12'), 'customer registration enforces a strong 12-character password');
-assert(functionsPhp.includes("add_filter('xmlrpc_enabled', '__return_false')") && functionsPhp.includes("'system.multicall'"), 'XML-RPC authentication and multicall are disabled');
+assert(functionsPhp.includes("add_filter('xmlrpc_enabled', '__return_false')") && functionsPhp.includes('luxureat_static_disable_xmlrpc_request') && functionsPhp.includes("'system.multicall'"), 'XML-RPC authentication and multicall requests are disabled');
 assert(functionsPhp.includes("'samesite' => 'Lax'") && functionsPhp.includes("add_action('set_logged_in_cookie'"), 'authentication cookies are reissued with SameSite=Lax');
 assert(functionsPhp.includes("'Content-Security-Policy'") && functionsPhp.includes("'X-Content-Type-Options'") && functionsPhp.includes("'Permissions-Policy'"), 'front-end responses include hardened security headers');
 

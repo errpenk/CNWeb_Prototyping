@@ -804,6 +804,15 @@ remove_action('wp_head', 'wp_generator');
 add_filter('the_generator', '__return_empty_string');
 
 add_filter('xmlrpc_enabled', '__return_false');
+function luxureat_static_disable_xmlrpc_request() {
+    if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {
+        status_header(403);
+        nocache_headers();
+        exit('XML-RPC disabled.');
+    }
+}
+add_action('init', 'luxureat_static_disable_xmlrpc_request', 0);
+
 function luxureat_static_remove_xmlrpc_auth_methods($methods) {
     foreach (array('system.multicall', 'wp.getUsersBlogs', 'blogger.getUsersBlogs', 'metaWeblog.getUsersBlogs') as $method) {
         unset($methods[$method]);
