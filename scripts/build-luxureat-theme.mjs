@@ -806,6 +806,7 @@ add_filter('the_generator', '__return_empty_string');
 add_filter('xmlrpc_enabled', '__return_false');
 function luxureat_static_disable_xmlrpc_request() {
     if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {
+        header_remove('X-Powered-By');
         status_header(403);
         nocache_headers();
         exit('XML-RPC disabled.');
