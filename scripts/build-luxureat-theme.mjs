@@ -712,8 +712,12 @@ function luxureat_static_reduce_paid_bag($order_id) {
         if (!isset($purchased[$item['sku']])) {
             return $item;
         }
-        $quantity = $item['quantity'] - $purchased[$item['sku']];
-        unset($purchased[$item['sku']]);
+        $paid_quantity = min($item['quantity'], $purchased[$item['sku']]);
+        $quantity = $item['quantity'] - $paid_quantity;
+        $purchased[$item['sku']] -= $paid_quantity;
+        if ($purchased[$item['sku']] <= 0) {
+            unset($purchased[$item['sku']]);
+        }
         return $quantity > 0 ? array_merge($item, array('quantity' => $quantity)) : null;
     }, luxureat_static_get_bag($user_id))));
     update_user_meta($user_id, 'luxureat_bag', $bag);

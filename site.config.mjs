@@ -1,4 +1,4 @@
-export const assetVersion = "20260724-carousel-cart-responsive";
+export const assetVersion = "20260724-cart-count-card-carousel-4";
 
 export const contact = {
   email: "china@luxureat.com",

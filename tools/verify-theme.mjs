@@ -135,6 +135,7 @@ assert(functionsPhp.includes('luxureat_static_verify_bot_challenge') && function
 assert(functionsPhp.includes('strlen($password) >= 12') && functionsPhp.includes("preg_match('/[A-Za-z]/'") && functionsPhp.includes("preg_match('/[0-9]/'"), 'customer registration requires 12 characters with letters and numbers');
 assert(functionsPhp.includes("empty($_POST['consent'])") && functionsPhp.includes('Terms of Service and Privacy Policy'), 'customer registration enforces legal consent on the server');
 assert(functionsPhp.includes("get_user_meta($user_id, 'luxureat_bag'") && functionsPhp.includes("update_user_meta(get_current_user_id(), 'luxureat_bag'") && functionsPhp.includes('woocommerce_payment_complete'), 'signed-in bags persist per user and paid items are removed');
+assert(functionsPhp.includes("$paid_quantity = min($item['quantity'], $purchased[$item['sku']])") && functionsPhp.includes("$purchased[$item['sku']] -= $paid_quantity"), 'paid bags decrement the matching SKU by the purchased quantity');
 assert(functionsPhp.includes("add_filter('wp_send_new_user_notification_to_admin', '__return_false')") && functionsPhp.includes("add_filter('pre_wp_mail', 'luxureat_static_silence_account_admin_mail'"), 'account activity emails to administrators are silenced');
 assert(functionsPhp.includes("add_filter('xmlrpc_enabled', '__return_false')") && functionsPhp.includes('luxureat_static_disable_xmlrpc_request') && functionsPhp.includes("'system.multicall'") && functionsPhp.includes("header_remove('X-Powered-By')"), 'XML-RPC authentication and multicall requests are disabled without exposing the PHP version');
 assert(functionsPhp.includes("cookie .= '; SameSite=Lax'") && functionsPhp.includes('header_register_callback'), 'authentication cookie headers receive SameSite=Lax immediately before sending');
@@ -239,6 +240,7 @@ assert(runtimeJs.includes('data-account-consent') && runtimeJs.includes('data-fo
 assert(runtimeJs.includes('data-account-password-toggle') && runtimeJs.includes('is-shaking'), 'registration provides password visibility and invalid-password warning');
 assert(runtimeJs.includes('data-account-email-hint') && runtimeJs.includes('icons.eyeOff'), 'account forms provide shaking email validation and Lucide password visibility icons');
 assert(runtimeJs.includes('data-event-carousel-index'), 'latest events provide clickable thumbnails');
+assert(runtimeJs.includes('src="${escapeHtml(event.poster)}"'), 'event thumbnails use the same square poster shown in the carousel');
 assert(runtimeJs.includes('Number.isFinite(product.stockQuantity)') && !runtimeJs.includes('product.stockQuantity === null ? labels.inStock'), 'unknown stock quantities are not rendered');
 assert(runtimeJs.includes('data-account-password-hint') && runtimeJs.includes('(?=.*[A-Za-z])(?=.*\\\\d).{12,}'), 'registration validates the password requirements');
 assert(runtimeJs.includes('data-account-forgot') && runtimeJs.includes('data-account-login-options') && runtimeJs.includes('text.resetSent'), 'account modal provides an inline password reset flow');
@@ -264,6 +266,9 @@ assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-
 assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow_upward<'), 'back-to-top control uses an inline SVG instead of a font ligature');
 assert(runtimeJs.includes('Please sign in before continuing to checkout.') && runtimeJs.includes('window.LuxureatAccount?.loggedIn'), 'bag checkout prompts guests to sign in before syncing the cart');
 assert(!runtimeJs.includes('localStorage.getItem("luxureatBag")') && runtimeJs.includes('action: "luxureat_bag"'), 'bags no longer use shared browser storage and sync to the signed-in user');
+assert(runtimeJs.includes('type === "reload"') && runtimeJs.includes('sessionStorage.removeItem(guestBagKey)'), 'guest bags clear on refresh while signed-in bags remain account-backed');
+assert(runtimeJs.includes('badge.classList.add("is-updating")'), 'bag badges update synchronously after quantity changes');
+assert(runtimeJs.includes('window.LuxureatBag?.items?.()'), 'shared bag events read the live bag instead of resetting its count');
 assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
 assert(runtimeJs.includes('const pageHref =') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('`/en/${slug}/`'), 'runtime navigation keeps static links relative and WordPress links root-based');
 assert(runtimeJs.includes('aria-pressed'), 'runtime scripts updates pressed states for caviar toolbar buttons');
@@ -279,6 +284,7 @@ assert(!walk(themeDir).some((file) => /\.(php|css|js)$/i.test(file) && /googleus
 
 const integrationCss = read(path.join(themeDir, 'integration.css'));
 assert(integrationCss.includes('.lux-event-thumbnails button.is-active'), 'active event thumbnails receive an enlarged visual state');
+assert(integrationCss.includes('repeat(auto-fit, minmax(min(100%, 380px), 1fr))') && integrationCss.includes('contain: paint'), 'product cards stay contained and adjacent carousel slides are clipped');
 assert(integrationCss.includes('.lux-wp-page-brand img') && integrationCss.includes('.woocommerce-MyAccount-navigation'), 'account page applies branded logo and WooCommerce account styling');
 assert(integrationCss.includes('.lux-account-dashboard-page .woocommerce-MyAccount-content > p'), 'account dashboard hides the duplicated WooCommerce introduction');
 assert(integrationCss.includes('html[lang^="zh"]') && integrationCss.includes('AlimamaShuHeiTi-Bold.woff2'), 'Chinese headline typography uses the bundled Alimama font');

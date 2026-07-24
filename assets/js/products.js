@@ -498,6 +498,9 @@ function initLuxProductDetails() {
 (() => {
   const maxQuantity = 99;
   const guestBagKey = "luxureat_guest_bag";
+  const accountBag = window.LuxureatAccount;
+  const isReload = globalThis.performance?.getEntriesByType?.("navigation")?.[0]?.type === "reload";
+  if (accountBag?.loggedIn || isReload) sessionStorage.removeItem(guestBagKey);
   const guestBag = () => {
     try {
       const items = JSON.parse(sessionStorage.getItem(guestBagKey) || "[]");
@@ -506,8 +509,8 @@ function initLuxProductDetails() {
       return [];
     }
   };
-  let bagItems = window.LuxureatAccount?.loggedIn && Array.isArray(window.LuxureatAccount.bag)
-    ? window.LuxureatAccount.bag
+  let bagItems = accountBag?.loggedIn && Array.isArray(accountBag.bag)
+    ? accountBag.bag
     : guestBag();
   const clampQuantity = (quantity, limit = maxQuantity) => Math.min(Math.max(1, Number(limit) || 1), Math.max(1, Number(quantity) || 1));
   const locale = () => document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
@@ -559,7 +562,7 @@ function initLuxProductDetails() {
         }),
       }).catch(() => {});
     }
-    renderBag();
+    renderBag(items);
     document.dispatchEvent?.(new CustomEvent("lux-bag-change"));
     return items;
   };
@@ -665,13 +668,17 @@ function initLuxProductDetails() {
     </div>`;
   };
 
-  const updateNavCount = () => {
+  const updateNavCount = (count) => {
     document.querySelectorAll(".lux-actions .lux-bag-link").forEach((link) => {
-      const count = api.count();
       const badge = link.querySelector("[data-bag-count]");
       if (badge) {
         badge.textContent = count ? String(count) : "";
         badge.hidden = count === 0;
+        badge.classList.remove("is-updating");
+        if (count) {
+          void badge.offsetWidth;
+          badge.classList.add("is-updating");
+        }
         return;
       }
 
@@ -707,14 +714,13 @@ function initLuxProductDetails() {
       </div>`).join("");
   };
 
-  const renderBag = () => {
-    updateNavCount();
-
+  const renderBag = (snapshot) => {
+    const items = snapshot || read();
+    updateNavCount(items.reduce((sum, item) => sum + item.quantity, 0));
     const list = document.querySelector("[data-bag-list]");
     if (!list) return;
 
     const lang = list.dataset.bagLocale || locale();
-    const items = read();
     const currency = items[0]?.currency || (lang === "zh" ? "¥" : "$");
     const shipping = items.length ? Number(list.dataset.bagShipping || (lang === "zh" ? 200 : 20)) : 0;
     const subtotal = api.subtotal();

@@ -39,7 +39,8 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
 
 const updateLuxBagCount = () => {
   let count = 0;
-  const items = window.LuxureatAccount?.loggedIn ? window.LuxureatAccount.bag : [];
+  const items = window.LuxureatBag?.items?.()
+    || (window.LuxureatAccount?.loggedIn ? window.LuxureatAccount.bag : []);
   if (Array.isArray(items)) count = items.reduce((sum, item) => sum + Math.max(1, Number(item.quantity) || 1), 0);
   document.querySelectorAll("[data-bag-count]").forEach((badge) => {
     badge.textContent = count ? String(count) : "";

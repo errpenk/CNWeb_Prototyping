@@ -50,7 +50,7 @@
         </div>` : ""}
       </div>
       ${events.length > 1 ? `<div class="lux-event-thumbnails" role="tablist" aria-label="${escapeHtml(carouselLabels.carousel)}">
-        ${events.map((event, index) => `<button type="button" role="tab" data-event-carousel-index="${index}" aria-selected="${index === 0}" aria-label="${escapeHtml(`${carouselLabels.select} ${event[lang].title}`)}"><img loading="eager" decoding="async" src="${escapeHtml(event.cardImage || event.banner || event.poster)}" alt=""></button>`).join("")}
+        ${events.map((event, index) => `<button type="button" role="tab" data-event-carousel-index="${index}" aria-selected="${index === 0}" aria-label="${escapeHtml(`${carouselLabels.select} ${event[lang].title}`)}"><img loading="eager" decoding="async" src="${escapeHtml(event.poster)}" alt=""></button>`).join("")}
       </div>` : ""}
     </div>`;
 
